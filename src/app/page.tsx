@@ -1,65 +1,105 @@
-import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight, Database, Lock, Palette, Zap } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
-export default function Home() {
+const features = [
+  {
+    icon: Lock,
+    title: "Authentication",
+    description:
+      "NextAuth.js v5 with Prisma Adapter, JWT sessions, and role-based access control.",
+  },
+  {
+    icon: Database,
+    title: "Database Ready",
+    description:
+      "Prisma ORM with PostgreSQL, Docker setup for local dev, and Supabase-ready config.",
+  },
+  {
+    icon: Palette,
+    title: "Beautiful UI",
+    description:
+      "shadcn/ui components with Tailwind CSS, dark mode, and responsive design.",
+  },
+  {
+    icon: Zap,
+    title: "Performance",
+    description:
+      "TanStack Query for server state, Zustand for client state, and Server Actions.",
+  },
+];
+
+export default function HomePage() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="flex flex-col items-center">
+      {/* Hero Section */}
+      <section className="container mx-auto flex flex-col items-center gap-6 px-4 pb-16 pt-24 text-center md:pt-32">
+        <div className="inline-flex items-center rounded-full border px-4 py-1.5 text-sm font-medium text-muted-foreground">
+          🚀 Production-Ready Boilerplate
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+
+        <h1 className="max-w-3xl text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
+          Build Faster with{" "}
+          <span className="bg-gradient-to-r from-primary to-primary/50 bg-clip-text text-transparent">
+            NextBoiler
+          </span>
+        </h1>
+
+        <p className="max-w-xl text-lg text-muted-foreground">
+          A clean, modular, and production-ready Next.js boilerplate with
+          TypeScript, Prisma, NextAuth, TanStack Query, and shadcn/ui.
+        </p>
+
+        <div className="flex gap-4">
+          <Button size="lg" render={<Link href="/dashboard" />} nativeButton={false}>
+            Get Started
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </Button>
+          <Button
+            size="lg"
+            variant="outline"
+            nativeButton={false}
+            render={
+              <Link
+                href="https://github.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              />
+            }
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            GitHub
+          </Button>
         </div>
-      </main>
+      </section>
+
+      {/* Features Section */}
+      <section className="container mx-auto px-4 pb-24">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {features.map((feature) => (
+            <Card
+              key={feature.title}
+              className="transition-colors hover:border-primary/50"
+            >
+              <CardHeader>
+                <feature.icon className="mb-2 h-8 w-8 text-primary" />
+                <CardTitle className="text-lg">{feature.title}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <CardDescription className="text-sm">
+                  {feature.description}
+                </CardDescription>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

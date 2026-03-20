@@ -1,0 +1,65 @@
+# Next.js Full-Stack Boilerplate Generation
+
+Generate a production-ready Next.js 14+ boilerplate from scratch following the specs in [context.md](file:///home/seno/Public/Project/next-js-boilerplate/context.md).
+
+## Proposed Changes
+
+### Phase 1: Project Initialization
+- Initialize Next.js with `npx create-next-app@latest` (TypeScript, App Router, Tailwind CSS, ESLint)
+- Install deps: Prisma, NextAuth v5, TanStack Query, Zustand, next-themes, react-hook-form, zod, @hookform/resolvers, sonner, lucide-react
+- Init shadcn/ui and install components (Button, Input, Card, Dialog, Tabs, Form, Sonner)
+
+### Phase 2: Database & Prisma
+#### [NEW] `prisma/schema.prisma`
+- User, Account, Session, VerificationToken models (NextAuth-compatible)
+- Role enum (USER, ADMIN), createdAt/updatedAt on all models
+
+#### [NEW] `src/lib/db.ts`
+- Prisma Client singleton pattern
+
+### Phase 3: Authentication
+#### [NEW] `src/lib/auth.ts` — NextAuth.js config with Prisma Adapter
+#### [NEW] `src/middleware.ts` — Protect `/dashboard/:path*`
+#### [NEW] `src/components/providers/session-provider.tsx` — SessionProvider wrapper
+
+### Phase 4: Architecture & Providers
+#### [NEW] `src/components/providers/query-provider.tsx` — TanStack Query
+#### [NEW] `src/components/providers/theme-provider.tsx` — next-themes
+#### [NEW] `src/components/providers/index.tsx` — Combined providers wrapper
+#### [NEW] `src/types/index.ts` — Shared TypeScript interfaces
+
+### Phase 5: UI/UX
+- shadcn/ui components installed via CLI
+#### [NEW] `src/components/shared/navbar.tsx` — Nav with dark mode toggle
+#### [NEW] `src/components/shared/footer.tsx`
+#### [NEW] `src/components/shared/form-input.tsx` — react-hook-form + zod integration
+#### [NEW] `src/components/shared/theme-toggle.tsx` — Dark mode toggle button
+
+### Phase 6: API & Data Fetching
+#### [NEW] `src/actions/profile.ts` — Example Server Action for "Profile Update"
+#### [NEW] `src/lib/validations/profile.ts` — Zod schema for profile
+
+### Phase 7: Infrastructure & SEO
+#### [NEW] `docker-compose.yml` — PostgreSQL + pgAdmin
+#### [NEW] `src/lib/metadata.ts` — Dynamic meta/OG helper
+#### [NEW] `.env.example` — Placeholder env vars
+
+### Phase 8: Pages & Layouts
+#### [MODIFY] `src/app/layout.tsx` — Wrap with providers, add fonts
+#### [MODIFY] `src/app/page.tsx` — Landing page
+#### [NEW] `src/app/dashboard/page.tsx` — Protected dashboard page
+#### [NEW] `src/app/auth/signin/page.tsx` — Sign-in page
+
+### Phase 9: Documentation
+#### [NEW] `README.md` — Setup, migrations, local vs Supabase instructions
+
+## Verification Plan
+
+### Automated Tests
+- Run `npx prisma validate` to verify schema
+- Run `npm run build` to ensure the project compiles without errors
+
+### Manual Verification
+- Run `npm run dev` and open `http://localhost:3000` — verify homepage renders
+- Check dark mode toggle works
+- Verify `/dashboard` redirects to sign-in when unauthenticated
