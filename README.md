@@ -1,114 +1,57 @@
-# NextBoiler — Next.js Full-Stack Boilerplate
+# Adyatara - FICPatch
 
-A clean, modular, and production-ready Next.js boilerplate with TypeScript, Prisma, NextAuth, TanStack Query, Zustand, and shadcn/ui.
+**Adyatara** adalah sebuah platform _Visual Novel Engine_ berbasis web yang membawa pemain menjelajahi jejak legenda Nusantara dengan antarmuka interaktif dan mekanisme pengambilan keputusan (*branching storyline*). 
 
-## Tech Stack
+Dikembangkan dengan menggunakan **Next.js (App Router)** dan **Prisma ORM**.
 
-- **Framework:** Next.js 15 (App Router) with TypeScript
-- **Styling:** Tailwind CSS v4 + shadcn/ui + Lucide Icons
-- **ORM:** Prisma (PostgreSQL)
-- **Auth:** NextAuth.js v5 (Auth.js) with Prisma Adapter
-- **Validation:** Zod + React Hook Form
-- **State:** TanStack Query (server) & Zustand (client)
+## ✨ Fitur Utama
+- 🗺️ **Interactive Geographic Dashboard**: Mengeksplorasi wilayah-wilayah Nusantara menggunakan peta interaktif (berbasis `Leaflet` + GeoJSON).
+- 🎭 **Dynamic Visual Novel Engine**: Rendering adegan dan percakapan cerita yang mendukung Sprite karakter, Background Images, narasi, dan ekspresi.
+- 🤔 **Branching Choices**: Sistem pilihan aksi yang mengubah alur cerita, mencatat skor yang didapatkan (Leveling), serta membuka Pengetahuan baru / ensiklopedia tersembunyi (Knowledges).
+- 🔐 **Authentication**: Sistem Login yang terintegrasi penuh menggunakan **NextAuth.js**.
+- 🗄️ **Seamless Database**: Manajemen relasional (User, Stories, Characters, Nodes, Choices, & Sessions) melalui **PostgreSQL** + Prisma.
 
-## Getting Started
+## 🛠️ Stack Teknologi
 
-### 1. Clone & Install
+- **Frontend**: Next.js 15+, React 19, Tailwind CSS v4, Framer Motion, Leaflet.
+- **Backend**: Next.js Server Actions & Route Handlers, Node.js.
+- **Database**: PostgreSQL
+- **ORM**: Prisma Client + `@prisma/adapter-pg`
 
+## 🚀 Cara Menjalankan Secara Lokal
+
+**1. Clone dan Install Dependensi**
 ```bash
-git clone <your-repo-url>
-cd next-js-boilerplate
+git clone <repository_url>
+cd adyatara-ficpatch
 npm install
 ```
 
-### 2. Environment Variables
-
-```bash
-cp .env.example .env
+**2. Siapkan File Environment `.env`**
+Buat file `.env` dan tambahkan variabel wajib (kamu bisa menggunakan docker/local postgres kamu):
+```ini
+DATABASE_URL="postgresql://username:password@localhost:5432/adyatara?schema=public"
+NEXTAUTH_SECRET="your-development-secret"
+AUTH_SECRET="your-development-secret"
 ```
 
-Edit `.env` and fill in your values:
-- `DATABASE_URL` — PostgreSQL connection string
-- `NEXTAUTH_SECRET` — Generate with `openssl rand -base64 32`
-- `GITHUB_CLIENT_ID` / `GITHUB_CLIENT_SECRET` — [GitHub OAuth App](https://github.com/settings/developers)
-- `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` — [Google Cloud Console](https://console.cloud.google.com/)
-
-### 3. Database Setup
-
-#### Option A: Local PostgreSQL (Docker)
-
+**3. Setup Database & Prisma**
+Setelah memastikan PostgreSQL server sudah berjalan, sinkronkan skema database dan masukkan *dummy story* bawaan:
 ```bash
-docker compose up -d
+npx prisma generate
+npx prisma db push
+npm run prisma:seed  # atau npx prisma db seed
 ```
 
-This starts PostgreSQL on `localhost:5432` and pgAdmin on `localhost:5050`.
-
-#### Option B: Supabase (Production)
-
-1. Create a project at [supabase.com](https://supabase.com)
-2. Copy the connection strings:
-   - `DATABASE_URL` = Pooled connection string (Transaction mode)
-   - `DIRECT_URL` = Direct connection string
-
-### 4. Run Migrations
-
-```bash
-npx prisma migrate dev --name init
-```
-
-### 5. Start Development Server
-
+**4. Jalankan Development Server**
 ```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+Platform dapat diakses pada `http://localhost:3000`.
 
-## Project Structure
-
-```
-src/
-├── actions/          # Server Actions & business logic
-├── app/              # Routes, Layouts, Pages
-│   ├── api/auth/     # NextAuth API routes
-│   ├── auth/signin/  # Sign-in page
-│   └── dashboard/    # Protected dashboard
-├── components/
-│   ├── providers/    # Context providers (Auth, Query, Theme)
-│   ├── shared/       # Reusable components (Navbar, Footer, FormInput)
-│   └── ui/           # shadcn/ui components
-├── hooks/            # Custom React hooks
-├── lib/              # Shared configs (Prisma, Auth, Utils, Metadata)
-│   └── validations/  # Zod schemas
-└── types/            # Shared TypeScript interfaces
-```
-
-## Key Patterns
-
-### Server Actions
-See `src/actions/profile.ts` for the recommended pattern:
-1. Authenticate with `auth()`
-2. Validate input with Zod
-3. Perform DB operation via Prisma
-4. Revalidate paths
-
-### Form Components
-Use `<FormInput>` from `src/components/shared/form-input.tsx` — integrates `react-hook-form` with `zod` and shadcn/ui `Form` primitives.
-
-### State Management
-- **Server state** → TanStack Query (`useQuery`, `useMutation`)
-- **Client state** → Zustand (see `src/hooks/use-app-store.ts`)
-
-## Scripts
-
-| Command | Description |
-|---|---|
-| `npm run dev` | Start dev server |
-| `npm run build` | Build for production |
-| `npx prisma migrate dev` | Run migrations |
-| `npx prisma studio` | Open Prisma Studio |
-| `docker compose up -d` | Start local DB |
-
-## License
-
-MIT
+## 📂 Struktur Penting
+- `src/app/game/...`: Tampilan utama UI Engine Visual Novel (Scene Player, UI Pilihan, dan Result Screen).
+- `src/app/api/...`: Titik Restful Endpoint yang mengatur State dari Sesi Game dan Progress Database.
+- `src/lib/game-engine.ts`: Core class dan helper utama yang memproses Validasi Node, perpindahan transisi state Session, serta komputasi Game Over. 
+- `prisma/schema.prisma`: Skema lengkap arsitektur Sistem Engine Cerita Interaktif, termasuk dukungan ekstensi BGM, karakter, dan *timing delay* auto-play.
