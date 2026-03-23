@@ -1,25 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { MapContainer, GeoJSON, Marker } from "react-leaflet";
+import { MapContainer, GeoJSON, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import L from "leaflet";
 import type { FeatureCollection } from "geojson";
-import { regionStoryMap, regionNames } from "@/stories";
-import { toast } from "sonner";
-
-// Region definitions matching the screenshot
-const regions = [
-  { id: "sumatra", coords: [-0.5897, 101.3431], status: "aktif" },
-  { id: "jawa", coords: [-7.6145, 110.7128], status: "aktif" },
-  { id: "kalimantan", coords: [0.9619, 114.5548], status: "aktif" },
-  { id: "sulawesi", coords: [-2.8441, 120.8718], status: "aktif" },
-  { id: "bali-nusa", coords: [-8.6500, 117.1000], status: "aktif" },
-  { id: "papua", coords: [-4.2699, 138.0803], status: "aktif" }
-];
+import { provinceStoryMap, storyInfoMap } from "@/stories";
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
+import { X } from "lucide-react";
 
 export default function DashboardMap() {
   const [geoData, setGeoData] = useState<FeatureCollection | null>(null);
+  const [selectedProvince, setSelectedProvince] = useState<{name: string, storySlug: string | null, position: [number, number]} | null>(null);
 
   useEffect(() => {
     fetch("/indonesia.geojson")
@@ -27,29 +19,6 @@ export default function DashboardMap() {
       .then((data) => setGeoData(data))
       .catch((err) => console.error("Error loading GeoJSON", err));
   }, []);
-
-  const createCustomIcon = (status: string, name: string) => {
-    return L.divIcon({
-      className: "custom-marker",
-      html: `
-        <div class="relative flex flex-col items-center justify-center translate-y-[-50%] translate-x-[-50%]">
-          <!-- Glow effects -->
-          <div class="absolute w-20 h-20 rounded-full bg-[#E86B52] opacity-20 blur-xl"></div>
-          <div class="absolute w-12 h-12 rounded-full bg-[#E86B52] opacity-30 shadow-[0_0_15px_rgba(232,107,82,0.8)]"></div>
-          <!-- Inner circle -->
-          <div class="relative w-8 h-8 rounded-full border border-[#E86B52] bg-[#0A0705] flex items-center justify-center z-10 hover:scale-110 transition-transform cursor-pointer">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E86B52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
-              <circle cx="12" cy="10" r="3"></circle>
-            </svg>
-          </div>
-          <div class="absolute -bottom-6 text-[9px] tracking-[0.2em] text-[#E86B52] font-semibold whitespace-nowrap drop-shadow-md">${name}</div>
-        </div>
-      `,
-      iconSize: [0, 0],
-      iconAnchor: [0, 0],
-    });
-  };
 
   if (!geoData) {
     return (
@@ -59,8 +28,15 @@ export default function DashboardMap() {
     );
   }
 
+  const handleProvinceSelect = (stateName: string, position: [number, number]) => {
+    const slug = provinceStoryMap[stateName];
+    setSelectedProvince({ name: stateName, storySlug: slug || null, position });
+  };
+
+  const selectedStoryInfo = selectedProvince?.storySlug ? storyInfoMap[selectedProvince.storySlug] : null;
+
   return (
-    <div className="w-full h-full absolute inset-0 z-0">
+    <div className="w-full h-full absolute inset-0 z-0 overflow-hidden">
       <MapContainer
         center={[-2.5, 118]} // Center of Indonesia
         zoom={5}
@@ -73,22 +49,103 @@ export default function DashboardMap() {
             background: "#0A0705"
         }}
       >
+        {selectedProvince && (
+          <Popup position={selectedProvince.position} closeButton={false} className="custom-map-popup mt-[-20px]">
+            <div className="relative p-6 w-80 bg-[#0D0907] border border-transparent shadow-[0_10px_40px_rgba(0,0,0,0.8)] text-[#f4e1d1] transition-all duration-300 animate-in fade-in zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out data-[state=closed]:zoom-out-95 group">
+              {/* Corner brackets matching landing page */}
+              <div className="absolute top-0 left-0 w-3 h-3 border-l border-t border-gray-800 transition-colors" />
+              <div className="absolute top-0 right-0 w-3 h-3 border-r border-t border-gray-800 transition-colors" />
+              <div className="absolute bottom-0 left-0 w-3 h-3 border-l border-b border-gray-800 transition-colors" />
+              <div className="absolute bottom-0 right-0 w-3 h-3 border-r border-b border-gray-800 transition-colors" />
+
+              <div className="relative">
+                <button 
+                  onClick={() => setSelectedProvince(null)}
+                  className="absolute -top-2 -right-2 text-gray-500 hover:text-[#D96B4A] transition-colors z-20"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+                
+                <div className="flex flex-col">
+                  {selectedProvince.storySlug && selectedStoryInfo ? (
+                    <>
+                      <div className="mb-4 inline-flex p-3 border border-gray-800/80 rounded-sm relative self-start">
+                         <div className="absolute top-0 left-0 w-1 h-1 border-l border-t border-gray-600"></div>
+                         <div className="absolute bottom-0 right-0 w-1 h-1 border-r border-b border-gray-600"></div>
+                         <Image 
+                           src={selectedStoryInfo.coverImage} 
+                           alt="" 
+                           width={20} 
+                           height={20} 
+                           className="object-cover rounded-sm w-5 h-5 opacity-90"
+                         />
+                      </div>
+                      
+                      <h3 className="text-lg font-serif text-white mb-3 tracking-wide">
+                        Provinsi {selectedProvince.name}
+                      </h3>
+                      
+                      <p className="text-gray-400 text-sm leading-relaxed mb-6 line-clamp-3">
+                         {selectedStoryInfo.title}. Petualangan menantimu di daerah ini—apakah kamu siap menjelajahi warisan nusantara?
+                      </p>
+
+                      <Button 
+                        onClick={() => {
+                          window.location.href = `/game?story=${selectedProvince.storySlug}`;
+                        }}
+                        className="w-full bg-[#1A1410] border border-gray-800 hover:border-[#D96B4A]/60 text-[#D96B4A] hover:bg-[#D96B4A]/10 transition-all uppercase tracking-widest text-xs py-5 rounded-none shadow-none font-sans"
+                      >
+                        Mulai Perjalanan
+                      </Button>
+                    </>
+                  ) : (
+                    <>
+                       <div className="mb-4 inline-flex p-3 border border-gray-800/80 rounded-sm relative self-start">
+                         <div className="absolute top-0 left-0 w-1 h-1 border-l border-t border-gray-600"></div>
+                         <div className="absolute bottom-0 right-0 w-1 h-1 border-r border-b border-gray-600"></div>
+                         <div className="w-5 h-5 bg-gray-800 rounded-sm opacity-50" />
+                      </div>
+                      
+                      <h3 className="text-lg font-serif text-white mb-3 tracking-wide">
+                        Provinsi {selectedProvince.name}
+                      </h3>
+                      
+                      <p className="text-gray-400 text-sm leading-relaxed mb-4">
+                         Belum ada cerita yang tersedia untuk wilayah ini. Ikuti terus pembaruannya!
+                      </p>
+                    </>
+                  )}
+                </div>
+              </div>
+            </div>
+          </Popup>
+        )}
+
         <GeoJSON
           data={geoData}
-          style={{
-            color: "#6b332b", // slightly darker than the marker
-            weight: 1,
-            fillColor: "#170c09",
-            fillOpacity: 0.6,
+          style={(feature) => {
+             const stateName = feature?.properties?.state;
+             const hasStory = !!provinceStoryMap[stateName];
+             return {
+                color: "#6b332b",
+                weight: 1,
+                fillColor: hasStory ? "#3d1c16" : "#170c09", // highlight provinces with stories slightly
+                fillOpacity: hasStory ? 0.8 : 0.6,
+             };
           }}
           onEachFeature={(feature, layer) => {
+            const stateName = feature?.properties?.state;
+            const hasStory = !!provinceStoryMap[stateName];
             layer.on({
+                click: (e) => {
+                   handleProvinceSelect(stateName, [e.latlng.lat, e.latlng.lng]);
+                },
                 mouseover: (e) => {
                     const layer = e.target;
                     layer.setStyle({
                         color: "#E86B52",
                         weight: 1.5,
-                        fillColor: "#2a1410",
+                        fillColor: hasStory ? "#4a231b" : "#2a1410",
                     });
                     layer.bringToFront();
                 },
@@ -97,31 +154,12 @@ export default function DashboardMap() {
                     layer.setStyle({
                         color: "#6b332b",
                         weight: 1,
-                        fillColor: "#170c09",
+                        fillColor: hasStory ? "#3d1c16" : "#170c09",
                     });
                 }
             });
           }}
         />
-
-        {regions.map((region) => (
-          <Marker
-            key={region.id}
-            position={region.coords as [number, number]}
-            icon={createCustomIcon(region.status, regionNames[region.id] || region.id.toUpperCase())}
-            eventHandlers={{
-                click: () => {
-                    const storySlug = regionStoryMap[region.id];
-                    if (storySlug) {
-                        window.location.href = `/game?story=${storySlug}`;
-                    } else {
-                        toast.info("Cerita untuk provinsi ini belum tersedia");
-                    }
-                }
-            }}
-          />
-        ))}
-
       </MapContainer>
     </div>
   );

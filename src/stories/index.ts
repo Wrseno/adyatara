@@ -27,22 +27,9 @@ export const endingLabels: Record<string, { label: string; color: string }> = {
   bad: { label: "Bad Ending", color: "#EF4444" },
 };
 
-export const regionStoryMap: Record<string, string> = {
-  "sumatra": "",
-  "jawa": "prambanan",
-  "kalimantan": "",
-  "sulawesi": "",
-  "bali-nusa": "",
-  "papua": "",
-};
-
-export const regionNames: Record<string, string> = {
-  "sumatra": "SUMATRA",
-  "jawa": "JAWA",
-  "kalimantan": "KALIMANTAN",
-  "sulawesi": "SULAWESI",
-  "bali-nusa": "BALI & NUSA TENGGARA",
-  "papua": "PAPUA",
+export const provinceStoryMap: Record<string, string> = {
+  "Yogyakarta": "prambanan",
+  "Jawa Tengah": "timun-mas",
 };
 
 export async function loadStory(slug: string): Promise<StoryModule | null> {
