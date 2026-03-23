@@ -78,10 +78,11 @@ function GamePlayer({
             {storyMeta.description}
           </p>
         </div>
-        
-        <h2 className="text-2xl font-serif text-white">
-          {storyMeta.title}
-        </h2>
+
+        <h2 className="text-2xl font-serif text-white">{storyMeta.title}</h2>
+        <p className="text-sm mt-1 text-white">
+          Tekan "spasi" untuk memulai/melanjutkan cerita
+        </p>
       </div>
 
       <Player
