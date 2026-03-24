@@ -7,251 +7,169 @@ import {
   Image,
   Sound,
 } from "narraleaf-react";
-import { addScore, setEnding } from "@/lib/game-utils";
+import { addScore, setEnding, unlockKnowledge } from "@/lib/game-utils";
+
+// --- KARAKTER ---
 const narrator = new Character("Narator", { color: "#D96B4A" });
 const bandung = new Character("Bandung Bondowoso", { color: "#E86B52" });
 const roro = new Character("Roro Jonggrang", { color: "#EAA87E" });
+const jin = new Character("Jin", { color: "#DA2525" });
 
-const bandung1 = new Image({
+// --- GAMBAR EKSPRESI KARAKTER ---
+const IMG = { zoom: 0.7, position: { yalign: 0.45, xalign: 0.5 } };
+
+// Bandung Bondowoso
+const imgBandung1 = new Image({
   src: "/images/stories/prambanan/bandung/1.webp",
-  zoom: 0.7,
-  position: {
-    yalign: 0.45,
-    xalign: 0.5,
-  },
+  ...IMG,
 });
-const bandung2 = new Image({
+const imgBandung2 = new Image({
   src: "/images/stories/prambanan/bandung/2.webp",
-  zoom: 0.7,
-  position: {
-    yalign: 0.45,
-    xalign: 0.5,
-  },
+  ...IMG,
 });
-const bandung3 = new Image({
+const imgBandung3 = new Image({
   src: "/images/stories/prambanan/bandung/3.webp",
-  zoom: 0.7,
-  position: {
-    yalign: 0.45,
-    xalign: 0.5,
-  },
+  ...IMG,
 });
-const bandung5 = new Image({
+const imgBandung5 = new Image({
   src: "/images/stories/prambanan/bandung/5.webp",
-  zoom: 0.7,
-  position: {
-    yalign: 0.45,
-    xalign: 0.5,
-  },
+  ...IMG,
 });
-const bandung6 = new Image({
+const imgBandung6 = new Image({
   src: "/images/stories/prambanan/bandung/6.webp",
-  zoom: 0.7,
-  position: {
-    yalign: 0.45,
-    xalign: 0.5,
-  },
+  ...IMG,
 });
-const bandung7 = new Image({
+const imgBandung7 = new Image({
   src: "/images/stories/prambanan/bandung/7.webp",
-  zoom: 0.7,
-  position: {
-    yalign: 0.45,
-    xalign: 0.5,
-  },
+  ...IMG,
 });
-const bandung8 = new Image({
+const imgBandung8 = new Image({
   src: "/images/stories/prambanan/bandung/8.webp",
-  zoom: 0.7,
-  position: {
-    yalign: 0.45,
-    xalign: 0.5,
-  },
+  ...IMG,
 });
-const bandung9 = new Image({
+const imgBandung9 = new Image({
   src: "/images/stories/prambanan/bandung/9.webp",
-  zoom: 0.7,
-  position: {
-    yalign: 0.45,
-    xalign: 0.5,
-  },
+  ...IMG,
 });
-const bandung10 = new Image({
+const imgBandung10 = new Image({
   src: "/images/stories/prambanan/bandung/10.webp",
-  zoom: 0.7,
-  position: {
-    yalign: 0.45,
-    xalign: 0.5,
-  },
+  ...IMG,
 });
 
-const roro1 = new Image({
+// Roro Jonggrang
+const imgRoro1 = new Image({
   src: "/images/stories/prambanan/roro/1.webp",
-  zoom: 0.6,
-  position: {
-    yalign: 0.45,
-    xalign: 0.5,
-  },
+  ...IMG,
 });
-const roro2 = new Image({
+const imgRoro2 = new Image({
   src: "/images/stories/prambanan/roro/2.webp",
-  zoom: 0.6,
-  position: {
-    yalign: 0.45,
-    xalign: 0.5,
-  },
+  ...IMG,
 });
-const roro4 = new Image({
+const imgRoro4 = new Image({
   src: "/images/stories/prambanan/roro/4.webp",
-  zoom: 0.6,
-  position: {
-    yalign: 0.45,
-    xalign: 0.5,
-  },
+  ...IMG,
 });
-const roro5 = new Image({
+const imgRoro5 = new Image({
   src: "/images/stories/prambanan/roro/5.webp",
-  zoom: 0.6,
-  position: {
-    yalign: 0.45,
-    xalign: 0.5,
-  },
+  ...IMG,
 });
-const roro6 = new Image({
+const imgRoro6 = new Image({
   src: "/images/stories/prambanan/roro/6.webp",
-  zoom: 0.6,
-  position: {
-    yalign: 0.45,
-    xalign: 0.5,
-  },
+  ...IMG,
 });
-const roro7 = new Image({
+const imgRoro7 = new Image({
   src: "/images/stories/prambanan/roro/7.webp",
-  zoom: 0.6,
-  position: {
-    yalign: 0.45,
-    xalign: 0.5,
-  },
+  ...IMG,
 });
-
-const roro8 = new Image({
+const imgRoro8 = new Image({
   src: "/images/stories/prambanan/roro/8.webp",
-  zoom: 0.6,
-  position: {
-    yalign: 0.45,
-    xalign: 0.5,
-  },
+  ...IMG,
 });
 
-// Sound - Bandung Bondowoso
-const soundConfig = { volume: 1, loop: false, sync: false };
+// Jin Guardian
+const imgJin1 = new Image({
+  src: "/images/stories/prambanan/jin/1.webp",
+  ...IMG,
+});
+const imgJin2 = new Image({
+  src: "/images/stories/prambanan/jin/2.webp",
+  ...IMG,
+});
 
+const imgJin3 = new Image({
+  src: "/images/stories/prambanan/jin/3.webp",
+  ...IMG,
+});
+
+const imgJin4 = new Image({
+  src: "/images/stories/prambanan/jin/4.webp",
+  ...IMG,
+});
+
+// --- VOICE ACTING ---
+
+// Bandung Bondowoso
+const vBandung1 = new Sound({ src: "/audio/prambanan/bandung/1.mp3" });
+const vBandung2 = new Sound({ src: "/audio/prambanan/bandung/2.mp3" });
+const vBandung3 = new Sound({ src: "/audio/prambanan/bandung/3.mp3" });
+const vBandung5 = new Sound({ src: "/audio/prambanan/bandung/5.mp3" });
+const vBandung6 = new Sound({ src: "/audio/prambanan/bandung/6.mp3" });
+const vBandung7 = new Sound({ src: "/audio/prambanan/bandung/7.mp3" });
+const vBandung8 = new Sound({ src: "/audio/prambanan/bandung/8.mp3" });
+const vBandung9 = new Sound({ src: "/audio/prambanan/bandung/9.mp3" });
+const vBandung10 = new Sound({ src: "/audio/prambanan/bandung/10.mp3" });
+const vBandung11 = new Sound({ src: "/audio/prambanan/bandung/1-1.mp3" });
+const vBandung12 = new Sound({ src: "/audio/prambanan/bandung/12.mp3" });
+
+// Roro Jonggrang
+const vRoro1 = new Sound({ src: "/audio/prambanan/roro/1.mp3" });
+const vRoro2 = new Sound({ src: "/audio/prambanan/roro/2.mp3" });
+const vRoro3 = new Sound({ src: "/audio/prambanan/roro/3.mp3" });
+const vRoro4 = new Sound({ src: "/audio/prambanan/roro/4.mp3" });
+const vRoro5 = new Sound({ src: "/audio/prambanan/roro/5.mp3" });
+const vRoro6 = new Sound({ src: "/audio/prambanan/roro/6.mp3" });
+const vRoro7 = new Sound({ src: "/audio/prambanan/roro/7.mp3" });
+
+// Jin Guardian
+const vJin1 = new Sound({ src: "/audio/prambanan/jin/1.mp3" });
+const vJin2 = new Sound({ src: "/audio/prambanan/jin/2.mp3" });
+const vJin3 = new Sound({ src: "/audio/prambanan/jin/3.mp3" });
+// TODO: Tambahkan voice untuk jawaban kuis Jin
+const vJin4 = new Sound({ src: "/audio/prambanan/jin/4.mp3" }); // "Benar! Joglo adalah..."
+const vJin5 = new Sound({ src: "/audio/prambanan/jin/5.mp3" }); // "Salah! Limasan bukan..."
+const vJin6 = new Sound({ src: "/audio/prambanan/jin/6.mp3" }); // "Salah! Rumah Gadang berasal..."
+
+// --- BACKGROUND MUSIC (BGM) ---
 const soundConfigBgm = { volume: 0.2, loop: true, sync: false };
-
-const soundbandung1 = new Sound({
-  ...soundConfig,
-  src: "/audio/prambanan/bandung/1.mp3",
-});
-const soundbandung2 = new Sound({
-  ...soundConfig,
-  src: "/audio/prambanan/bandung/2.mp3",
-});
-const soundbandung3 = new Sound({
-  ...soundConfig,
-  src: "/audio/prambanan/bandung/3.mp3",
-});
-const soundbandung5 = new Sound({
-  ...soundConfig,
-  src: "/audio/prambanan/bandung/5.mp3",
-});
-const soundbandung6 = new Sound({
-  ...soundConfig,
-  src: "/audio/prambanan/bandung/6.mp3",
-});
-const soundbandung7 = new Sound({
-  ...soundConfig,
-  src: "/audio/prambanan/bandung/7.mp3",
-});
-const soundbandung8 = new Sound({
-  ...soundConfig,
-  src: "/audio/prambanan/bandung/8.mp3",
-});
-const soundbandung9 = new Sound({
-  ...soundConfig,
-  src: "/audio/prambanan/bandung/9.mp3",
-});
-const soundbandung10 = new Sound({
-  ...soundConfig,
-  src: "/audio/prambanan/bandung/10.mp3",
-});
-const soundbandung11 = new Sound({
-  ...soundConfig,
-  src: "/audio/prambanan/bandung/1-1.mp3",
-});
-
-// Sound - Roro Jonggrang
-const soundroro1 = new Sound({
-  ...soundConfig,
-  src: "/audio/prambanan/roro/1.mp3",
-});
-const soundroro2 = new Sound({
-  ...soundConfig,
-  src: "/audio/prambanan/roro/2.mp3",
-});
-const soundroro3 = new Sound({
-  ...soundConfig,
-  src: "/audio/prambanan/roro/3.mp3",
-});
-const soundroro4 = new Sound({
-  ...soundConfig,
-  src: "/audio/prambanan/roro/4.mp3",
-});
-const soundroro5 = new Sound({
-  ...soundConfig,
-  src: "/audio/prambanan/roro/5.mp3",
-});
-const soundroro6 = new Sound({
-  ...soundConfig,
-  src: "/audio/prambanan/roro/6.mp3",
-});
-const soundroro7 = new Sound({
-  ...soundConfig,
-  src: "/audio/prambanan/roro/7.mp3",
-});
-
-// bgmusic
 
 const bgm1 = Sound.bgm({
   ...soundConfigBgm,
   src: "/music/prambanan/1.mp3",
-});
-
+}); // Intro — damai
 const bgm2 = Sound.bgm({
   ...soundConfigBgm,
   src: "/music/prambanan/2.mp3",
-});
-
+}); // Choice1 — penuh pertimbangan
 const bgm3 = Sound.bgm({
   ...soundConfigBgm,
   src: "/music/prambanan/3.mp3",
-});
-
+}); // Proposal — romantis
 const bgm4 = Sound.bgm({
   ...soundConfigBgm,
   src: "/music/prambanan/4.mp3",
-});
-
+}); // Force — tegang/gelap
 const bgm5 = Sound.bgm({
   ...soundConfigBgm,
   src: "/music/prambanan/5.mp3",
-});
-
+}); // Challenge — dramatis
 const bgm6 = Sound.bgm({
   ...soundConfigBgm,
   src: "/music/prambanan/6.mp3",
-});
+}); // Build — epik
+// TODO: Tambahkan BGM untuk scene quiz
+const bgm7 = Sound.bgm({ ...soundConfigBgm, src: "/music/prambanan/7.mp3" }); // Quiz1 — mistis/magis
 
-// Scenes
+// --- PENGATURAN BACKGROUND SCENE ---
 const sceneIntro = new Scene("intro", {
   background: "/images/stories/prambanan/1.webp",
   backgroundMusic: bgm1,
@@ -288,7 +206,21 @@ const sceneBuild = new Scene("build", {
   backgroundMusicFade: 1000,
 });
 
-// Story flow
+const sceneBest = new Scene("best", {
+  background: "/images/stories/prambanan/6.webp",
+  backgroundMusic: bgm6,
+  backgroundMusicFade: 1000,
+});
+
+const sceneQuiz1 = new Scene("quiz1", {
+  background: "/images/stories/prambanan/7.webp",
+  backgroundMusic: bgm7,
+  backgroundMusicFade: 1000,
+});
+
+// --- STORY FLOW ---
+
+// 1. INTRO — Dua kerajaan bermusuhan
 sceneIntro.action([
   narrator.say`Di sebuah zaman dahulu kala, terdapat dua kerajaan yang saling bermusuhan, yaitu Pengging dan Boko.`,
   narrator.say`Kerajaan Pengging dipimpin oleh seorang raja yang memiliki putra perkasa bernama Bandung Bondowoso.`,
@@ -296,14 +228,17 @@ sceneIntro.action([
   sceneIntro.jumpTo(sceneChoice1),
 ]);
 
+// 2. PILIHAN — Bandung melihat Roro
 sceneChoice1.action([
-  bandung1.show({ ease: "easeInOut", duration: 1000 }),
-  soundbandung1.play(),
+  imgBandung1.show({ ease: "easeInOut", duration: 1000 }),
+  vBandung1.play(),
   bandung.say`Kamu adalah Bandung Bondowoso yang baru saja memenangkan perang setelah menaklukkan Kerajaan Boko.`,
-  soundbandung1.stop(),
-  soundbandung11.play(),
+  vBandung1.stop(),
+  vBandung11.play(),
   bandung.say`Kamu melihat putri kerajaan musuh, Roro Jonggrang yang sedang berduka, namun kamu justru jatuh hati kepadanya.`,
-  soundbandung11.stop(),
+  vBandung11.stop(),
+  imgBandung1.hide({ ease: "easeInOut", duration: 1000 }),
+
   Menu.prompt("Apa yang kamu lakukan?")
     .choose("Lamar dia dengan sopan", [
       Script.execute(({ storable }) => addScore(storable, 30)),
@@ -314,34 +249,41 @@ sceneChoice1.action([
     ]),
 ]);
 
+// 3. PROPOSAL — Bandung melamar Roro
 sceneProposal.action([
-  bandung2.show({ ease: "easeInOut", duration: 1000 }),
-  soundbandung2.play(),
+  imgBandung2.show({ ease: "easeInOut", duration: 1000 }),
+  vBandung2.play(),
   bandung.say`Roro Jonggrang, aku ingin mempersuntingmu. Maukah kau menjadi permaisuriku?`,
-  bandung2.hide({ ease: "easeInOut", duration: 1000 }),
-  roro1.show({ ease: "easeInOut", duration: 1000 }),
-  soundbandung2.stop(),
-  soundroro1.play(),
+  imgBandung2.hide({ ease: "easeInOut", duration: 1000 }),
+  vBandung2.stop(),
+
+  imgRoro1.show({ ease: "easeInOut", duration: 1000 }),
+  vRoro1.play(),
   roro.say`Aku... aku tidak bisa begitu saja menerimamu, Bondowoso.`,
-  roro1.hide({ ease: "easeInOut", duration: 1000 }),
-  roro2.show({ ease: "easeInOut", duration: 1000 }),
-  soundroro1.stop(),
-  soundroro2.play(),
+  imgRoro1.hide({ ease: "easeInOut", duration: 1000 }),
+  vRoro1.stop(),
+
+  imgRoro2.show({ ease: "easeInOut", duration: 1000 }),
+  vRoro2.play(),
   roro.say`Jika kau benar-benar ingin mempersuntingku, kau harus memenuhi syaratku.`,
-  roro2.hide({ ease: "easeInOut", duration: 1000 }),
-  bandung3.show({ ease: "easeInOut", duration: 1000 }),
-  soundroro2.stop(),
-  soundbandung3.play(),
+  imgRoro2.hide({ ease: "easeInOut", duration: 1000 }),
+  vRoro2.stop(),
+
+  imgBandung3.show({ ease: "easeInOut", duration: 1000 }),
+  vBandung3.play(),
   bandung.say`Apa syaratnya? Aku akan memenuhinya!`,
-  bandung3.hide({ ease: "easeInOut", duration: 1000 }),
-  roro2.show({ ease: "easeInOut", duration: 1000 }),
-  soundbandung3.stop(),
-  soundroro3.play(),
+  imgBandung3.hide({ ease: "easeInOut", duration: 1000 }),
+  vBandung3.stop(),
+
+  imgRoro2.show({ ease: "easeInOut", duration: 1000 }),
+  vRoro3.play(),
   roro.say`Bangunkan 1000 candi untukku dalam waktu satu malam saja.`,
-  roro2.hide({ ease: "easeInOut", duration: 1000 }),
-  soundroro3.stop(),
+  imgRoro2.hide({ ease: "easeInOut", duration: 1000 }),
+  vRoro3.stop(),
+
   narrator.say`Syarat yang mustahil, namun Bandung Bondowoso tidak gentar.`,
-  bandung3.show({ ease: "easeInOut", duration: 1000 }),
+  imgBandung3.show({ ease: "easeInOut", duration: 1000 }),
+
   Menu.prompt("Apa yang akan kamu lakukan?")
     .choose("Terima syaratnya", [
       Script.execute(({ storable }) => addScore(storable, 30)),
@@ -353,81 +295,163 @@ sceneProposal.action([
     ]),
 ]);
 
+// 4. FORCE — Bandung menggunakan kekuatan (Bad Ending)
 sceneForce.action([
-  bandung5.show({ ease: "easeInOut", duration: 1000 }),
-  soundbandung5.play(),
+  imgBandung5.show({ ease: "easeInOut", duration: 1000 }),
+  vBandung5.play(),
   bandung.say`Kau tidak punya pilihan, Roro Jonggrang! Kau akan menjadi istriku!`,
-  bandung5.hide({ ease: "easeInOut", duration: 1000 }),
-  roro4.show({ ease: "easeInOut", duration: 1000 }),
-  soundbandung5.stop(),
-  soundroro4.play(),
+  imgBandung5.hide({ ease: "easeInOut", duration: 1000 }),
+  vBandung5.stop(),
+
+  imgRoro4.show({ ease: "easeInOut", duration: 1000 }),
+  vRoro4.play(),
   roro.say`Tidak! Aku tidak akan pernah mau menjadi istrimu, Bondowoso!`,
-  roro4.hide({ ease: "easeInOut", duration: 1000 }),
-  soundroro4.stop(),
+  imgRoro4.hide({ ease: "easeInOut", duration: 1000 }),
+  vRoro4.stop(),
+
   narrator.say`Roro Jonggrang marah besar dan menolak dengan keras.`,
   narrator.say`Bandung Bondowoso kehilangan kesabarannya dan murka.`,
-  bandung6.show({ ease: "easeInOut", duration: 1000 }),
+  imgBandung6.show({ ease: "easeInOut", duration: 1000 }),
   narrator.say`Karena amarahnya, ia mengutuk Roro Jonggrang menjadi batu.`,
-  roro8.show({ ease: "easeInOut", duration: 1000 }),
+  imgBandung6.hide({ ease: "easeInOut", duration: 1000 }),
+  imgRoro8.show({ ease: "easeInOut", duration: 1000 }),
   narrator.say`Dan demikianlah kisah tragis berakhir. Tamat (Bad Ending).`,
   bgm4.stop(),
   Script.execute(({ storable }) => setEnding(storable, "bad")),
 ]);
 
+// 5. CHALLENGE — Jin tolak / Tolak syarat (Neutral Ending)
 sceneChallenge.action([
-  bandung7.show({ ease: "easeInOut", duration: 1000 }),
-  soundbandung7.play(),
+  imgBandung7.show({ ease: "easeInOut", duration: 1000 }),
+  vBandung6.play(),
   bandung.say`Syarat itu terlalu berlebihan, Roro Jonggrang!`,
-  bandung7.hide({ ease: "easeInOut", duration: 1000 }),
-  roro7.show({ ease: "easeInOut", duration: 1000 }),
-  soundbandung7.stop(),
-  soundroro7.play(),
+  imgBandung7.hide({ ease: "easeInOut", duration: 1000 }),
+  vBandung6.stop(),
+
+  imgRoro7.show({ ease: "easeInOut", duration: 1000 }),
+  vRoro7.play(),
   roro.say`Jika kau tidak bisa memenuhinya, berarti kau tidak layak untukku.`,
-  roro7.hide({ ease: "easeInOut", duration: 1000 }),
-  bandung7.show({ ease: "easeInOut", duration: 1000 }),
-  soundroro7.stop(),
-  soundbandung7.play(),
+  imgRoro7.hide({ ease: "easeInOut", duration: 1000 }),
+  vRoro7.stop(),
+
+  imgBandung7.show({ ease: "easeInOut", duration: 1000 }),
+  vBandung7.play(),
   bandung.say`Kau akan menyesal telah menolakku!`,
-  bandung7.hide({ ease: "easeInOut", duration: 1000 }),
-  soundbandung7.stop(),
+  imgBandung7.hide({ ease: "easeInOut", duration: 1000 }),
+  vBandung7.stop(),
+
   narrator.say`Bandung Bondowoso meninggalkan Roro Jonggrang dengan kekecewaan besar.`,
   narrator.say`Dan kisah ini berakhir tanpa kebahagiaan. Tamat (Neutral Ending).`,
   bgm5.stop(),
   Script.execute(({ storable }) => setEnding(storable, "neutral")),
 ]);
 
+// 6. BUILD — Bandung terima syarat, panggil jin
 sceneBuild.action([
-  bandung8.show({ ease: "easeInOut", duration: 1000 }),
-  soundbandung8.play(),
+  imgBandung8.show({ ease: "easeInOut", duration: 1000 }),
+  vBandung8.play(),
   bandung.say`Baiklah! Aku terima syaratmu! Aku akan membangun 1000 candi dalam satu malam!`,
-  bandung8.hide({ ease: "easeInOut", duration: 1000 }),
-  soundbandung8.stop(),
-  narrator.say`Bandung Bondowoso memanggil pasukan jin untuk membantunya membangun candi.`,
-  narrator.say`Satu per satu candi mulai berdiri megah di bawah sinar bulan.`,
+  imgBandung8.hide({ ease: "easeInOut", duration: 1000 }),
+  vBandung8.stop(),
+
+  narrator.say`Bandung Bondowoso bertapa di puncak bukit dan memanggil pasukan jin dengan mantra kuno.`,
+  narrator.say`Tanah bergetar, kabut tebal menyelimuti, dan sesosok makhluk gaib muncul dari dalam bumi.`,
+  sceneBuild.jumpTo(sceneQuiz1),
+]);
+
+// 7. QUIZ — Jin Guardian bertanya tentang rumah adat Jogja
+sceneQuiz1.action([
+  imgJin1.show({ ease: "easeInOut", duration: 1000 }),
+  vJin1.play(),
+  jin.say`Siapa yang berani memanggil kami?!`,
+  vJin1.stop(),
+  vJin2.play(),
+  jin.say`Kami bisa membantumu membangun 1000 candi. Tapi kau harus menjawab pertanyaanku lebih dulu!`,
+  vJin2.stop(),
+  imgJin1.hide({ ease: "easeInOut", duration: 1000 }),
+  imgJin2.hide({ ease: "easeInOut", duration: 1000 }),
+
+  imgBandung3.show({ ease: "easeInOut", duration: 1000 }),
+  vBandung12.play(),
+  bandung.say`Tanyakanlah! Aku akan menjawab apapun!`,
+  imgBandung3.hide({ ease: "easeInOut", duration: 1000 }),
+  vBandung12.stop(),
+
+  imgJin2.show({ ease: "easeInOut", duration: 1000 }),
+  vJin3.play(),
+  Menu.prompt(
+    'Apa nama rumah adat khas Daerah Istimewa Yogyakarta?',
+  )
+    .choose("Joglo", [
+      imgJin2.hide({ ease: "easeInOut", duration: 1000 }),
+      imgJin3.show({ ease: "easeInOut", duration: 1000 }),
+      vJin3.stop(),
+      // TODO: Ganti dengan vJin4 (voice "Benar! Joglo adalah...")
+      vJin4.play(),
+      Script.execute(({ storable }) => {
+        addScore(storable, 20);
+        unlockKnowledge(storable, "K1");
+      }),
+      jin.say`Benar! Joglo adalah rumah adat khas Yogyakarta dengan atap menjulang tinggi melambangkan hubungan manusia dengan Sang Pencipta. Baik, kami akan membantumu!`,
+      vJin4.stop(),
+      sceneQuiz1.jumpTo(sceneBest),
+    ])
+    .choose("Limasan", [
+      imgJin2.hide({ ease: "easeInOut", duration: 1000 }),
+      imgJin4.show({ ease: "easeInOut", duration: 1000 }),
+      vJin3.stop(),
+      // TODO: Ganti dengan vJin5 (voice "Salah! Limasan bukan...")
+      vJin5.play(),
+      Script.execute(({ storable }) => addScore(storable, 0)),
+      jin.say`Salah! Limasan bukan rumah adat khas Yogyakarta. Kau tidak cukup mengenal tanah ini. Kami tidak akan membantumu!`,
+      vJin5.stop(),
+      sceneQuiz1.jumpTo(sceneChallenge),
+    ])
+    .choose("Rumah Gadang", [
+      imgJin2.hide({ ease: "easeInOut", duration: 1000 }),
+      imgJin4.show({ ease: "easeInOut", duration: 1000 }),
+      vJin3.stop(),
+      // TODO: Ganti dengan vJin6 (voice "Salah! Rumah Gadang berasal...")
+      vJin6.play(),
+      Script.execute(({ storable }) => addScore(storable, 0)),
+      jin.say`Salah! Rumah Gadang berasal dari Minangkabau, Sumatera Barat. Kau tidak cukup mengenal tanah ini. Kami tidak akan membantumu!`,
+      vJin6.stop(),
+      sceneQuiz1.jumpTo(sceneChallenge),
+    ]),
+]);
+
+// 8. BEST ENDING — Jin berhasil, candi terbangun, Roro jadi candi ke-1000
+sceneBest.action([
+  narrator.say`Pasukan jin mulai membangun candi di bawah sinar bulan. Satu per satu candi berdiri megah.`,
   narrator.say`Roro Jonggrang panik melihat candi-candi hampir selesai.`,
-  roro5.show({ ease: "easeInOut", duration: 1000 }),
-  soundroro5.play(),
+
+  imgRoro5.show({ ease: "easeInOut", duration: 1000 }),
+  vRoro5.play(),
   roro.say`Tidak... hampir 1000! Aku harus melakukan sesuatu!`,
-  roro5.hide({ ease: "easeInOut", duration: 1000 }),
-  roro6.show({ ease: "easeInOut", duration: 1000 }),
-  soundroro5.stop(),
-  soundroro6.play(),
+  imgRoro5.hide({ ease: "easeInOut", duration: 1000 }),
+  vRoro5.stop(),
+
+  imgRoro6.show({ ease: "easeInOut", duration: 1000 }),
+  vRoro6.play(),
   narrator.say`Roro Jonggrang membakar jerami dan membangunkan ayam-ayam agar berkokok seolah fajar telah tiba.`,
   narrator.say`Pasukan jin yang mendengar ayam berkokok langsung pergi, mengira pagi telah tiba.`,
-  roro6.hide({ ease: "easeInOut", duration: 1000 }),
-  bandung9.show({ ease: "easeInOut", duration: 1000 }),
-  soundroro6.stop(),
-  soundbandung9.play(),
+  imgRoro6.hide({ ease: "easeInOut", duration: 1000 }),
+  vRoro6.stop(),
+
+  imgBandung9.show({ ease: "easeInOut", duration: 1000 }),
+  vBandung9.play(),
   bandung.say`Tidak! Candi baru 999! Kau curang, Roro Jonggrang!`,
-  bandung9.hide({ ease: "easeInOut", duration: 1000 }),
-  bandung10.show({ ease: "easeInOut", duration: 1000 }),
-  soundbandung9.stop(),
-  soundbandung10.play(),
+  imgBandung9.hide({ ease: "easeInOut", duration: 1000 }),
+  vBandung9.stop(),
+
+  imgBandung10.show({ ease: "easeInOut", duration: 1000 }),
+  vBandung10.play(),
   bandung.say`Kau telah mengkhianatiku! Terimalah kutukanmu!`,
-  bandung10.hide({ ease: "easeInOut", duration: 1000 }),
-  soundbandung10.stop(),
+  imgBandung10.hide({ ease: "easeInOut", duration: 1000 }),
+  vBandung10.stop(),
+
   narrator.say`Bandung Bondowoso marah besar dan mengutuk Roro Jonggrang menjadi candi yang ke-1000.`,
-  roro8.show({ ease: "easeInOut", duration: 1000 }),
+  imgRoro8.show({ ease: "easeInOut", duration: 1000 }),
   narrator.say`Begitulah Legenda Candi Prambanan tercipta. Roro Jonggrang menjadi candi, dan Bandung Bondowoso kehilangan cintanya selamanya. Tamat (Best Ending).`,
   bgm6.stop(),
   Script.execute(({ storable }) => setEnding(storable, "best")),
@@ -440,9 +464,8 @@ story.entry(sceneIntro);
 export default story;
 export const storyMeta = {
   title: "Legenda Candi Prambanan",
-  region: "Jawa Tengah",
-  description:
-    "Kisah cinta dan pengkhianatan Bandung Bondowoso dan Roro Jonggrang.",
-  difficulty: "Pemula",
+  region: "Yogyakarta",
+  description: "Kisah cinta Bandung Bondowoso dan Roro Jonggrang",
+  difficulty: "Menengah",
   coverImage: "/images/jawa-tengah.webp",
 };

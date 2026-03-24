@@ -8,21 +8,24 @@ datasource db {
 }
 
 model User {
-  id             String          @id @default(cuid())
-  name           String?
-  email          String?         @unique
-  emailVerified  DateTime?
-  password       String?
-  image          String?
-  role           Role            @default(USER)
-  level          Int             @default(1)
-  totalScore     Int             @default(0)
-  createdAt      DateTime        @default(now())
-  updatedAt      DateTime        @updatedAt
-  accounts       Account[]
-  gameSessions   GameSession[]
-  sessions       Session[]
-  userKnowledges UserKnowledge[]
+  id              String          @id @default(cuid())
+  name            String?
+  email           String?         @unique
+  emailVerified   DateTime?
+  password        String?
+  image           String?
+  bio             String?
+  avatarUrl       String?
+  role            Role            @default(USER)
+  level           Int             @default(1)
+  totalScore      Int             @default(0)
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  accounts        Account[]
+  gameSessions    GameSession[]
+  sessions        Session[]
+  userKnowledges  UserKnowledge[]
+  userCollectibles UserCollectible[]
 }
 
 model Account {
@@ -66,20 +69,21 @@ model VerificationToken {
 }
 
 model Story {
-  id                     String        @id @default(cuid())
+  id                     String          @id @default(cuid())
   title                  String
   region                 String
   description            String
   difficulty             String
-  levelReq               Int           @default(1)
+  levelReq               Int             @default(1)
   coverImage             String?
   backgroundMusicDefault String?
   themeColor             String?
-  createdAt              DateTime      @default(now())
-  updatedAt              DateTime      @updatedAt
+  createdAt              DateTime        @default(now())
+  updatedAt              DateTime        @updatedAt
   sessions               GameSession[]
   knowledges             Knowledge[]
   nodes                  Node[]
+  collectibles           Collectible[]
 }
 
 model Character {
@@ -113,18 +117,20 @@ model Node {
 }
 
 model Choice {
-  id          String     @id @default(cuid())
-  nodeId      String
-  text        String
-  nextNodeId  String?
-  scoreDelta  Int        @default(0)
-  knowledgeId String?
-  soundEffect String?
-  isImportant Boolean    @default(false)
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
-  knowledge   Knowledge? @relation(fields: [knowledgeId], references: [id])
-  node        Node       @relation("NodeChoices", fields: [nodeId], references: [id], onDelete: Cascade)
+  id            String       @id @default(cuid())
+  nodeId        String
+  text          String
+  nextNodeId    String?
+  scoreDelta    Int          @default(0)
+  knowledgeId   String?
+  collectibleId String?
+  soundEffect   String?
+  isImportant   Boolean      @default(false)
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  knowledge     Knowledge?   @relation(fields: [knowledgeId], references: [id])
+  collectible   Collectible? @relation(fields: [collectibleId], references: [id])
+  node          Node         @relation("NodeChoices", fields: [nodeId], references: [id], onDelete: Cascade)
 }
 
 model GameSession {
@@ -169,4 +175,30 @@ model UserKnowledge {
 enum Role {
   USER
   ADMIN
+}
+
+model Collectible {
+  id          String            @id @default(cuid())
+  name        String
+  description String?
+  image       String
+  rarity      String            @default("common")
+  category    String?
+  storyId     String
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  story       Story             @relation(fields: [storyId], references: [id], onDelete: Cascade)
+  choices     Choice[]
+  users       UserCollectible[]
+}
+
+model UserCollectible {
+  id            String      @id @default(cuid())
+  userId        String
+  collectibleId String
+  unlockedAt    DateTime    @default(now())
+  collectible   Collectible @relation(fields: [collectibleId], references: [id], onDelete: Cascade)
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, collectibleId])
 }
