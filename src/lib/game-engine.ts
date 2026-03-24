@@ -145,6 +145,23 @@ export async function submitChoice(sessionId: string, choiceId: string, userId: 
     })
   }
 
+  // Award collectible if Choice has collectible appended
+  if (choice.collectibleId) {
+    await db.userCollectible.upsert({
+        where: {
+            userId_collectibleId: {
+                userId,
+                collectibleId: choice.collectibleId
+            }
+        },
+        update: {},
+        create: {
+            userId,
+            collectibleId: choice.collectibleId
+        }
+    })
+  }
+
   if (!choice.nextNodeId) {
     throw new Error("Choice does not lead anywhere");
   }

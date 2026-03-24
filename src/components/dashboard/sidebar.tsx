@@ -7,6 +7,7 @@ import { signOut, useSession } from "next-auth/react";
 import {
   LayoutDashboard,
   Map,
+  BookMarked,
   User,
   LogOut,
   ChevronLeft,
@@ -31,6 +32,11 @@ const menuItems: MenuItem[] = [
     label: "Cerita Rakyat",
     icon: Map,
     href: "/explore",
+  },
+  {
+    label: "Koleksi",
+    icon: BookMarked,
+    href: "/dashboard/collection",
   },
 ];
 

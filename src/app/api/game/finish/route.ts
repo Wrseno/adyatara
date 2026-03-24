@@ -1,6 +1,7 @@
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { NextResponse } from "next/server";
+import { storyCollectibleMap } from "@/stories/collectible-map";
 
 export async function POST(req: Request) {
   try {
@@ -44,7 +45,35 @@ export async function POST(req: Request) {
         },
       });
 
-      return NextResponse.json({ success: true, score: gameScore, ending: gameEnding });
+      // Award collectibles based on story + ending (only new ones)
+      const collectibleIds = storyCollectibleMap[storySlug]?.[gameEnding] || [];
+      let newCollectibles = 0;
+      if (collectibleIds.length > 0) {
+        // Check which ones user already has
+        const existing = await db.userCollectible.findMany({
+          where: {
+            userId: user.id,
+            collectibleId: { in: collectibleIds },
+          },
+          select: { collectibleId: true },
+        });
+        const existingIds = new Set(existing.map((e) => e.collectibleId));
+        const toCreate = collectibleIds
+          .filter((id) => !existingIds.has(id))
+          .map((id) => ({ userId: user.id, collectibleId: id }));
+
+        if (toCreate.length > 0) {
+          await db.userCollectible.createMany({ data: toCreate });
+          newCollectibles = toCreate.length;
+        }
+      }
+
+      return NextResponse.json({
+        success: true,
+        score: gameScore,
+        ending: gameEnding,
+        collectiblesUnlocked: newCollectibles,
+      });
     }
 
     // Old flow: sessionId-based finish (backward compatibility)

@@ -1,7 +1,13 @@
 "use client";
 
 import { useEffect, useState, useCallback, useRef } from "react";
-import { GameProviders, Player, useGame, Storable, LiveGame } from "narraleaf-react";
+import {
+  GameProviders,
+  Player,
+  useGame,
+  Storable,
+  LiveGame,
+} from "narraleaf-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Loader2, Pause } from "lucide-react";
 import { toast } from "sonner";
@@ -69,8 +75,10 @@ function GamePlayer({
       } catch {
         // storable read failed, use defaults
       }
+
+      let newCollectibles = 0;
       try {
-        await fetch("/api/game/finish", {
+        const res = await fetch("/api/game/finish", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -80,9 +88,17 @@ function GamePlayer({
             ending,
           }),
         });
+        const data = await res.json();
+        newCollectibles = data.collectiblesUnlocked || 0;
       } catch {
         // Score save failed silently
       }
+
+      // Toast: new collectibles
+      if (newCollectibles > 0) {
+        toast.success(`${newCollectibles} item koleksi baru ditemukan!`);
+      }
+
       router.push(
         `/game/result?story=${storySlug}&ending=${ending}&score=${score}`,
       );
@@ -103,7 +119,9 @@ function GamePlayer({
               </p>
             </div>
 
-            <h2 className="text-2xl font-serif text-white">{storyMeta.title}</h2>
+            <h2 className="text-2xl font-serif text-white">
+              {storyMeta.title}
+            </h2>
             <p className="text-sm mt-1 text-white">
               Tekan "spasi" untuk memulai/melanjutkan cerita
             </p>
@@ -143,7 +161,7 @@ function GamePlayer({
 
           <div className="border-t border-gray-800/60 my-2" />
 
-          <DialogFooter className="gap-3 -mx-0 -mb-0 border-0 bg-transparent p-0 sm:justify-end">
+          <DialogFooter className="gap-3 mx-0 mb-0 border-0 bg-transparent p-0 sm:justify-end">
             <Button
               variant="outline"
               onClick={() => setIsPaused(false)}

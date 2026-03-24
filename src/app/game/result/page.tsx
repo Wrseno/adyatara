@@ -42,7 +42,7 @@ function ResultPageContent() {
           filter: "grayscale(100%)",
         }}
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#0A0705] via-[#0A0705]/80 to-transparent z-0" />
+      <div className="absolute inset-0 bg-linear-to-t from-[#0A0705] via-[#0A0705]/80 to-transparent z-0" />
 
       {/* Main Content */}
       <div className="w-full max-w-4xl z-10 flex flex-col items-center">
@@ -54,11 +54,11 @@ function ResultPageContent() {
           className="text-center mb-16"
         >
           <div className="flex items-center justify-center gap-4 mb-4">
-            <div className="h-[1px] w-12 bg-[#D96B4A]" />
+            <div className="h-px w-12 bg-[#D96B4A]" />
             <h2 className="text-[#D96B4A] tracking-[0.3em] text-xs font-semibold uppercase">
               Permainan Selesai
             </h2>
-            <div className="h-[1px] w-12 bg-[#D96B4A]" />
+            <div className="h-px w-12 bg-[#D96B4A]" />
           </div>
 
           <h1 className="text-4xl md:text-6xl font-serif text-white mb-6">
@@ -67,12 +67,6 @@ function ResultPageContent() {
           <p className="text-gray-400 font-light max-w-xl mx-auto text-lg">
             Anda telah menyelesaikan kisah {storyTitle}. Keputusan yang Anda
             ambil telah mengubah takdir mereka selamanya.
-          </p>
-          <p
-            className="mt-4 text-2xl font-serif font-semibold"
-            style={{ color: endingInfo.color }}
-          >
-            {endingInfo.label}
           </p>
         </motion.div>
 
@@ -138,9 +132,7 @@ function ResultPageContent() {
 
 export default function GameResultPage() {
   return (
-    <Suspense
-      fallback={<div className="min-h-screen bg-[#0A0705]" />}
-    >
+    <Suspense fallback={<div className="min-h-screen bg-[#0A0705]" />}>
       <ResultPageContent />
     </Suspense>
   );
