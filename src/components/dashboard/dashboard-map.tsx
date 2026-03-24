@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { MapContainer, GeoJSON, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import type { FeatureCollection } from "geojson";
@@ -8,6 +8,18 @@ import { provinceStoryMap, storyInfoMap } from "@/stories";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { X } from "lucide-react";
+import { prefetchStoryModule, preloadStoryAssets } from "@/lib/preload-assets";
+
+// Get initials from province name (e.g., "Sulawesi Utara" -> "SU")
+function getInitials(name: string): string {
+  return name
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase())
+    .join("");
+}
+
+// Track which stories have been prefetched
+const prefetchedStories = new Set<string>();
 
 export default function DashboardMap() {
   const [geoData, setGeoData] = useState<FeatureCollection | null>(null);
@@ -18,6 +30,19 @@ export default function DashboardMap() {
       .then((res) => res.json())
       .then((data) => setGeoData(data))
       .catch((err) => console.error("Error loading GeoJSON", err));
+  }, []);
+
+  // Prefetch story when province with story is hovered
+  const handlePrefetch = useCallback((storySlug: string) => {
+    if (!prefetchedStories.has(storySlug)) {
+      prefetchedStories.add(storySlug);
+      // Prefetch the JS module
+      prefetchStoryModule(storySlug);
+      // Preload critical assets in background
+      preloadStoryAssets(storySlug).catch(() => {
+        // Silently fail, will retry on game start
+      });
+    }
   }, []);
 
   if (!geoData) {
@@ -69,16 +94,24 @@ export default function DashboardMap() {
                 <div className="flex flex-col">
                   {selectedProvince.storySlug && selectedStoryInfo ? (
                     <>
-                      <div className="mb-4 inline-flex p-3 border border-gray-800/80 rounded-sm relative self-start">
-                         <div className="absolute top-0 left-0 w-1 h-1 border-l border-t border-gray-600"></div>
-                         <div className="absolute bottom-0 right-0 w-1 h-1 border-r border-b border-gray-600"></div>
-                         <Image 
-                           src={selectedStoryInfo.coverImage} 
-                           alt="" 
-                           width={20} 
-                           height={20} 
-                           className="object-cover rounded-sm w-5 h-5 opacity-90"
-                         />
+                      <div className="mb-4 inline-flex border border-gray-800/80 rounded-sm relative self-start overflow-hidden">
+                         <div className="absolute top-0 left-0 w-1.5 h-1.5 border-l border-t border-gray-600 z-10"></div>
+                         <div className="absolute bottom-0 right-0 w-1.5 h-1.5 border-r border-b border-gray-600 z-10"></div>
+                         {selectedStoryInfo.coverImage ? (
+                           <Image 
+                             src={selectedStoryInfo.coverImage} 
+                             alt="" 
+                             width={56} 
+                             height={56} 
+                             className="object-cover w-14 h-14"
+                           />
+                         ) : (
+                           <div className="w-14 h-14 bg-gradient-to-br from-[#2a1a14] to-[#1a0f0a] flex items-center justify-center">
+                             <span className="text-[#D96B4A]/60 text-base font-serif">
+                               {getInitials(selectedProvince.name)}
+                             </span>
+                           </div>
+                         )}
                       </div>
                       
                       <h3 className="text-lg font-serif text-white mb-3 tracking-wide">
@@ -100,10 +133,14 @@ export default function DashboardMap() {
                     </>
                   ) : (
                     <>
-                       <div className="mb-4 inline-flex p-3 border border-gray-800/80 rounded-sm relative self-start">
-                         <div className="absolute top-0 left-0 w-1 h-1 border-l border-t border-gray-600"></div>
-                         <div className="absolute bottom-0 right-0 w-1 h-1 border-r border-b border-gray-600"></div>
-                         <div className="w-5 h-5 bg-gray-800 rounded-sm opacity-50" />
+                       <div className="mb-4 inline-flex border border-gray-800/80 rounded-sm relative self-start overflow-hidden">
+                         <div className="absolute top-0 left-0 w-1.5 h-1.5 border-l border-t border-gray-600 z-10"></div>
+                         <div className="absolute bottom-0 right-0 w-1.5 h-1.5 border-r border-b border-gray-600 z-10"></div>
+                         <div className="w-14 h-14 bg-gradient-to-br from-[#2a1a14] to-[#1a0f0a] flex items-center justify-center">
+                           <span className="text-gray-600 text-base font-serif">
+                             {getInitials(selectedProvince.name)}
+                           </span>
+                         </div>
                       </div>
                       
                       <h3 className="text-lg font-serif text-white mb-3 tracking-wide">
@@ -136,6 +173,7 @@ export default function DashboardMap() {
           onEachFeature={(feature, layer) => {
             const stateName = feature?.properties?.state;
             const hasStory = !!provinceStoryMap[stateName];
+            const storySlug = provinceStoryMap[stateName];
             layer.on({
                 click: (e) => {
                    handleProvinceSelect(stateName, [e.latlng.lat, e.latlng.lng]);
@@ -148,6 +186,10 @@ export default function DashboardMap() {
                         fillColor: hasStory ? "#4a231b" : "#2a1410",
                     });
                     layer.bringToFront();
+                    // Prefetch story assets when hovering over province with story
+                    if (storySlug) {
+                      handlePrefetch(storySlug);
+                    }
                 },
                 mouseout: (e) => {
                     const layer = e.target;

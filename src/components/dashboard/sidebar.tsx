@@ -36,7 +36,7 @@ const menuItems: MenuItem[] = [
   {
     label: "Koleksi",
     icon: BookMarked,
-    href: "/dashboard/collection",
+    href: "/collection",
   },
 ];
 

@@ -14,6 +14,10 @@ import { toast } from "sonner";
 import type { Story } from "narraleaf-react";
 import { loadStory, type StoryMeta } from "@/stories";
 import { getGameNamespace } from "@/lib/game-utils";
+import {
+  preloadStoryAssets,
+  type PreloadProgress,
+} from "@/lib/preload-assets";
 import { AdyataraDialog } from "./adyatara-dialog";
 import { AdyataraMenu } from "./adyatara-menu";
 import { Button } from "@/components/ui/button";
@@ -50,6 +54,16 @@ function GamePlayer({
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (liveGameRef.current) {
+        liveGameRef.current.game.dispose();
+        liveGameRef.current = null;
+      }
+    };
   }, []);
 
   useEffect(() => {
@@ -217,6 +231,14 @@ export function AdyataraPlayer() {
     meta: StoryMeta;
   } | null>(null);
   const [loading, setLoading] = useState(true);
+  const [loadingPhase, setLoadingPhase] = useState<"module" | "assets">(
+    "module"
+  );
+  const [preloadProgress, setPreloadProgress] = useState<PreloadProgress>({
+    loaded: 0,
+    total: 0,
+    percent: 0,
+  });
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -228,12 +250,21 @@ export function AdyataraPlayer() {
       }
 
       try {
+        // Phase 1: Load story module
+        setLoadingPhase("module");
         const data = await loadStory(storySlug);
         if (!data) {
           setError("Cerita tidak ditemukan");
           setLoading(false);
           return;
         }
+
+        // Phase 2: Preload critical assets
+        setLoadingPhase("assets");
+        await preloadStoryAssets(storySlug, (progress) => {
+          setPreloadProgress(progress);
+        });
+
         setStoryData({ story: data.default, meta: data.storyMeta });
       } catch {
         setError("Gagal memuat cerita");
@@ -250,8 +281,18 @@ export function AdyataraPlayer() {
         <div className="flex flex-col items-center gap-4">
           <Loader2 className="w-10 h-10 animate-spin text-[#D96B4A]" />
           <p className="text-[10px] tracking-[0.4em] text-gray-500 uppercase">
-            Memuat cerita...
+            {loadingPhase === "module"
+              ? "Memuat cerita..."
+              : `Memuat aset... ${preloadProgress.percent}%`}
           </p>
+          {loadingPhase === "assets" && preloadProgress.total > 0 && (
+            <div className="w-48 h-1 bg-gray-800 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-[#D96B4A] transition-all duration-200"
+                style={{ width: `${preloadProgress.percent}%` }}
+              />
+            </div>
+          )}
         </div>
       </div>
     );
@@ -275,7 +316,7 @@ export function AdyataraPlayer() {
 
   return (
     <div style={{ width: "100vw", height: "100vh", background: "#0A0705" }}>
-      <GameProviders>
+      <GameProviders key={storySlug}>
         <GamePlayer
           story={storyData.story}
           storySlug={storySlug!}
