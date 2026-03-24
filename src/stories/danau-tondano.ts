@@ -20,41 +20,41 @@ const IMG_CONFIG = { zoom: 0.65, position: { yalign: 0.45, xalign: 0.5 } };
 
 // --- ASET GAMBAR ---
 const imgMar1 = new Image({
-  src: "/images/stories/danau-tondano/marimbow/normal.webp",
+  src: "/images/stories/danau-tondano/chars/marimbow/normal.webp",
   ...IMG_CONFIG,
 });
 const imgMar2 = new Image({
-  src: "/images/stories/danau-tondano/marimbow/disguise.webp",
+  src: "/images/stories/danau-tondano/chars/marimbow/disguise.webp",
   ...IMG_CONFIG,
 });
 const imgMar3 = new Image({
-  src: "/images/stories/danau-tondano/marimbow/fight.webp",
+  src: "/images/stories/danau-tondano/chars/marimbow/fight.webp",
   ...IMG_CONFIG,
 });
 const imgMar4 = new Image({
-  src: "/images/stories/danau-tondano/marimbow/revealed.webp",
+  src: "/images/stories/danau-tondano/chars/marimbow/revealed.webp",
   ...IMG_CONFIG,
 });
 const imgMar5 = new Image({
-  src: "/images/stories/danau-tondano/marimbow/sad.webp",
+  src: "/images/stories/danau-tondano/chars/marimbow/sad.webp",
   ...IMG_CONFIG,
 });
 
 const imgMah1 = new Image({
-  src: "/images/stories/danau-tondano/maharimbow/guard.webp",
+  src: "/images/stories/danau-tondano/chars/maharimbow/guard.webp",
   ...IMG_CONFIG,
 });
 const imgMah2 = new Image({
-  src: "/images/stories/danau-tondano/maharimbow/surprised.webp",
+  src: "/images/stories/danau-tondano/chars/maharimbow/surprised.webp",
   ...IMG_CONFIG,
 });
 const imgMah3 = new Image({
-  src: "/images/stories/danau-tondano/maharimbow/love.webp",
+  src: "/images/stories/danau-tondano/chars/maharimbow/love.webp",
   ...IMG_CONFIG,
 });
 
 const imgTonaas = new Image({
-  src: "/images/stories/danau-tondano/tonaas-utara/old.webp",
+  src: "/images/stories/danau-tondano/chars/tonaas-utara/old.webp",
   ...IMG_CONFIG,
 });
 
