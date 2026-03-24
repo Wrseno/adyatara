@@ -297,6 +297,181 @@ async function main() {
   console.log("Seed complete.");
   console.log("Story 1 (Prambanan):", story1.id, "-", collectibles1.length, "collectibles");
   console.log("Story 2 (Timun Mas):", story2.id, "-", collectibles2.length, "collectibles");
+
+  // =============================
+  // STORY 3: Legenda Danau Tondano
+  // =============================
+  const story3 = await prisma.story.create({
+    data: {
+      title: "Legenda Danau Tondano",
+      region: "Sulawesi Utara",
+      description: "Kisah cinta terlarang Marimbow dan Maharimbow yang berujung pada terbentuknya Danau Tondano.",
+      difficulty: "Menengah",
+      levelReq: 1,
+    }
+  });
+
+  // --- Knowledge ---
+  const kGeo1 = await prisma.knowledge.create({
+    data: {
+      title: "Danau Tondano",
+      content: "Danau Tondano adalah danau terluas di Sulawesi Utara, terletak di ketinggian 600 meter di atas permukaan laut dan dikelilingi pegunungan.",
+      category: "Geografi",
+      storyId: story3.id
+    }
+  });
+
+  const kVolcano = await prisma.knowledge.create({
+    data: {
+      title: "Gunung Kaweng",
+      content: "Gunung berapi yang disebutkan dalam legenda Danau Tondano. Letusan dan banjir yang terjadi dipercaya sebagai hukuman atas sumpah yang dilanggar.",
+      category: "Geologi",
+      storyId: story3.id
+    }
+  });
+
+  const kIntegrity = await prisma.knowledge.create({
+    data: {
+      title: "Integritas Sumpah",
+      content: "Dalam budaya Minahasa, sumpah adalah janji suci yang harus ditepati. Melanggar sumpah dipercaya membawa malapetaka besar.",
+      category: "Budaya",
+      storyId: story3.id
+    }
+  });
+
+  // --- Nodes ---
+  const nodeIntro3 = await prisma.node.create({
+    data: {
+      storyId: story3.id,
+      content: "Di Sulawesi Utara, wilayah Minahasa dipimpin oleh para Tonaas. Marimbow, putri Tonaas Utara, bersumpah tidak akan menikah sebelum siap memimpin.",
+      type: "narration",
+      isAutoPlay: false
+    }
+  });
+
+  const nodeQuiz3 = await prisma.node.create({
+    data: {
+      storyId: story3.id,
+      content: "Kuis Geografi: Danau Tondano merupakan danau terluas di provinsi mana?",
+      type: "choice"
+    }
+  });
+
+  await prisma.choice.create({
+    data: { nodeId: nodeIntro3.id, text: "Lanjutkan", nextNodeId: nodeQuiz3.id }
+  });
+
+  const nodeMeet = await prisma.node.create({
+    data: {
+      storyId: story3.id,
+      content: "Marimbow bertemu Maharimbow di perbatasan. Mereka jatuh cinta, tapi ayah Marimbow melarang pernikahan.",
+      type: "choice"
+    }
+  });
+
+  const nodeDecision = await prisma.node.create({
+    data: {
+      storyId: story3.id,
+      content: "Maharimbow mengajak Marimbow menikah diam-diam. Apa keputusan Marimbow?",
+      type: "choice"
+    }
+  });
+
+  const nodeBad3 = await prisma.node.create({
+    data: {
+      storyId: story3.id,
+      content: "Pernikahan rahasia membuat alam murka. Gunung Kaweng meletus dan banjir menenggelamkan desa menjadi Danau Tondano. Tamat (Bad Ending).",
+      type: "ending"
+    }
+  });
+
+  const nodeBest3 = await prisma.node.create({
+    data: {
+      storyId: story3.id,
+      content: "Marimbow memilih menepati sumpahnya. Ia menjadi Tonaas yang bijaksana dan rakyat sejahtera. Tamat (Best Ending).",
+      type: "ending"
+    }
+  });
+
+  // --- Choices ---
+  await prisma.choice.create({
+    data: {
+      nodeId: nodeQuiz3.id, text: "Sulawesi Utara",
+      nextNodeId: nodeMeet.id, scoreDelta: 20, knowledgeId: kGeo1.id
+    }
+  });
+  await prisma.choice.create({
+    data: {
+      nodeId: nodeQuiz3.id, text: "Sulawesi Selatan",
+      nextNodeId: nodeMeet.id, scoreDelta: 0
+    }
+  });
+  await prisma.choice.create({
+    data: {
+      nodeId: nodeMeet.id, text: "Lanjutkan",
+      nextNodeId: nodeDecision.id, scoreDelta: 0
+    }
+  });
+  await prisma.choice.create({
+    data: {
+      nodeId: nodeDecision.id, text: "Ikuti Maharimbow & Menikah Diam-diam",
+      nextNodeId: nodeBad3.id, scoreDelta: 10, knowledgeId: kVolcano.id
+    }
+  });
+  await prisma.choice.create({
+    data: {
+      nodeId: nodeDecision.id, text: "Pegang Teguh Sumpah demi Rakyat",
+      nextNodeId: nodeBest3.id, scoreDelta: 30, knowledgeId: kIntegrity.id
+    }
+  });
+
+  // --- Collectibles: Sulawesi Utara ---
+  const collectibles3 = await Promise.all([
+    prisma.collectible.create({
+      data: {
+        name: "Kolintang",
+        description: "Alat musik tradisional Minahasa yang terbuat dari kayu dan dimainkan dengan cara dipukul. Digunakan dalam upacara adat dan pertunjukan budaya.",
+        image: "/images/collectibles/kolintang.webp", rarity: "rare", category: "Seni", storyId: story3.id
+      }
+    }),
+    prisma.collectible.create({
+      data: {
+        name: "Pakaian Adat Minahasa",
+        description: "Pakaian tradisional suku Minahasa dengan motif khas berwarna cerah. Dikenakan dalam upacara adat dan perayaan budaya.",
+        image: "/images/collectibles/pakaian-minahasa.webp", rarity: "common", category: "Budaya", storyId: story3.id
+      }
+    }),
+    prisma.collectible.create({
+      data: {
+        name: "Tinutuan (Bubur Manado)",
+        description: "Makanan khas Manado berupa bubur yang terdiri dari berbagai sayuran, jagung, dan labu. Disajikan dengan ikan asin dan sambal roa.",
+        image: "/images/collectibles/tinutuan.webp", rarity: "common", category: "Kuliner", storyId: story3.id
+      }
+    }),
+    prisma.collectible.create({
+      data: {
+        name: "Danau Tondano",
+        description: "Danau vulkanik terbesar di Sulawesi Utara yang terbentuk dari kaldera gunung berapi. Menjadi sumber mata pencaharian nelayan dan objek wisata.",
+        image: "/images/collectibles/danau-tondano.webp", rarity: "legendary", category: "Alam", storyId: story3.id
+      }
+    }),
+    prisma.collectible.create({
+      data: {
+        name: "Cakalang Fufu",
+        description: "Ikan cakalang yang diasap dengan cara tradisional khas Sulawesi Utara. Digunakan sebagai bahan masakan seperti sambal roa dan rica-rica.",
+        image: "/images/collectibles/cakalang-fufu.webp", rarity: "rare", category: "Kuliner", storyId: story3.id
+      }
+    }),
+    prisma.collectible.create({
+      data: {
+        name: "Watu Pinabetengan",
+        description: "Batu bersejarah suku Minahasa yang dipercaya sebagai tempat pembagian wilayah sub-etnis. Menjadi situs sejarah dan spiritual penting.",
+        image: "/images/collectibles/watu-pinabetengan.webp", rarity: "legendary", category: "Sejarah", storyId: story3.id
+      }
+    }),
+  ]);
+
+  console.log("Story 3 (Danau Tondano):", story3.id, "-", collectibles3.length, "collectibles");
 }
 
 main()

@@ -128,47 +128,47 @@ const bgmPanic = Sound.bgm({
 
 // --- SCENES ---
 const sceneIntro = new Scene("intro", {
-  background: "/images/tondano/bg/panorama.webp",
+  background: "/images/stories/danau-tondano/bg/panorama.webp",
   backgroundMusic: bgmIntro,
   backgroundMusicFade: 1000,
 });
 const sceneNorth = new Scene("north", {
-  background: "/images/tondano/bg/village_north.webp",
+  background: "/images/stories/danau-tondano/bg/village_north.webp",
   backgroundMusic: bgmIntro,
   backgroundMusicFade: 1000,
 });
 const sceneBorder = new Scene("border", {
-  background: "/images/tondano/bg/border_forest.webp",
+  background: "/images/stories/danau-tondano/bg/border_forest.webp",
   backgroundMusic: bgmForest,
   backgroundMusicFade: 1000,
 });
 const sceneBattle = new Scene("battle", {
-  background: "/images/tondano/bg/battle_ground.webp",
+  background: "/images/stories/danau-tondano/bg/battle_ground.webp",
   backgroundMusic: bgmFight,
   backgroundMusicFade: 1000,
 });
 const sceneHome = new Scene("home", {
-  background: "/images/tondano/bg/tonaas_house.webp",
+  background: "/images/stories/danau-tondano/bg/tonaas_house.webp",
   backgroundMusic: bgmRomance,
   backgroundMusicFade: 1000,
 });
 const sceneEruption = new Scene("eruption", {
-  background: "/images/tondano/bg/volcano.webp",
+  background: "/images/stories/danau-tondano/bg/volcano.webp",
   backgroundMusic: bgmPanic,
   backgroundMusicFade: 1000,
 });
 const sceneFlood = new Scene("flood", {
-  background: "/images/tondano/bg/flood_strike.webp",
+  background: "/images/stories/danau-tondano/bg/flood_strike.webp",
   backgroundMusic: bgmPanic,
   backgroundMusicFade: 1000,
 });
 const sceneFinalBad = new Scene("final_bad", {
-  background: "/images/tondano/bg/lake_tondano.webp",
+  background: "/images/stories/danau-tondano/bg/lake_tondano.webp",
   backgroundMusic: bgmPanic,
   backgroundMusicFade: 1000,
 });
 const sceneFinalGood = new Scene("final_good", {
-  background: "/images/tondano/bg/prosperity_village.webp",
+  background: "/images/stories/danau-tondano/bg/prosperity_village.webp",
   backgroundMusic: bgmRomance,
   backgroundMusicFade: 1000,
 });
@@ -355,4 +355,13 @@ sceneFinalGood.action([
 
 const story = new Story("Legenda Danau Tondano");
 story.entry(sceneIntro);
+
 export default story;
+export const storyMeta = {
+  title: "Legenda Danau Tondano",
+  region: "Sulawesi Utara",
+  description:
+    "Kisah cinta terlarang Marimbow dan Maharimbow yang berujung pada terbentuknya Danau Tondano.",
+  difficulty: "Menengah",
+  coverImage: "/images/sulawesi-utara.webp",
+};
