@@ -15,122 +15,168 @@ const tonaasU = new Character("Tonaas Utara", { color: "#795548" });
 const marimbow = new Character("Marimbow", { color: "#E91E63" });
 const maharimbow = new Character("Maharimbow", { color: "#4A90E2" });
 
-// --- GAMBAR EKSPRESI KARAKTER ---
-const IMG = { zoom: 0.65, position: { yalign: 0.45, xalign: 0.5 } };
+const IMG_DURATION = 1000;
+const IMG_CONFIG = { zoom: 0.65, position: { yalign: 0.45, xalign: 0.5 } };
 
-// Marimbow
+// --- ASET GAMBAR ---
 const imgMar1 = new Image({
-  src: "/images/tondano/marimbow/normal.webp",
-  ...IMG,
-}); // Cantik jelita
+  src: "/images/stories/danau-tondano/marimbow/normal.webp",
+  ...IMG_CONFIG,
+});
 const imgMar2 = new Image({
-  src: "/images/tondano/marimbow/disguise.webp",
-  ...IMG,
-}); // Penyamaran pria
+  src: "/images/stories/danau-tondano/marimbow/disguise.webp",
+  ...IMG_CONFIG,
+});
 const imgMar3 = new Image({
-  src: "/images/tondano/marimbow/fight.webp",
-  ...IMG,
-}); // Siaga bertarung
+  src: "/images/stories/danau-tondano/marimbow/fight.webp",
+  ...IMG_CONFIG,
+});
 const imgMar4 = new Image({
-  src: "/images/tondano/marimbow/revealed.webp",
-  ...IMG,
-}); // Rambut terurai
-const imgMar5 = new Image({ src: "/images/tondano/marimbow/sad.webp", ...IMG }); // Bimbang/Sedih
+  src: "/images/stories/danau-tondano/marimbow/revealed.webp",
+  ...IMG_CONFIG,
+});
+const imgMar5 = new Image({
+  src: "/images/stories/danau-tondano/marimbow/sad.webp",
+  ...IMG_CONFIG,
+});
 
-// Maharimbow
 const imgMah1 = new Image({
-  src: "/images/tondano/maharimbow/guard.webp",
-  ...IMG,
-}); // Waspada
+  src: "/images/stories/danau-tondano/maharimbow/guard.webp",
+  ...IMG_CONFIG,
+});
 const imgMah2 = new Image({
-  src: "/images/tondano/maharimbow/surprised.webp",
-  ...IMG,
-}); // Terkejut
+  src: "/images/stories/danau-tondano/maharimbow/surprised.webp",
+  ...IMG_CONFIG,
+});
 const imgMah3 = new Image({
-  src: "/images/tondano/maharimbow/love.webp",
-  ...IMG,
-}); // Jatuh hati
+  src: "/images/stories/danau-tondano/maharimbow/love.webp",
+  ...IMG_CONFIG,
+});
 
-// Tonaas
 const imgTonaas = new Image({
-  src: "/images/tondano/tonaas-utara/old.webp",
-  ...IMG,
+  src: "/images/stories/danau-tondano/tonaas-utara/old.webp",
+  ...IMG_CONFIG,
 });
 
-// --- BACKGROUND MUSIC (BGM) ---
-const bgmIntro = new Sound({
-  src: "/music/tondano/minahasa_intro.mp3",
-  loop: true,
-  volume: 0.2,
+// --- AUDIO (VA) ---
+const vMarSumpah = new Sound({
+  src: "/audio/danau-tondano/marimbow/sumpah.mp3",
 });
-const bgmForest = new Sound({
-  src: "/music/tondano/forest_mystery.mp3",
-  loop: true,
-  volume: 0.2,
+const vMarResiko = new Sound({
+  src: "/audio/danau-tondano/marimbow/resiko.mp3",
 });
-const bgmFight = new Sound({
-  src: "/music/tondano/action_drums.mp3",
-  loop: true,
-  volume: 0.2,
+const vMarTersesat = new Sound({
+  src: "/audio/danau-tondano/marimbow/tersesat.mp3",
 });
-const bgmRomance = new Sound({
-  src: "/music/tondano/kolintang_soft.mp3",
-  loop: true,
-  volume: 0.2,
+const vMarNama = new Sound({
+  src: "/audio/danau-tondano/marimbow/perkenalan.mp3",
 });
-const bgmPanic = new Sound({
-  src: "/music/tondano/disaster_eruption.mp3",
-  loop: true,
-  volume: 0.2,
+const vMarBimbang = new Sound({
+  src: "/audio/danau-tondano/marimbow/bimbang.mp3",
+});
+const vMarTolak = new Sound({
+  src: "/audio/danau-tondano/marimbow/tolak_nikah.mp3",
 });
 
-// --- VOICE ACTING (VA) ---
-const vMarSumpah = new Sound({ src: "/audio/tondano/mar/sumpah.mp3" });
-const vMahSiapa = new Sound({ src: "/audio/tondano/mah/siapa_kau.mp3" });
+const vMahSiapa = new Sound({
+  src: "/audio/danau-tondano/maharimbow/siapa_kau.mp3",
+});
+const vMahTawan = new Sound({
+  src: "/audio/danau-tondano/maharimbow/tawan.mp3",
+});
+const vMahCantik = new Sound({
+  src: "/audio/danau-tondano/maharimbow/cantik.mp3",
+});
+const vMahJanji = new Sound({
+  src: "/audio/danau-tondano/maharimbow/janji_ketemu.mp3",
+});
+const vMahAjak = new Sound({
+  src: "/audio/danau-tondano/maharimbow/ajak_nikah.mp3",
+});
+const vMahSetia = new Sound({
+  src: "/audio/danau-tondano/maharimbow/setia_tunggu.mp3",
+});
+
 const vTonaasPeringatan = new Sound({
-  src: "/audio/tondano/tonaas/peringatan.mp3",
+  src: "/audio/danau-tondano/tonaas-utara/peringatan.mp3",
+});
+const vTonaasLarang = new Sound({
+  src: "/audio/danau-tondano/tonaas-utara/larangan.mp3",
 });
 
-// --- PENGATURAN BACKGROUND SCENE ---
+// --- BGM ---
+const bgmIntro = Sound.bgm({
+  src: "/music/danau-tondano/minahasa_intro.mp3",
+  volume: 0.2,
+});
+const bgmForest = Sound.bgm({
+  src: "/music/danau-tondano/forest_mystery.mp3",
+  volume: 0.2,
+});
+const bgmFight = Sound.bgm({
+  src: "/music/danau-tondano/action_drums.mp3",
+  volume: 0.2,
+});
+const bgmRomance = Sound.bgm({
+  src: "/music/danau-tondano/kolintang_soft.mp3",
+  volume: 0.2,
+});
+const bgmPanic = Sound.bgm({
+  src: "/music/danau-tondano/disaster_eruption.mp3",
+  volume: 0.2,
+});
+
+// --- SCENES ---
 const sceneIntro = new Scene("intro", {
   background: "/images/tondano/bg/panorama.webp",
+  backgroundMusic: bgmIntro,
+  backgroundMusicFade: 1000,
 });
 const sceneNorth = new Scene("north", {
   background: "/images/tondano/bg/village_north.webp",
+  backgroundMusic: bgmIntro,
+  backgroundMusicFade: 1000,
 });
 const sceneBorder = new Scene("border", {
   background: "/images/tondano/bg/border_forest.webp",
+  backgroundMusic: bgmForest,
+  backgroundMusicFade: 1000,
 });
 const sceneBattle = new Scene("battle", {
   background: "/images/tondano/bg/battle_ground.webp",
+  backgroundMusic: bgmFight,
+  backgroundMusicFade: 1000,
 });
 const sceneHome = new Scene("home", {
   background: "/images/tondano/bg/tonaas_house.webp",
+  backgroundMusic: bgmRomance,
+  backgroundMusicFade: 1000,
 });
-
-// Jalur Bad Ending
 const sceneEruption = new Scene("eruption", {
   background: "/images/tondano/bg/volcano.webp",
+  backgroundMusic: bgmPanic,
+  backgroundMusicFade: 1000,
 });
 const sceneFlood = new Scene("flood", {
   background: "/images/tondano/bg/flood_strike.webp",
+  backgroundMusic: bgmPanic,
+  backgroundMusicFade: 1000,
 });
 const sceneFinalBad = new Scene("final_bad", {
   background: "/images/tondano/bg/lake_tondano.webp",
+  backgroundMusic: bgmPanic,
+  backgroundMusicFade: 1000,
 });
-
-// Jalur Good Ending
 const sceneFinalGood = new Scene("final_good", {
   background: "/images/tondano/bg/prosperity_village.webp",
+  backgroundMusic: bgmRomance,
+  backgroundMusicFade: 1000,
 });
 
 // --- STORY FLOW ---
 
-// 1. PENDAHULUAN & EDUKASI GEOGRAFI
 sceneIntro.action([
-  bgmIntro.play(),
-  narrator.say`Provinsi Sulawesi Utara adalah daerah paling utara di Pulau Sulawesi. Di provinsi ini terbentang rangkaian pegunungan yang mengelilingi sebuah danau bernama Danau Tondano.`,
-
+  narrator.say`Provinsi Sulawesi Utara adalah daerah paling utara di Pulau Sulawesi. Di provinsi ini terbentang rangkaian pegunungan yang mengelilingi Danau Tondano.`,
   Menu.prompt(
     "Kuis Geografi: Danau Tondano merupakan danau terluas di provinsi mana?",
   )
@@ -143,87 +189,108 @@ sceneIntro.action([
       sceneIntro.jumpTo(sceneNorth),
     ])
     .choose("Sulawesi Selatan", [
-      narrator.say`Kurang tepat. Danau Tondano terletak di Kabupaten Minahasa, Sulawesi Utara.`,
+      narrator.say`Kurang tepat. Danau Tondano terletak di Sulawesi Utara.`,
       sceneIntro.jumpTo(sceneNorth),
     ]),
 ]);
 
-// 2. SUMPAH & PENYAMARAN
 sceneNorth.action([
-  narrator.say`Dahulu, wilayah Minahasa dipimpin oleh para Tonaas. Marimbow, putri Tonaas Utara, merasa lelah karena terus-menerus didatangi tamu laki-laki yang ingin melamarnya.`,
-  imgMar1.show({ ease: "easeInOut", duration: 1000 }),
+  narrator.say`Dahulu, wilayah Minahasa dipimpin oleh para Tonaas. Marimbow, putri Tonaas Utara, merasa lelah karena terus didatangi pelamar.`,
+  imgMar1.show({ ease: "easeInOut", duration: IMG_DURATION }),
   vMarSumpah.play(),
   marimbow.say`Aku bersumpah demi rakyat di utara, aku takkan menikah terlebih dahulu sebelum siap menggantikan posisi ayah sebagai Tonaas!`,
   vMarSumpah.stop(),
+  imgMar1.hide({ ease: "easeInOut", duration: IMG_DURATION }),
 
-  imgTonaas.show({ ease: "easeInOut", duration: 1000 }),
+  imgTonaas.show({ ease: "easeInOut", duration: IMG_DURATION }),
   vTonaasPeringatan.play(),
   tonaasU.say`Tapi anakku, bagaimana jika kau lupa dengan sumpahmu ini? Berhati-hatilah.`,
   vTonaasPeringatan.stop(),
-  imgTonaas.hide(),
+  imgTonaas.hide({ ease: "easeInOut", duration: IMG_DURATION }),
 
-  marimbow.say`Aku akan menerima semua resikonya. Mulai hari ini, aku akan mengubah penampilanku agar mereka mengira aku seorang laki-laki.`,
-  imgMar1.hide(),
-  imgMar2.show({ ease: "easeInOut", duration: 1000 }),
-  narrator.say`Sejak saat itu, Marimbow berpakaian layaknya laki-laki. Ia bisa dengan bebas mempelajari ilmu beladiri dan berburu di hutan.`,
+  imgMar1.show({ ease: "easeInOut", duration: IMG_DURATION }),
+  vMarResiko.play(),
+  marimbow.say`Aku akan menerima semua resikonya. Aku akan mengubah penampilanku agar mereka mengira aku seorang laki-laki.`,
+  vMarResiko.stop(),
+  imgMar1.hide({ ease: "easeInOut", duration: IMG_DURATION }),
+
+  imgMar2.show({ ease: "easeInOut", duration: IMG_DURATION }),
+  narrator.say`Dengan penyamaran itu, Marimbow bebas berlatih beladiri dan berburu di hutan.`,
   sceneNorth.jumpTo(sceneBorder),
 ]);
 
-// 3. KONFLIK PERBATASAN & PERTARUNGAN
 sceneBorder.action([
-  bgmIntro.stop(),
-  bgmForest.play(),
-  narrator.say`Suatu hari, Marimbow terlalu sibuk mencari hewan buruan hingga tidak sadar telah memasuki wilayah Selatan.`,
-
-  imgMah1.show({ ease: "easeInOut", duration: 1000 }),
+  narrator.say`Suatu hari, Marimbow tersesat hingga memasuki wilayah Selatan. Ia diincar oleh penjaga perbatasan, Maharimbow.`,
+  imgMah1.show({ ease: "easeInOut", duration: IMG_DURATION }),
   vMahSiapa.play(),
-  maharimbow.say`Siapa kau?! Kenapa berani memasuki wilayah ini? Kamu pasti mata-mata yang dikirim dari Utara!`,
+  maharimbow.say`Siapa kau?! Kenapa berani memasuki wilayah ini? Kamu pasti mata-mata dari Utara!`,
   vMahSiapa.stop(),
+  imgMah1.hide({ ease: "easeInOut", duration: IMG_DURATION }),
 
-  imgMar2.show(),
-  marimbow.say`Tuduhanmu tidak benar! Aku hanya sedang berburu dan tidak tahu kalau sudah tersesat. Biarkan aku kembali!`,
+  imgMar2.show({ ease: "easeInOut", duration: IMG_DURATION }),
+  vMarTersesat.play(),
+  marimbow.say`Tuduhanmu tidak benar! Aku hanya sedang berburu dan tersesat. Biarkan aku kembali!`,
+  vMarTersesat.stop(),
+  imgMar2.hide({ ease: "easeInOut", duration: IMG_DURATION }),
 
-  maharimbow.say`Aku tidak percaya! Kau akan menjadi tawananku untuk menghadap Tonaas di Selatan!`,
-  narrator.say`Marimbow menolak keras. Dalam kelelahannya, ia berusaha melawan dan terjadilah pertarungan sengit!`,
-  bgmForest.stop(),
-  bgmFight.play(),
+  imgMah1.show({ ease: "easeInOut", duration: IMG_DURATION }),
+  vMahTawan.play(),
+  maharimbow.say`Aku tidak percaya! Kau akan menjadi tawananku sekarang!`,
+  vMahTawan.stop(),
+  imgMah1.hide({ ease: "easeInOut", duration: IMG_DURATION }),
+
+  narrator.say`Marimbow menolak keras. Pertarungan sengit pun terjadi!`,
   sceneBorder.jumpTo(sceneBattle),
 ]);
 
-// 4. TERBONGKARNYA RAHASIA
 sceneBattle.action([
-  imgMar3.show(),
-  narrator.say`Marimbow berusaha mengelak dari serangan Maharimbow. Namun, gerakan tersebut justru membuka kedoknya.`,
-  narrator.say`Tutup kepalanya terlepas... dan rambut hitam panjangnya tiba-tiba terurai!`,
+  imgMar3.show({ ease: "easeInOut", duration: IMG_DURATION }),
+  narrator.say`Marimbow berusaha mengelak, namun gerakan Maharimbow terlalu cepat. Tutup kepalanya terlepas...`,
+  imgMar3.hide({ ease: "easeInOut", duration: IMG_DURATION }),
 
-  imgMar3.hide(),
-  imgMar4.show({ ease: "easeInOut", duration: 800 }),
-  bgmFight.stop(),
-  bgmRomance.play(),
+  imgMar4.show({ ease: "easeInOut", duration: IMG_DURATION }),
+  narrator.say`Rambut hitam panjang Marimbow terurai di depan Maharimbow.`,
+  imgMar4.hide({ ease: "easeInOut", duration: IMG_DURATION }),
 
-  imgMah1.hide(),
-  imgMah2.show({ ease: "easeInOut", duration: 800 }),
-  maharimbow.say`Seorang... wanita? Aku tidak menyangka lawanku secantik ini. Maafkan jika aku melukaimu.`,
+  imgMah2.show({ ease: "easeInOut", duration: IMG_DURATION }),
+  vMahCantik.play(),
+  maharimbow.say`Seorang... wanita? Aku tidak menyangka lawanku secantik ini. Maafkan kekasaranku.`,
+  vMahCantik.stop(),
+  imgMah2.hide({ ease: "easeInOut", duration: IMG_DURATION }),
 
-  marimbow.say`Aku Marimbow, putri Tonaas Utara. Sudah kubilang aku hanya tersesat karena hewan buruan.`,
-  maharimbow.say`Bisakah kau berjanji padaku... datanglah kembali ke sini beberapa hari lagi?`,
+  imgMar4.show({ ease: "easeInOut", duration: IMG_DURATION }),
+  vMarNama.play(),
+  marimbow.say`Aku Marimbow, putri Tonaas Utara. Aku sudah bilang aku hanya tersesat.`,
+  vMarNama.stop(),
+  imgMar4.hide({ ease: "easeInOut", duration: IMG_DURATION }),
+
+  imgMah3.show({ ease: "easeInOut", duration: IMG_DURATION }),
+  vMahJanji.play(),
+  maharimbow.say`Maukah kau berjanji... datanglah kembali ke perbatasan ini beberapa hari lagi?`,
+  vMahJanji.stop(),
+  imgMah3.hide({ ease: "easeInOut", duration: IMG_DURATION }),
   sceneBattle.jumpTo(sceneHome),
 ]);
 
-// 5. PENOLAKAN ORANG TUA & PILIHAN AKHIR
 sceneHome.action([
-  narrator.say`Semenjak itu, mereka sering berjumpa di perbatasan. Maharimbow akhirnya melamar, namun Marimbow bimbang karena sumpahnya.`,
-  narrator.say`Ia mencoba berbicara pada orang tuanya, namun sang Ayah mengingatkannya dengan keras.`,
+  narrator.say`Mereka sering berjumpa hingga jatuh cinta. Namun Marimbow bimbang karena sumpahnya.`,
+  imgTonaas.show({ ease: "easeInOut", duration: IMG_DURATION }),
+  vTonaasLarang.play(),
+  tonaasU.say`Bukankah kau berjanji tidak menikah sebelum jadi Tonaas? Ayah tidak mengizinkan kalian bersatu!`,
+  vTonaasLarang.stop(),
+  imgTonaas.hide({ ease: "easeInOut", duration: IMG_DURATION }),
 
-  imgTonaas.show(),
-  tonaasU.say`Bukankah kau berjanji tidak menikah sebelum jadi Tonaas? Ayah harap kau memikirkannya lagi!`,
-  imgTonaas.hide(),
+  imgMar5.show({ ease: "easeInOut", duration: IMG_DURATION }),
+  vMarBimbang.play(),
+  marimbow.say`Maharimbow, ayahku melarang kita. Bagaimana dengan sumpahmu?`,
+  vMarBimbang.stop(),
+  imgMar5.hide({ ease: "easeInOut", duration: IMG_DURATION }),
 
-  imgMar5.show(),
-  marimbow.say`Maharimbow, orang tuaku tidak mengizinkan. Sumpah itu... aku takut akan resikonya.`,
-
-  imgMah3.show(),
-  maharimbow.say`Mari kita lanjutkan rencana kita. Kita menikah diam-diam di desa yang jauh tanpa sepengetahuan mereka. Hanya kita berdua.`,
+  imgMah3.show({ ease: "easeInOut", duration: IMG_DURATION }),
+  vMahAjak.play(),
+  maharimbow.say`Mari kita menikah diam-diam di desa yang jauh. Hanya ada aku dan kau.`,
+  vMahAjak.stop(),
+  imgMah3.hide({ ease: "easeInOut", duration: IMG_DURATION }),
 
   Menu.prompt("Pilihan Sulit: Apa yang akan Marimbow putuskan?")
     .choose("Ikuti Maharimbow & Menikah Diam-diam", [
@@ -233,7 +300,7 @@ sceneHome.action([
       }),
       sceneHome.jumpTo(sceneEruption),
     ])
-    .choose("Pegang Teguh Sumpah demi Rakyat & Orang Tua", [
+    .choose("Pegang Teguh Sumpah demi Rakyat", [
       Script.execute(({ storable }) => {
         addScore(storable, 30);
         unlockKnowledge(storable, "INTEGRITY_WIN");
@@ -242,68 +309,50 @@ sceneHome.action([
     ]),
 ]);
 
-// 6. BENCANA (ALUR ASLI)
 sceneEruption.action([
-  bgmRomance.stop(),
-  bgmPanic.play(),
-  narrator.say`Pasangan itu melakukan pernikahan secara diam-diam tanpa restu orang tua. Namun, alam tidak tinggal diam.`,
-  narrator.say`Sesaat setelah janji diucapkan, Gunung Kaweng yang menjulang tinggi tiba-tiba menyemburkan lahar panas!`,
-  narrator.say`Terjadi gempa bumi dahsyat yang menyebabkan batu-batuan tebing berjatuhan. Rumah-rumah hancur porak-poranda.`,
-
-  Menu.prompt(
-    "Kuis Geologi: Berdasarkan legenda, gunung apa yang meletus akibat pelanggaran sumpah ini?",
-  )
+  narrator.say`Pernikahan dilakukan secara rahasia. Sesaat kemudian, alam bereaksi hebat!`,
+  narrator.say`Gunung Kaweng menyemburkan lahar panas dan gempa dahsyat menghancurkan segalanya.`,
+  Menu.prompt("Kuis Geologi: Gunung apa yang meletus dalam legenda ini?")
     .choose("Gunung Kaweng", [
-      Script.execute(({ storable }) => addScore(storable, 10)),
-      narrator.say`Benar. Letusan Gunung Kaweng menandai dimulainya malapetaka ini.`,
+      Script.execute(({ storable }) => {
+        addScore(storable, 15);
+        unlockKnowledge(storable, "VOLCANO1");
+      }),
+      narrator.say`Benar. Gunung Kaweng saksi bisu kemurkaan alam.`,
     ])
     .choose("Gunung Klabat", [
-      narrator.say`Kurang tepat. Dalam legenda Danau Tondano, Gunung Kaweng-lah yang disebut meletus.`,
+      narrator.say`Kurang tepat. Legenda menyebut Gunung Kaweng.`,
     ]),
   sceneEruption.jumpTo(sceneFlood),
 ]);
 
-// 6A. AIR BAH (FLOOD SCENE)
 sceneFlood.action([
-  narrator.say`Bencana belum berhenti. Tiba-tiba datanglah air bah yang menerjang desa-desa di sekitar gunung tinggi.`,
-  narrator.say`Banyak manusia, rumah, dan hewan yang tenggelam akibat terjangan air bah dahsyat tersebut.`,
-  narrator.say`Bencana ini dipercaya sebagai akibat dari Marimbow yang melanggar sumpahnya sendiri demi cinta.`,
+  narrator.say`Tiba-tiba datang air bah yang menenggelamkan desa dan seisinya. Sumpah yang dilanggar membawa petaka.`,
   sceneFlood.jumpTo(sceneFinalBad),
 ]);
 
-// 7A. FINAL BAD ENDING
 sceneFinalBad.action([
-  narrator.say`Daerah yang telah terendam air bah tersebut sekarang berubah menjadi danau besar yang diberi nama Danau Tondano.`,
-  narrator.say`Danau yang indah ini menjadi pengingat abadi bagi masyarakat Minahasa tentang kesakralan sebuah janji.`,
-  narrator.say`Tamat (Bad Ending).`,
-  bgmPanic.stop(),
+  narrator.say`Daerah yang terendam kini menjadi Danau Tondano. Tamat (Bad Ending).`,
   Script.execute(({ storable }) => setEnding(storable, "bad")),
 ]);
 
-// 7B. FINAL GOOD ENDING
 sceneFinalGood.action([
-  imgMar5.show(),
-  marimbow.say`Maafkan aku Maharimbow. Aku mencintaimu, tapi aku tidak bisa membangun kebahagiaan di atas sumpah yang patah dan kehancuran rakyatku.`,
-  imgMah3.show(),
-  maharimbow.say`Jika itu keputusanmu... maka aku akan setia menunggumu sampai kau resmi menjadi Tonaas.`,
-  narrator.say`Marimbow memegang janjinya. Ia memimpin Utara dengan bijak. Setelah masa tugasnya usai, barulah mereka bersatu dalam restu yang sempurna.`,
-  narrator.say`Gunung Kaweng tetap tenang, dan wilayah Minahasa hidup dalam kemakmuran abadi.`,
-  narrator.say`Tamat (Best Ending).`,
-  bgmRomance.stop(),
+  imgMar5.show({ ease: "easeInOut", duration: IMG_DURATION }),
+  vMarTolak.play(),
+  marimbow.say`Maafkan aku, aku tidak bisa membangun cinta di atas sumpah yang patah.`,
+  vMarTolak.stop(),
+  imgMar5.hide({ ease: "easeInOut", duration: IMG_DURATION }),
+
+  imgMah3.show({ ease: "easeInOut", duration: IMG_DURATION }),
+  vMahSetia.play(),
+  maharimbow.say`Jika itu keputusanmu, aku akan setia menunggumu hingga tugasmu selesai.`,
+  vMahSetia.stop(),
+  imgMah3.hide({ ease: "easeInOut", duration: IMG_DURATION }),
+
+  narrator.say`Marimbow menjadi Tonaas yang bijaksana. Tamat (Best Ending).`,
   Script.execute(({ storable }) => setEnding(storable, "best")),
 ]);
 
-// EXPORT STORY
 const story = new Story("Legenda Danau Tondano");
 story.entry(sceneIntro);
-
 export default story;
-
-export const storyMeta = {
-  title: "Legenda Danau Tondano: Sumpah Sang Tonaas",
-  region: "Sulawesi Utara",
-  description:
-    "Dilema antara cinta terlarang dan sumpah suci yang menentukan nasib tanah Minahasa.",
-  difficulty: "Menengah",
-  coverImage: "/images/tondano/cover.webp",
-};
