@@ -62,7 +62,7 @@ export function Sidebar() {
 
   return (
     <TooltipProvider delay={0}>
-      <div className="relative flex-shrink-0">
+      <div className="relative flex-shrink-0 hidden md:block">
         <aside
           className={cn(
             "sticky top-0 h-screen flex flex-col border-r",
@@ -248,7 +248,7 @@ export function Sidebar() {
           variant="ghost"
           size="icon"
           onClick={toggleSidebar}
-          className="absolute top-4 -right-3 z-50 h-6 w-6 rounded-full border border-[#2E2318] bg-[#0D0A08] text-[#9A8A7A] hover:text-[#F5F0EB] hover:bg-[#1A1410]"
+          className="hidden md:flex absolute top-4 -right-3 z-50 h-6 w-6 rounded-full border border-[#2E2318] bg-[#0D0A08] text-[#9A8A7A] hover:text-[#F5F0EB] hover:bg-[#1A1410]"
         >
           {collapsed ? (
             <ChevronRight className="h-3 w-3" />

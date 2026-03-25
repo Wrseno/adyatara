@@ -179,9 +179,6 @@ export function MobileNav() {
           </div>
         </div>
       </div>
-
-      {/* Spacer for fixed header */}
-      <div className="md:hidden h-14" />
     </>
   );
 }
