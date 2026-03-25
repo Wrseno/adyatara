@@ -58,9 +58,15 @@ export default async function DashboardPage() {
   // Calculate stats
   const totalScore = userData.totalScore || 0;
   const level = userData.level || 1;
-  const completedStories = userData.gameSessions.filter(
-    (s) => s.status === "completed"
-  ).length;
+  
+  // Count unique completed stories (each story counted only once)
+  const uniqueCompletedStoryIds = new Set(
+    userData.gameSessions
+      .filter((s) => s.status === "completed")
+      .map((s) => s.storyId)
+  );
+  const completedStories = uniqueCompletedStoryIds.size;
+  
   const totalStories = await db.story.count();
   const knowledgeUnlocked = userData.userKnowledges.length;
   const recentActivities = userData.gameSessions.slice(0, 5);
@@ -380,7 +386,7 @@ export default async function DashboardPage() {
             <h3 className="text-lg font-serif text-white">Koleksi Terbaru</h3>
           </div>
           <Link 
-            href="/collection" 
+            href="/dashboard/collection" 
             className="text-[11px] tracking-[0.15em] text-[#D96B4A] hover:text-[#E86B52] transition-colors uppercase"
           >
             Lihat Semua

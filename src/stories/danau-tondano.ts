@@ -108,22 +108,27 @@ const vTonaasLarang = new Sound({
 const bgmIntro = Sound.bgm({
   src: "/music/danau-tondano/minahasa_intro.mp3",
   volume: 0.2,
+  loop: true,
 });
 const bgmForest = Sound.bgm({
   src: "/music/danau-tondano/forest_mystery.mp3",
   volume: 0.2,
+  loop: true,
 });
 const bgmFight = Sound.bgm({
   src: "/music/danau-tondano/action_drums.mp3",
   volume: 0.2,
+  loop: true,
 });
 const bgmRomance = Sound.bgm({
   src: "/music/danau-tondano/kolintang_soft.mp3",
   volume: 0.2,
+  loop: true,
 });
 const bgmPanic = Sound.bgm({
   src: "/music/danau-tondano/disaster_eruption.mp3",
   volume: 0.2,
+  loop: true,
 });
 
 // --- SCENES ---
@@ -177,9 +182,8 @@ const sceneFinalGood = new Scene("final_good", {
 
 sceneIntro.action([
   narrator.say`Provinsi Sulawesi Utara adalah daerah paling utara di Pulau Sulawesi. Di provinsi ini terbentang rangkaian pegunungan yang mengelilingi Danau Tondano.`,
-  Menu.prompt(
-    "Kuis Geografi: Danau Tondano merupakan danau terluas di provinsi mana?",
-  )
+  narrator.say`Kuis Geografi: Danau Tondano merupakan danau terluas di provinsi mana?`,
+  Menu.prompt(" ")
     .choose("Sulawesi Utara", [
       Script.execute(({ storable }) => {
         addScore(storable, 20);
@@ -292,7 +296,8 @@ sceneHome.action([
   vMahAjak.stop(),
   imgMah3.hide({ ease: "easeInOut", duration: IMG_DURATION }),
 
-  Menu.prompt("Pilihan Sulit: Apa yang akan Marimbow putuskan?")
+  narrator.say`Pilihan Sulit: Apa yang akan Marimbow putuskan?`,
+  Menu.prompt(" ")
     .choose("Ikuti Maharimbow & Menikah Diam-diam", [
       Script.execute(({ storable }) => {
         addScore(storable, 10);
@@ -312,7 +317,8 @@ sceneHome.action([
 sceneEruption.action([
   narrator.say`Pernikahan dilakukan secara rahasia. Sesaat kemudian, alam bereaksi hebat!`,
   narrator.say`Gunung Kaweng menyemburkan lahar panas dan gempa dahsyat menghancurkan segalanya.`,
-  Menu.prompt("Kuis Geologi: Gunung apa yang meletus dalam legenda ini?")
+  narrator.say`Kuis Geologi: Gunung apa yang meletus dalam legenda ini?`,
+  Menu.prompt(" ")
     .choose("Gunung Kaweng", [
       Script.execute(({ storable }) => {
         addScore(storable, 15);

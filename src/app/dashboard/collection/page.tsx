@@ -7,7 +7,7 @@ import { Lock } from "lucide-react";
 export const metadata = constructMetadata({
   title: "Koleksi",
   description: "Lihat koleksi pengetahuan dan pencapaian Anda",
-  path: "/collection",
+  path: "/dashboard/collection",
 });
 
 const rarityStyles: Record<string, string> = {
