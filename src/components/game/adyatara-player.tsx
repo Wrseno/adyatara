@@ -317,7 +317,7 @@ export function AdyataraPlayer() {
     <div style={{ width: "100vw", height: "100vh", background: "#0A0705" }}>
       {/* Refresh Overlay - shown EVERY time user enters VN */}
       {showRefreshDialog && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 pointer-events-auto">
+        <div className="fixed inset-0 z-100 flex items-center justify-center bg-black/90 pointer-events-auto">
           <div className="bg-[#0A0705] border border-gray-800 p-6 md:p-8 max-w-md w-full mx-4 relative pointer-events-auto">
             {/* Close button - matching pause dialog style */}
             <button
@@ -335,7 +335,7 @@ export function AdyataraPlayer() {
             <div className="absolute bottom-0 right-0 w-2 h-2 border-r border-b border-gray-700/50" />
 
             <div className="flex items-center gap-3 mb-4">
-              <div className="h-4 w-1 bg-orange-500 flex-shrink-0" />
+              <div className="h-4 w-1 bg-orange-500 shrink-0" />
               <h2 className="font-serif text-base md:text-lg text-white">
                 Refresh Diperlukan
               </h2>

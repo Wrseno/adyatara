@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import { Providers } from "@/components/providers";
 import { Navbar } from "@/components/shared/navbar";
 import { Footer } from "@/components/shared/footer";
+import { AudioPlayer } from "@/components/audio-player";
 import { constructMetadata } from "@/lib/metadata";
 import "./globals.css";
 
@@ -27,6 +28,7 @@ export default function RootLayout({
             <main className="flex-1">{children}</main>
             <Footer />
           </div>
+          <AudioPlayer />
         </Providers>
       </body>
     </html>

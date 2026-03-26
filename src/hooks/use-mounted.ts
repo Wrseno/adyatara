@@ -1,11 +1,15 @@
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
+
+// Hydration-safe mounted check using useSyncExternalStore
+// This avoids the ESLint error about calling setState in useEffect
+const emptySubscribe = () => () => {};
+const getClientSnapshot = () => true;
+const getServerSnapshot = () => false;
 
 export function useMounted() {
-    const [mounted, setMounted] = useState(false);
-
-    useEffect(() => {
-        setMounted(true);
-    }, []);
-
-    return mounted;
+    return useSyncExternalStore(
+        emptySubscribe,
+        getClientSnapshot,
+        getServerSnapshot
+    );
 }

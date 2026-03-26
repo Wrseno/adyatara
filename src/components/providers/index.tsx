@@ -3,6 +3,7 @@
 import { SessionProvider } from "./session-provider";
 import { QueryProvider } from "./query-provider";
 import { ThemeProvider } from "./theme-provider";
+import { AudioPlayerProvider } from "@/components/audio-player";
 import { Toaster } from "@/components/ui/sonner";
 
 interface ProvidersProps {
@@ -14,8 +15,10 @@ export function Providers({ children }: ProvidersProps) {
         <SessionProvider>
             <QueryProvider>
                 <ThemeProvider>
-                    {children}
-                    <Toaster richColors position="top-right" />
+                    <AudioPlayerProvider>
+                        {children}
+                        <Toaster richColors position="top-right" />
+                    </AudioPlayerProvider>
                 </ThemeProvider>
             </QueryProvider>
         </SessionProvider>
