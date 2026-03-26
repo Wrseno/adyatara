@@ -8,6 +8,7 @@ import {
   LayoutDashboard,
   Map,
   BookMarked,
+  MessageCircle,
   User,
   LogOut,
   ChevronLeft,
@@ -44,6 +45,11 @@ const menuItems: MenuItem[] = [
     icon: BookMarked,
     href: "/dashboard/collection",
   },
+  {
+    label: "Chatbot",
+    icon: MessageCircle,
+    href: "/dashboard/chat",
+  },
 ];
 
 export function Sidebar() {
@@ -72,12 +78,12 @@ export function Sidebar() {
           )}
         >
           {/* Header with Logo */}
-          <div className="flex items-center justify-center border-b border-[#2E2318] min-h-[65px] px-3">
+          <div className="flex items-center justify-center border-b border-[#2E2318] min-h-16.25 px-3">
             <Link 
               href="/dashboard" 
               className="flex items-center gap-4 py-4"
             >
-              <div className="w-8 h-8 border border-gray-600 relative flex items-center justify-center flex-shrink-0">
+              <div className="w-8 h-8 border border-gray-600 relative flex items-center justify-center shrink-0">
                 <div className="absolute top-0 left-0 w-1 h-1 border-l border-t border-gray-500" />
                 <div className="absolute bottom-0 right-0 w-1 h-1 border-r border-b border-gray-500" />
               </div>
@@ -107,7 +113,7 @@ export function Sidebar() {
                     collapsed ? "justify-center" : "gap-3 px-3"
                   )}
                 >
-                  <Icon className="h-5 w-5 flex-shrink-0" />
+                  <Icon className="h-5 w-5 shrink-0" />
                   {!collapsed && (
                     <span className="whitespace-nowrap">
                       {item.label}
@@ -155,10 +161,10 @@ export function Sidebar() {
                         <img
                           src={session.user.avatarUrl || session.user.image || ""}
                           alt={session.user.name || "User"}
-                          className="h-5 w-5 rounded-full object-cover flex-shrink-0"
+                          className="h-5 w-5 rounded-full object-cover shrink-0"
                         />
                       ) : (
-                        <User className="h-5 w-5 flex-shrink-0" />
+                        <User className="h-5 w-5 shrink-0" />
                       )}
                     </Link>
                   }
@@ -185,10 +191,10 @@ export function Sidebar() {
                   <img
                     src={session.user.avatarUrl || session.user.image || ""}
                     alt={session.user.name || "User"}
-                    className="h-5 w-5 rounded-full object-cover flex-shrink-0"
+                    className="h-5 w-5 rounded-full object-cover shrink-0"
                   />
                 ) : (
-                  <User className="h-5 w-5 flex-shrink-0" />
+                  <User className="h-5 w-5 shrink-0" />
                 )}
                 <div className="flex flex-col overflow-hidden">
                   <span className="truncate">
@@ -216,7 +222,7 @@ export function Sidebar() {
                         "text-[#9A8A7A] hover:bg-red-950/30 hover:text-red-400"
                       )}
                     >
-                      <LogOut className="h-5 w-5 flex-shrink-0" />
+                      <LogOut className="h-5 w-5 shrink-0" />
                     </button>
                   }
                 />
@@ -236,7 +242,7 @@ export function Sidebar() {
                   "text-[#9A8A7A] hover:bg-red-950/30 hover:text-red-400"
                 )}
               >
-                <LogOut className="h-5 w-5 flex-shrink-0" />
+                <LogOut className="h-5 w-5 shrink-0" />
                 <span>Logout</span>
               </button>
             )}

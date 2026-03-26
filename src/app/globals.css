@@ -127,15 +127,15 @@
   * {
     @apply border-border outline-ring/50;
   }
-  
+
   body {
     @apply bg-background text-foreground;
   }
-  
+
   html {
     @apply font-sans;
   }
-  
+
   /* Custom Adyatara Components */
   .corner-bracket::before,
   .corner-bracket::after {
@@ -145,25 +145,25 @@
     height: 12px;
     border: 1px solid var(--border);
   }
-  
+
   .corner-bracket::before {
     top: -1px;
     left: -1px;
     border-right: none;
     border-bottom: none;
   }
-  
+
   .corner-bracket::after {
     top: -1px;
     right: -1px;
     border-left: none;
     border-bottom: none;
   }
-  
+
   .corner-bracket {
     position: relative;
   }
-  
+
   .corner-bracket > *:first-child::before {
     content: "";
     position: absolute;
@@ -175,7 +175,7 @@
     border-right: none;
     border-top: none;
   }
-  
+
   .corner-bracket > *:first-child::after {
     content: "";
     position: absolute;
@@ -187,7 +187,7 @@
     border-left: none;
     border-top: none;
   }
-  
+
   /* NarraLeaf dialog text override — inline fontSize from game engine */
   .adyatara-dialog-texts span {
     font-size: 1rem !important;
@@ -211,23 +211,23 @@
   .glow-orange {
     box-shadow: 0 0 15px rgba(232, 114, 74, 0.5), 0 0 30px rgba(232, 114, 74, 0.3);
   }
-  
+
   .glow-orange-large {
     box-shadow: 0 0 25px rgba(232, 114, 74, 0.6), 0 0 50px rgba(232, 114, 74, 0.4);
   }
-  
+
   /* Typography */
   h1, h2, h3 {
     font-family: var(--font-serif);
     font-weight: 700;
     letter-spacing: 0.02em;
   }
-  
+
   h4, h5, h6 {
     font-family: var(--font-serif);
     font-weight: 600;
   }
-  
+
   .eyebrow {
     font-size: 0.75rem;
     font-weight: 600;

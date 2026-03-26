@@ -57,7 +57,7 @@ export default function DashboardMap() {
         }}
       >
         {selectedProvince && (
-          <Popup position={selectedProvince.position} closeButton={false} className="custom-map-popup mt-[-20px]">
+          <Popup position={selectedProvince.position} closeButton={false} className="custom-map-popup -mt-5">
             <div className="relative p-6 w-80 bg-[#0D0907] border border-transparent shadow-[0_10px_40px_rgba(0,0,0,0.8)] text-[#f4e1d1] transition-all duration-300 animate-in fade-in zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out data-[state=closed]:zoom-out-95 group">
               {/* Corner brackets matching landing page */}
               <div className="absolute top-0 left-0 w-3 h-3 border-l border-t border-gray-800 transition-colors" />
@@ -88,7 +88,7 @@ export default function DashboardMap() {
                              className="object-cover w-14 h-14"
                            />
                          ) : (
-                           <div className="w-14 h-14 bg-gradient-to-br from-[#2a1a14] to-[#1a0f0a] flex items-center justify-center">
+                           <div className="w-14 h-14 bg-linear-to-br from-[#2a1a14] to-[#1a0f0a] flex items-center justify-center">
                              <span className="text-[#D96B4A]/60 text-base font-serif">
                                {getInitials(selectedProvince.name)}
                              </span>
@@ -118,7 +118,7 @@ export default function DashboardMap() {
                        <div className="mb-4 inline-flex border border-gray-800/80 rounded-sm relative self-start overflow-hidden">
                          <div className="absolute top-0 left-0 w-1.5 h-1.5 border-l border-t border-gray-600 z-10"></div>
                          <div className="absolute bottom-0 right-0 w-1.5 h-1.5 border-r border-b border-gray-600 z-10"></div>
-                         <div className="w-14 h-14 bg-gradient-to-br from-[#2a1a14] to-[#1a0f0a] flex items-center justify-center">
+                         <div className="w-14 h-14 bg-linear-to-br from-[#2a1a14] to-[#1a0f0a] flex items-center justify-center">
                            <span className="text-gray-600 text-base font-serif">
                              {getInitials(selectedProvince.name)}
                            </span>

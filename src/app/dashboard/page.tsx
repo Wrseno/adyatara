@@ -162,7 +162,7 @@ export default async function DashboardPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0A0705] text-[#F5F0EB] p-4 md:p-6 lg:p-8">
+    <div className="min-h-screen bg-[#0A0705] text-[#F5F0EB] p-6 md:p-8">
       {/* Spacer for mobile nav */}
       <div className="md:hidden h-14" />
       
@@ -170,12 +170,12 @@ export default async function DashboardPage() {
       <div className="mb-8 md:mb-10">
         <div className="flex items-center gap-4 mb-4">
           <div className="h-px w-12 bg-[#D96B4A]/30"></div>
-          <p className="text-[9px] tracking-[0.3em] text-[#D96B4A] uppercase font-medium">DASHBOARD</p>
+          <p className="text-[10px] tracking-[0.3em] text-[#D96B4A] uppercase font-medium">DASHBOARD</p>
         </div>
-        <h1 className="text-2xl sm:text-3xl md:text-4xl font-serif text-white mb-2 md:mb-3">
+        <h1 className="text-5xl font-serif text-white mb-3">
           Selamat Datang, {userData.name || "Penjelajah"}!
         </h1>
-        <p className="text-[12px] md:text-[13px] text-gray-400 font-light">
+        <p className="text-sm text-gray-400 font-light">
           Lihat progress dan pencapaian Anda dalam menjelajahi budaya Nusantara
         </p>
       </div>
@@ -193,10 +193,10 @@ export default async function DashboardPage() {
           <div className="mb-3 md:mb-4 inline-flex p-2 md:p-3 border border-gray-800/80 group-hover:border-[#D96B4A]/30 rounded-sm transition-colors relative">
             <div className="absolute top-0 left-0 w-1 h-1 border-l border-t border-gray-600"></div>
             <div className="absolute bottom-0 right-0 w-1 h-1 border-r border-b border-gray-600"></div>
-            <Trophy className="w-4 h-4 md:w-5 md:h-5 text-[#D96B4A]" strokeWidth={2} />
+            <Trophy className="w-5 h-5 md:w-6 md:h-6 text-[#D96B4A]" strokeWidth={2} />
           </div>
-          <p className="text-[9px] md:text-[10px] tracking-[0.2em] text-gray-500 uppercase mb-1 md:mb-2">Total Skor</p>
-          <p className="text-2xl md:text-3xl font-serif text-[#D96B4A]">
+          <p className="text-[10px] md:text-[11px] tracking-[0.2em] text-gray-500 uppercase mb-1 md:mb-2">Total Skor</p>
+          <p className="text-3xl md:text-4xl font-serif text-[#D96B4A]">
             {totalScore.toLocaleString()}
           </p>
         </div>
@@ -212,16 +212,16 @@ export default async function DashboardPage() {
           <div className="mb-3 md:mb-4 inline-flex p-2 md:p-3 border border-gray-800/80 group-hover:border-[#D96B4A]/30 rounded-sm transition-colors relative">
             <div className="absolute top-0 left-0 w-1 h-1 border-l border-t border-gray-600"></div>
             <div className="absolute bottom-0 right-0 w-1 h-1 border-r border-b border-gray-600"></div>
-            <Award className="w-4 h-4 md:w-5 md:h-5 text-[#D96B4A]" strokeWidth={2} />
+            <Award className="w-5 h-5 md:w-6 md:h-6 text-[#D96B4A]" strokeWidth={2} />
           </div>
-          <p className="text-[9px] md:text-[10px] tracking-[0.2em] text-gray-500 uppercase mb-1 md:mb-2">Level</p>
+          <p className="text-[10px] md:text-[11px] tracking-[0.2em] text-gray-500 uppercase mb-1 md:mb-2">Level</p>
           <div className="flex items-end gap-1 md:gap-2 mb-2 md:mb-3">
-            <p className="text-2xl md:text-3xl font-serif text-white">{level}</p>
-            <p className="text-xs md:text-sm text-gray-500 mb-0.5 md:mb-1">/ Lv {level + 1}</p>
+            <p className="text-3xl md:text-4xl font-serif text-white">{level}</p>
+            <p className="text-sm md:text-base text-gray-500 mb-0.5 md:mb-1">/ Lv {level + 1}</p>
           </div>
           <div className="w-full h-1 md:h-1.5 bg-gray-800 rounded-full overflow-hidden">
             <div
-              className="h-full bg-gradient-to-r from-[#D96B4A] to-[#E86B52] rounded-full transition-all"
+              className="h-full bg-linear-to-r from-[#D96B4A] to-[#E86B52] rounded-full transition-all"
               style={{ width: `${levelProgress}%` }}
             />
           </div>
@@ -241,11 +241,11 @@ export default async function DashboardPage() {
           <div className="mb-3 md:mb-4 inline-flex p-2 md:p-3 border border-gray-800/80 group-hover:border-[#D96B4A]/30 rounded-sm transition-colors relative">
             <div className="absolute top-0 left-0 w-1 h-1 border-l border-t border-gray-600"></div>
             <div className="absolute bottom-0 right-0 w-1 h-1 border-r border-b border-gray-600"></div>
-            <BookOpen className="w-4 h-4 md:w-5 md:h-5 text-[#D96B4A]" strokeWidth={2} />
+            <BookOpen className="w-5 h-5 md:w-6 md:h-6 text-[#D96B4A]" strokeWidth={2} />
           </div>
-          <p className="text-[9px] md:text-[10px] tracking-[0.2em] text-gray-500 uppercase mb-1 md:mb-2">Cerita Selesai</p>
-          <p className="text-2xl md:text-3xl font-serif text-white">{completedStories}</p>
-          <p className="text-[9px] md:text-[10px] text-gray-500 mt-1">dari {totalStories} cerita</p>
+          <p className="text-[10px] md:text-[11px] tracking-[0.2em] text-gray-500 uppercase mb-1 md:mb-2">Cerita Selesai</p>
+          <p className="text-3xl md:text-4xl font-serif text-white">{completedStories}</p>
+          <p className="text-[10px] md:text-[11px] text-gray-500 mt-1">dari {totalStories} cerita</p>
         </div>
 
         {/* Knowledge Unlocked */}
@@ -259,11 +259,11 @@ export default async function DashboardPage() {
           <div className="mb-3 md:mb-4 inline-flex p-2 md:p-3 border border-gray-800/80 group-hover:border-[#D96B4A]/30 rounded-sm transition-colors relative">
             <div className="absolute top-0 left-0 w-1 h-1 border-l border-t border-gray-600"></div>
             <div className="absolute bottom-0 right-0 w-1 h-1 border-r border-b border-gray-600"></div>
-            <Lightbulb className="w-4 h-4 md:w-5 md:h-5 text-[#D96B4A]" strokeWidth={2} />
+            <Lightbulb className="w-5 h-5 md:w-6 md:h-6 text-[#D96B4A]" strokeWidth={2} />
           </div>
-          <p className="text-[9px] md:text-[10px] tracking-[0.2em] text-gray-500 uppercase mb-1 md:mb-2">Pengetahuan</p>
-          <p className="text-2xl md:text-3xl font-serif text-white">{knowledgeUnlocked}</p>
-          <p className="text-[9px] md:text-[10px] text-gray-500 mt-1">pengetahuan terbuka</p>
+          <p className="text-[10px] md:text-[11px] tracking-[0.2em] text-gray-500 uppercase mb-1 md:mb-2">Pengetahuan</p>
+          <p className="text-3xl md:text-4xl font-serif text-white">{knowledgeUnlocked}</p>
+          <p className="text-[10px] md:text-[11px] text-gray-500 mt-1">pengetahuan terbuka</p>
         </div>
       </div>
 
@@ -281,30 +281,30 @@ export default async function DashboardPage() {
             <div className="inline-flex p-2 border border-gray-800/80 rounded-sm relative">
               <div className="absolute top-0 left-0 w-1 h-1 border-l border-t border-gray-600"></div>
               <div className="absolute bottom-0 right-0 w-1 h-1 border-r border-b border-gray-600"></div>
-              <TrendingUp className="w-4 h-4 text-[#D96B4A]" strokeWidth={2} />
+              <TrendingUp className="w-5 h-5 text-[#D96B4A]" strokeWidth={2} />
             </div>
-            <h3 className="text-base md:text-lg font-serif text-white">Progress Per Region</h3>
+            <h3 className="text-lg md:text-xl font-serif text-white">Progress Per Region</h3>
           </div>
 
           <div className="space-y-4 md:space-y-5">
             {regionProgress.map((region) => (
               <div key={region.name}>
                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-[12px] md:text-[13px] text-gray-300">{region.name}</span>
-                  <span className="text-[10px] md:text-[11px] text-gray-500">
+                  <span className="text-sm md:text-base text-gray-300">{region.name}</span>
+                  <span className="text-[11px] md:text-[12px] text-gray-500">
                     {region.completed}/{region.total}
                   </span>
                 </div>
                 <div className="w-full h-1 md:h-1.5 bg-gray-800 rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-gradient-to-r from-[#D96B4A] to-[#E86B52] rounded-full transition-all"
+                    className="h-full bg-linear-to-r from-[#D96B4A] to-[#E86B52] rounded-full transition-all"
                     style={{ width: `${region.percentage}%` }}
                   />
                 </div>
               </div>
             ))}
             {regionProgress.length === 0 && (
-              <p className="text-[12px] md:text-[13px] text-gray-500 text-center py-6 md:py-8">
+              <p className="text-sm md:text-base text-gray-500 text-center py-6 md:py-8">
                 Belum ada progress di region manapun.{" "}
                 <Link href="/explore" className="text-[#D96B4A] hover:text-[#E86B52] transition-colors">
                   Mulai jelajah sekarang!
@@ -326,9 +326,9 @@ export default async function DashboardPage() {
             <div className="inline-flex p-2 border border-gray-800/80 rounded-sm relative">
               <div className="absolute top-0 left-0 w-1 h-1 border-l border-t border-gray-600"></div>
               <div className="absolute bottom-0 right-0 w-1 h-1 border-r border-b border-gray-600"></div>
-              <Clock className="w-4 h-4 text-[#D96B4A]" strokeWidth={2} />
+              <Clock className="w-5 h-5 text-[#D96B4A]" strokeWidth={2} />
             </div>
-            <h3 className="text-base md:text-lg font-serif text-white">Aktivitas Terbaru</h3>
+            <h3 className="text-lg md:text-xl font-serif text-white">Aktivitas Terbaru</h3>
           </div>
 
           <div className="space-y-3 md:space-y-4">
@@ -346,11 +346,11 @@ export default async function DashboardPage() {
                     }`}
                   />
                   <div className="flex-1 min-w-0">
-                    <p className="text-[12px] md:text-[13px] text-gray-300 truncate">
+                    <p className="text-sm md:text-base text-gray-300 truncate">
                       {activity.status === "completed" ? "Selesai" : "Memainkan"}{" "}
                       &quot;{activity.story.title}&quot;
                     </p>
-                    <p className="text-[10px] md:text-[11px] text-gray-500 mt-1">
+                    <p className="text-[11px] md:text-[12px] text-gray-500 mt-1">
                       {formatDate(activity.startedAt)} •{" "}
                       {activity.status === "completed"
                         ? `Skor: ${activity.score}`
@@ -360,7 +360,7 @@ export default async function DashboardPage() {
                 </div>
               ))
             ) : (
-              <p className="text-[12px] md:text-[13px] text-gray-500 text-center py-6 md:py-8">
+              <p className="text-sm md:text-base text-gray-500 text-center py-6 md:py-8">
                 Belum ada aktivitas.{" "}
                 <Link href="/explore" className="text-[#D96B4A] hover:text-[#E86B52] transition-colors">
                   Mulai petualangan Anda!
@@ -384,9 +384,9 @@ export default async function DashboardPage() {
             <div className="inline-flex p-2 border border-gray-800/80 rounded-sm relative">
               <div className="absolute top-0 left-0 w-1 h-1 border-l border-t border-gray-600"></div>
               <div className="absolute bottom-0 right-0 w-1 h-1 border-r border-b border-gray-600"></div>
-              <Gem className="w-4 h-4 text-[#D96B4A]" strokeWidth={2} />
+              <Gem className="w-5 h-5 text-[#D96B4A]" strokeWidth={2} />
             </div>
-            <h3 className="text-base md:text-lg font-serif text-white">Koleksi Terbaru</h3>
+            <h3 className="text-lg md:text-xl font-serif text-white">Koleksi Terbaru</h3>
           </div>
           <Link 
             href="/dashboard/collection" 
@@ -428,13 +428,13 @@ export default async function DashboardPage() {
                   </div>
                 </div>
                 
-                <p className="text-[11px] md:text-[12px] text-gray-200 font-medium truncate">
+                <p className="text-xs md:text-sm text-gray-200 font-medium truncate">
                   {item.collectible.name}
                 </p>
-                <p className="text-[9px] md:text-[10px] text-gray-500 truncate mt-0.5">
+                <p className="text-[10px] md:text-[11px] text-gray-500 truncate mt-0.5">
                   {item.collectible.story.title}
                 </p>
-                <p className="text-[8px] md:text-[9px] text-gray-600 mt-1">
+                <p className="text-[9px] md:text-[10px] text-gray-600 mt-1">
                   {formatDate(item.unlockedAt)}
                 </p>
               </div>
@@ -442,8 +442,8 @@ export default async function DashboardPage() {
           </div>
         ) : (
           <div className="text-center py-8 md:py-12">
-            <Gem className="w-12 h-12 md:w-16 md:h-16 text-gray-700 mx-auto mb-4" />
-            <p className="text-[12px] md:text-[13px] text-gray-500">
+            <Gem className="w-14 h-14 md:w-18 md:h-18 text-gray-700 mx-auto mb-4" />
+            <p className="text-sm md:text-base text-gray-500">
               Belum ada koleksi.{" "}
               <Link href="/explore" className="text-[#D96B4A] hover:text-[#E86B52] transition-colors">
                 Mainkan cerita untuk mengumpulkan item!
@@ -451,6 +451,31 @@ export default async function DashboardPage() {
             </p>
           </div>
         )}
+      </div>
+
+      {/* Achievements Section (Placeholder) */}
+      <div className="relative p-8 bg-[#0D0907] border border-transparent group">
+        {/* Corner brackets */}
+        <div className="absolute top-0 left-0 w-3 h-3 border-l border-t border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
+        <div className="absolute top-0 right-0 w-3 h-3 border-r border-t border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
+        <div className="absolute bottom-0 left-0 w-3 h-3 border-l border-b border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
+        <div className="absolute bottom-0 right-0 w-3 h-3 border-r border-b border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
+
+        <div className="flex items-center gap-3 mb-6">
+          <div className="inline-flex p-2 border border-gray-800/80 rounded-sm relative">
+            <div className="absolute top-0 left-0 w-1 h-1 border-l border-t border-gray-600"></div>
+            <div className="absolute bottom-0 right-0 w-1 h-1 border-r border-b border-gray-600"></div>
+            <Trophy className="w-5 h-5 text-[#D96B4A]" strokeWidth={2} />
+          </div>
+          <h3 className="text-xl font-serif text-white">Pencapaian</h3>
+        </div>
+
+        <div className="text-center py-12">
+          <Trophy className="w-16 h-16 text-gray-700 mx-auto mb-4" />
+          <p className="text-sm text-gray-500">
+            Sistem pencapaian akan segera hadir...
+          </p>
+        </div>
       </div>
     </div>
   );
