@@ -53,7 +53,7 @@ export default async function ExplorePage() {
               className="flex items-center gap-2 px-4 py-2 border border-gray-800/80 bg-[#0D0907]/50 hover:bg-[#1A1410]/80 transition-colors group"
             >
               <ArrowLeft className="w-4 h-4 text-gray-400 group-hover:text-[#E8724A] transition-colors" />
-              <span className="text-xs tracking-[0.2em] text-gray-400 group-hover:text-[#F5F0EB] transition-colors">
+              <span className="text-sm tracking-[0.2em] text-gray-400 group-hover:text-[#F5F0EB] transition-colors">
                 KEMBALI
               </span>
             </Link>
@@ -71,20 +71,20 @@ export default async function ExplorePage() {
               <div className="flex items-center gap-3 pr-8 border-r border-gray-800">
                 <Award className="w-4 h-4 text-[#D96B4A]" strokeWidth={2} />
                 <div>
-                  <p className="text-[9px] tracking-[0.2em] text-gray-500 uppercase mb-0.5">
+                  <p className="text-[10px] tracking-[0.2em] text-gray-500 uppercase mb-0.5">
                     LEVEL
                   </p>
-                  <p className="text-[13px] font-medium text-white">{level}</p>
+                  <p className="text-sm font-medium text-white">{level}</p>
                 </div>
               </div>
 
               <div className="flex items-center gap-3 pl-8">
                 <Trophy className="w-4 h-4 text-[#D96B4A]" strokeWidth={2} />
                 <div>
-                  <p className="text-[9px] tracking-[0.2em] text-gray-500 uppercase mb-0.5">
+                  <p className="text-[10px] tracking-[0.2em] text-gray-500 uppercase mb-0.5">
                     SKOR TOTAL
                   </p>
-                  <p className="text-[13px] font-medium text-white">{score}</p>
+                  <p className="text-sm font-medium text-white">{score}</p>
                 </div>
               </div>
             </div>
@@ -93,7 +93,7 @@ export default async function ExplorePage() {
           {/* Right - Logo */}
           <div className="flex items-center pointer-events-auto">
             <div className="flex items-center gap-4">
-              <span className="text-[11px] tracking-[0.4em] font-serif text-gray-300 uppercase">
+              <span className="text-xs tracking-[0.4em] font-serif text-gray-300 uppercase">
                 ADYATARA
               </span>
               <div className="w-8 h-8 border border-gray-700/50 flex items-center justify-center relative">
@@ -106,10 +106,10 @@ export default async function ExplorePage() {
 
         {/* Title */}
         <div className="flex flex-col items-center mt-2">
-          <p className="text-[10px] tracking-[0.4em] text-[#D96B4A] uppercase font-medium mb-3">
+          <p className="text-xs tracking-[0.4em] text-[#D96B4A] uppercase font-medium mb-3">
             PETA NUSANTARA
           </p>
-          <h1 className="text-4xl md:text-[2.5rem] font-serif text-white">
+          <h1 className="text-5xl md:text-[2.5rem] font-serif text-white">
             Pilih Provinsi
           </h1>
         </div>
@@ -118,25 +118,25 @@ export default async function ExplorePage() {
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center justify-center gap-10 bg-[#0a0705]/80 px-8 py-3 rounded-full border border-gray-800/50 backdrop-blur-md">
           <div className="flex items-center gap-3">
             <div className="w-2.5 h-2.5 rounded-full bg-[#EAA87E]" />
-            <span className="text-[9px] tracking-[0.2em] text-gray-500 uppercase font-medium">
+            <span className="text-[10px] tracking-[0.2em] text-gray-500 uppercase font-medium">
               SELESAI
             </span>
           </div>
           <div className="flex items-center gap-3">
             <div className="w-2.5 h-2.5 rounded-full bg-[#E86B52] shadow-[0_0_10px_2px_rgba(232,107,82,0.6)]" />
-            <span className="text-[9px] tracking-[0.2em] text-gray-500 uppercase font-medium">
+            <span className="text-[10px] tracking-[0.2em] text-gray-500 uppercase font-medium">
               AKTIF
             </span>
           </div>
           <div className="flex items-center gap-3">
             <div className="w-2.5 h-2.5 rounded-full bg-[#8C3A2A]" />
-            <span className="text-[9px] tracking-[0.2em] text-gray-500 uppercase font-medium">
+            <span className="text-[10px] tracking-[0.2em] text-gray-500 uppercase font-medium">
               TERSEDIA
             </span>
           </div>
           <div className="flex items-center gap-3">
             <div className="w-2.5 h-2.5 rounded-full bg-gray-700" />
-            <span className="text-[9px] tracking-[0.2em] text-gray-500 uppercase font-medium">
+            <span className="text-[10px] tracking-[0.2em] text-gray-500 uppercase font-medium">
               TERKUNCI
             </span>
           </div>

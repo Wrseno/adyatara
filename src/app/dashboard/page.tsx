@@ -167,12 +167,12 @@ export default async function DashboardPage() {
       <div className="mb-10">
         <div className="flex items-center gap-4 mb-4">
           <div className="h-px w-12 bg-[#D96B4A]/30"></div>
-          <p className="text-[9px] tracking-[0.3em] text-[#D96B4A] uppercase font-medium">DASHBOARD</p>
+          <p className="text-[10px] tracking-[0.3em] text-[#D96B4A] uppercase font-medium">DASHBOARD</p>
         </div>
-        <h1 className="text-4xl font-serif text-white mb-3">
+        <h1 className="text-5xl font-serif text-white mb-3">
           Selamat Datang, {userData.name || "Penjelajah"}!
         </h1>
-        <p className="text-[13px] text-gray-400 font-light">
+        <p className="text-sm text-gray-400 font-light">
           Lihat progress dan pencapaian Anda dalam menjelajahi budaya Nusantara
         </p>
       </div>
@@ -180,7 +180,7 @@ export default async function DashboardPage() {
       {/* Stats Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
         {/* Total Score */}
-        <div className="relative p-6 bg-[#0D0907] border border-transparent group min-h-[140px]">
+        <div className="relative p-6 bg-[#0D0907] border border-transparent group min-h-35">
           {/* Corner brackets */}
           <div className="absolute top-0 left-0 w-3 h-3 border-l border-t border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
           <div className="absolute top-0 right-0 w-3 h-3 border-r border-t border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
@@ -199,7 +199,7 @@ export default async function DashboardPage() {
         </div>
 
         {/* Level */}
-        <div className="relative p-6 bg-[#0D0907] border border-transparent group min-h-[140px]">
+        <div className="relative p-6 bg-[#0D0907] border border-transparent group min-h-35">
           {/* Corner brackets */}
           <div className="absolute top-0 left-0 w-3 h-3 border-l border-t border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
           <div className="absolute top-0 right-0 w-3 h-3 border-r border-t border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
@@ -218,7 +218,7 @@ export default async function DashboardPage() {
           </div>
           <div className="w-full h-1.5 bg-gray-800 rounded-full overflow-hidden">
             <div
-              className="h-full bg-gradient-to-r from-[#D96B4A] to-[#E86B52] rounded-full transition-all"
+              className="h-full bg-linear-to-r from-[#D96B4A] to-[#E86B52] rounded-full transition-all"
               style={{ width: `${levelProgress}%` }}
             />
           </div>
@@ -228,7 +228,7 @@ export default async function DashboardPage() {
         </div>
 
         {/* Stories Completed */}
-        <div className="relative p-6 bg-[#0D0907] border border-transparent group min-h-[140px]">
+        <div className="relative p-6 bg-[#0D0907] border border-transparent group min-h-35">
           {/* Corner brackets */}
           <div className="absolute top-0 left-0 w-3 h-3 border-l border-t border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
           <div className="absolute top-0 right-0 w-3 h-3 border-r border-t border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
@@ -246,7 +246,7 @@ export default async function DashboardPage() {
         </div>
 
         {/* Knowledge Unlocked */}
-        <div className="relative p-6 bg-[#0D0907] border border-transparent group min-h-[140px]">
+        <div className="relative p-6 bg-[#0D0907] border border-transparent group min-h-35">
           {/* Corner brackets */}
           <div className="absolute top-0 left-0 w-3 h-3 border-l border-t border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
           <div className="absolute top-0 right-0 w-3 h-3 border-r border-t border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
@@ -287,21 +287,21 @@ export default async function DashboardPage() {
             {regionProgress.map((region) => (
               <div key={region.name}>
                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-[13px] text-gray-300">{region.name}</span>
+                  <span className="text-sm text-gray-300">{region.name}</span>
                   <span className="text-[11px] text-gray-500">
                     {region.completed}/{region.total}
                   </span>
                 </div>
                 <div className="w-full h-1.5 bg-gray-800 rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-gradient-to-r from-[#D96B4A] to-[#E86B52] rounded-full transition-all"
+                    className="h-full bg-linear-to-r from-[#D96B4A] to-[#E86B52] rounded-full transition-all"
                     style={{ width: `${region.percentage}%` }}
                   />
                 </div>
               </div>
             ))}
             {regionProgress.length === 0 && (
-              <p className="text-[13px] text-gray-500 text-center py-8">
+              <p className="text-sm text-gray-500 text-center py-8">
                 Belum ada progress di region manapun.{" "}
                 <Link href="/explore" className="text-[#D96B4A] hover:text-[#E86B52] transition-colors">
                   Mulai jelajah sekarang!
@@ -343,7 +343,7 @@ export default async function DashboardPage() {
                     }`}
                   />
                   <div className="flex-1">
-                    <p className="text-[13px] text-gray-300">
+                    <p className="text-sm text-gray-300">
                       {activity.status === "completed" ? "Selesai" : "Memainkan"}{" "}
                       &quot;{activity.story.title}&quot;
                     </p>
@@ -357,7 +357,7 @@ export default async function DashboardPage() {
                 </div>
               ))
             ) : (
-              <p className="text-[13px] text-gray-500 text-center py-8">
+              <p className="text-sm text-gray-500 text-center py-8">
                 Belum ada aktivitas.{" "}
                 <Link href="/explore" className="text-[#D96B4A] hover:text-[#E86B52] transition-colors">
                   Mulai petualangan Anda!
@@ -369,7 +369,7 @@ export default async function DashboardPage() {
       </div>
 
       {/* Recent Collectibles Section */}
-      <div className="relative p-8 bg-[#0D0907] border border-transparent group">
+      <div className="relative p-8 bg-[#0D0907] border border-transparent group mb-10">
         {/* Corner brackets */}
         <div className="absolute top-0 left-0 w-3 h-3 border-l border-t border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
         <div className="absolute top-0 right-0 w-3 h-3 border-r border-t border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
@@ -385,8 +385,8 @@ export default async function DashboardPage() {
             </div>
             <h3 className="text-lg font-serif text-white">Koleksi Terbaru</h3>
           </div>
-          <Link 
-            href="/dashboard/collection" 
+          <Link
+            href="/dashboard/collection"
             className="text-[11px] tracking-[0.15em] text-[#D96B4A] hover:text-[#E86B52] transition-colors uppercase"
           >
             Lihat Semua
@@ -403,7 +403,7 @@ export default async function DashboardPage() {
                 {/* Corner accents */}
                 <div className="absolute top-0 left-0 w-2 h-2 border-l border-t border-gray-700 group-hover/item:border-[#D96B4A]/50 transition-colors" />
                 <div className="absolute bottom-0 right-0 w-2 h-2 border-r border-b border-gray-700 group-hover/item:border-[#D96B4A]/50 transition-colors" />
-                
+
                 <div className="relative aspect-square mb-3 overflow-hidden bg-[#1A1410] rounded-sm">
                   <Image
                     src={item.collectible.image}
@@ -413,7 +413,7 @@ export default async function DashboardPage() {
                   />
                   {/* Rarity badge */}
                   <div className={`absolute top-1 right-1 px-1.5 py-0.5 text-[8px] uppercase tracking-wider font-medium rounded-sm ${
-                    item.collectible.rarity === "legendary" 
+                    item.collectible.rarity === "legendary"
                       ? "bg-amber-500/20 text-amber-400 border border-amber-500/30"
                       : item.collectible.rarity === "rare"
                       ? "bg-purple-500/20 text-purple-400 border border-purple-500/30"
@@ -424,7 +424,7 @@ export default async function DashboardPage() {
                     {item.collectible.rarity}
                   </div>
                 </div>
-                
+
                 <p className="text-[12px] text-gray-200 font-medium truncate">
                   {item.collectible.name}
                 </p>
@@ -440,7 +440,7 @@ export default async function DashboardPage() {
         ) : (
           <div className="text-center py-12">
             <Gem className="w-16 h-16 text-gray-700 mx-auto mb-4" />
-            <p className="text-[13px] text-gray-500">
+            <p className="text-sm text-gray-500">
               Belum ada koleksi.{" "}
               <Link href="/explore" className="text-[#D96B4A] hover:text-[#E86B52] transition-colors">
                 Mainkan cerita untuk mengumpulkan item!
@@ -448,6 +448,31 @@ export default async function DashboardPage() {
             </p>
           </div>
         )}
+      </div>
+
+      {/* Achievements Section (Placeholder) */}
+      <div className="relative p-8 bg-[#0D0907] border border-transparent group">
+        {/* Corner brackets */}
+        <div className="absolute top-0 left-0 w-3 h-3 border-l border-t border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
+        <div className="absolute top-0 right-0 w-3 h-3 border-r border-t border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
+        <div className="absolute bottom-0 left-0 w-3 h-3 border-l border-b border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
+        <div className="absolute bottom-0 right-0 w-3 h-3 border-r border-b border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
+
+        <div className="flex items-center gap-3 mb-6">
+          <div className="inline-flex p-2 border border-gray-800/80 rounded-sm relative">
+            <div className="absolute top-0 left-0 w-1 h-1 border-l border-t border-gray-600"></div>
+            <div className="absolute bottom-0 right-0 w-1 h-1 border-r border-b border-gray-600"></div>
+            <Trophy className="w-4 h-4 text-[#D96B4A]" strokeWidth={2} />
+          </div>
+          <h3 className="text-lg font-serif text-white">Pencapaian</h3>
+        </div>
+
+        <div className="text-center py-12">
+          <Trophy className="w-16 h-16 text-gray-700 mx-auto mb-4" />
+          <p className="text-sm text-gray-500">
+            Sistem pencapaian akan segera hadir...
+          </p>
+        </div>
       </div>
     </div>
   );
