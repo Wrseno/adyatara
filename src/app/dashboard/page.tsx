@@ -4,15 +4,22 @@ import { redirect } from "next/navigation";
 import { constructMetadata } from "@/lib/metadata";
 import {
   Trophy,
-  Award,
+  
   BookOpen,
   Lightbulb,
   Clock,
   TrendingUp,
   Gem,
+  Map,
+  Compass,
+  Footprints,
+  ChevronRight,
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export const metadata = constructMetadata({
   title: "Dashboard - Statistik",
@@ -71,13 +78,14 @@ export default async function DashboardPage() {
   const knowledgeUnlocked = userData.userKnowledges.length;
   const recentActivities = userData.gameSessions.slice(0, 5);
 
-  // Calculate progress to next level (simple formula: level * 1000)
-  const currentLevelThreshold = (level - 1) * 1000;
-  const nextLevelThreshold = level * 1000;
-  const rawProgress =
-    ((totalScore - currentLevelThreshold) /
-      (nextLevelThreshold - currentLevelThreshold)) *
-    100;
+  // Calculate progress to next level dynamically 
+  // Assuming a rough scale of ~100-200 score per level for the visual bar 
+  const scoreThreshold = 100;
+  const currentLevelBase = (level - 1) * scoreThreshold;
+  let rawProgress = ((totalScore - currentLevelBase) / scoreThreshold) * 100;
+  if (rawProgress < 0) rawProgress = 0;
+  if (rawProgress > 99) rawProgress = (totalScore % scoreThreshold); // Wrap around for visual looping if they overshot
+  
   // Clamp progress between 0 and 100
   const levelProgress = Math.max(0, Math.min(rawProgress, 100));
 
@@ -166,231 +174,212 @@ export default async function DashboardPage() {
       {/* Spacer for mobile nav */}
       <div className="md:hidden h-14" />
       
-      {/* Welcome Header */}
-      <div className="mb-8 md:mb-10">
-        <div className="flex items-center gap-4 mb-4">
-          <div className="h-px w-12 bg-[#D96B4A]/30"></div>
-          <p className="text-[10px] tracking-[0.3em] text-[#D96B4A] uppercase font-medium">DASHBOARD</p>
+      {/* Hero Banner */}
+      <div className="relative mb-8 md:mb-10 bg-[#0a0604] border border-[#2E2318] p-8 md:p-12 overflow-hidden group shadow-[inset_0_0_40px_rgba(217,107,74,0.05)]">
+        {/* Background MAP/Texture placeholder */}
+        <div className="absolute -right-20 -top-20 w-64 h-64 bg-[#D96B4A] opacity-[0.03] blur-[80px] rounded-full pointer-events-none" />
+        
+        {/* Corner frames */}
+        <div className="absolute top-0 left-0 w-8 h-8 border-l-2 border-t-2 border-[#D96B4A]/30 group-hover:border-[#D96B4A]/60 transition-colors" />
+        <div className="absolute top-0 right-0 w-8 h-8 border-r-2 border-t-2 border-[#D96B4A]/30 group-hover:border-[#D96B4A]/60 transition-colors" />
+        <div className="absolute bottom-0 left-0 w-8 h-8 border-l-2 border-b-2 border-[#D96B4A]/30 group-hover:border-[#D96B4A]/60 transition-colors" />
+        <div className="absolute bottom-0 right-0 w-8 h-8 border-r-2 border-b-2 border-[#D96B4A]/30 group-hover:border-[#D96B4A]/60 transition-colors" />
+
+        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div>
+            <div className="flex items-center gap-4 mb-3">
+              <div className="h-px w-8 bg-gradient-to-r from-transparent to-[#D96B4A]"></div>
+              <p className="text-[10px] tracking-[0.3em] text-[#D96B4A] uppercase font-medium">Buku Harian Penjelajah</p>
+            </div>
+            <h1 className="text-3xl md:text-5xl font-serif text-[#F5F0EB] mb-4 drop-shadow-sm leading-tight">
+              Salam, {userData.name || "Penjelajah"}!<br/>
+              <span className="text-[#9A8A7A] text-2xl md:text-3xl">Legenda Menanti...</span>
+            </h1>
+            <p className="text-sm text-[#9A8A7A] font-light max-w-xl leading-relaxed">
+              Buka lembaran baru dan temukan rahasia yang tersembunyi di penjuru Nusantara. Setiap pilihanmu mengukir legenda baru.
+            </p>
+          </div>
+          <Link href="/explore" className="inline-flex items-center justify-center bg-[#1A1410] border border-[#D96B4A]/50 text-[#D96B4A] px-6 py-3 uppercase tracking-[0.2em] text-[10px] font-bold hover:bg-[#D96B4A] hover:text-[#0A0705] transition-all group/btn shadow-[0_0_15px_rgba(217,107,74,0.1)] hover:shadow-[0_0_20px_rgba(217,107,74,0.3)]">
+            Mulai Perjalanan
+            <ChevronRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
+          </Link>
         </div>
-        <h1 className="text-5xl font-serif text-white mb-3">
-          Selamat Datang, {userData.name || "Penjelajah"}!
-        </h1>
-        <p className="text-sm text-gray-400 font-light">
-          Lihat progress dan pencapaian Anda dalam menjelajahi budaya Nusantara
-        </p>
       </div>
 
-      {/* Stats Cards Grid */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 mb-8 md:mb-10">
-        {/* Total Score */}
-        <div className="relative p-4 md:p-6 bg-[#0D0907] border border-transparent group min-h-[120px] md:min-h-[140px]">
-          {/* Corner brackets */}
-          <div className="absolute top-0 left-0 w-3 h-3 border-l border-t border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
-          <div className="absolute top-0 right-0 w-3 h-3 border-r border-t border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
-          <div className="absolute bottom-0 left-0 w-3 h-3 border-l border-b border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
-          <div className="absolute bottom-0 right-0 w-3 h-3 border-r border-b border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
-
-          <div className="mb-3 md:mb-4 inline-flex p-2 md:p-3 border border-gray-800/80 group-hover:border-[#D96B4A]/30 rounded-sm transition-colors relative">
-            <div className="absolute top-0 left-0 w-1 h-1 border-l border-t border-gray-600"></div>
-            <div className="absolute bottom-0 right-0 w-1 h-1 border-r border-b border-gray-600"></div>
-            <Trophy className="w-5 h-5 md:w-6 md:h-6 text-[#D96B4A]" strokeWidth={2} />
+      {/* Konsolidasi Stats - Player Status Bar */}
+      <div className="mb-8 md:mb-10 bg-[#0a0604] border border-[#2E2318] p-5 md:p-6 shadow-[inset_0_0_20px_rgba(0,0,0,0.5)] relative">
+        <div className="flex flex-col md:flex-row gap-6 md:gap-10 items-center">
+          {/* Level Ring/Bar */}
+          <div className="flex items-center gap-5 flex-1 w-full">
+            <div className="relative w-[70px] h-[70px] shrink-0 flex items-center justify-center border border-[#D96B4A]/40 bg-[#1A1410] rotate-45 group hover:border-[#D96B4A] transition-colors shadow-[0_0_15px_rgba(217,107,74,0.1)]">
+              <div className="absolute inset-1 border border-[#2E2318]" />
+              <span className="text-2xl font-serif text-[#F5F0EB] -rotate-45">{level}</span>
+            </div>
+            <div className="flex-1">
+              <div className="flex justify-between items-end mb-2">
+                <span className="text-[10px] uppercase tracking-[0.2em] text-[#9A8A7A] font-medium">Tingkat Penjelajah</span>
+                <span className="text-[10px] text-[#D96B4A]">{Math.round(levelProgress)}% ke Lv {level + 1}</span>
+              </div>
+              <div className="w-full h-1.5 bg-[#1A1410] border border-[#2E2318] overflow-hidden">
+                <div className="h-full bg-gradient-to-r from-[#D96B4A] to-[#E86B52] shadow-[0_0_8px_rgba(217,107,74,0.6)]" style={{ width: `${levelProgress}%` }} />
+              </div>
+            </div>
           </div>
-          <p className="text-[10px] md:text-[11px] tracking-[0.2em] text-gray-500 uppercase mb-1 md:mb-2">Total Skor</p>
-          <p className="text-3xl md:text-4xl font-serif text-[#D96B4A]">
-            {totalScore.toLocaleString()}
-          </p>
-        </div>
 
-        {/* Level */}
-        <div className="relative p-4 md:p-6 bg-[#0D0907] border border-transparent group min-h-[120px] md:min-h-[140px]">
-          {/* Corner brackets */}
-          <div className="absolute top-0 left-0 w-3 h-3 border-l border-t border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
-          <div className="absolute top-0 right-0 w-3 h-3 border-r border-t border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
-          <div className="absolute bottom-0 left-0 w-3 h-3 border-l border-b border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
-          <div className="absolute bottom-0 right-0 w-3 h-3 border-r border-b border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
-
-          <div className="mb-3 md:mb-4 inline-flex p-2 md:p-3 border border-gray-800/80 group-hover:border-[#D96B4A]/30 rounded-sm transition-colors relative">
-            <div className="absolute top-0 left-0 w-1 h-1 border-l border-t border-gray-600"></div>
-            <div className="absolute bottom-0 right-0 w-1 h-1 border-r border-b border-gray-600"></div>
-            <Award className="w-5 h-5 md:w-6 md:h-6 text-[#D96B4A]" strokeWidth={2} />
+          {/* Sub Stats List */}
+          <div className="flex flex-wrap md:flex-nowrap items-center justify-between md:justify-end gap-6 md:gap-10 w-full md:w-auto border-t md:border-t-0 md:border-l border-[#2E2318] pt-5 md:pt-0 md:pl-10">
+            {/* Karma */}
+            <div className="flex items-center gap-3">
+              <div className="p-2 border border-[#2E2318] bg-[#0D0A08] rotate-45 hidden md:block">
+                <Trophy className="w-4 h-4 text-[#D96B4A] -rotate-45" strokeWidth={1.5} />
+              </div>
+              <div>
+                <p className="text-[9px] tracking-[0.2em] text-[#9A8A7A] uppercase mb-0.5">Karma</p>
+                <p className="text-xl font-serif text-[#F5F0EB]">{totalScore.toLocaleString()}</p>
+              </div>
+            </div>
+            {/* Legenda */}
+            <div className="flex items-center gap-3">
+              <div className="p-2 border border-[#2E2318] bg-[#0D0A08] rotate-45 hidden md:block">
+                <BookOpen className="w-4 h-4 text-[#D96B4A] -rotate-45" strokeWidth={1.5} />
+              </div>
+              <div>
+                <p className="text-[9px] tracking-[0.2em] text-[#9A8A7A] uppercase mb-0.5">Legenda</p>
+                <p className="text-xl font-serif text-[#F5F0EB]">{completedStories}<span className="text-xs text-[#9A8A7A]">/{totalStories}</span></p>
+              </div>
+            </div>
+            {/* Wawasan */}
+            <div className="flex items-center gap-3">
+              <div className="p-2 border border-[#2E2318] bg-[#0D0A08] rotate-45 hidden md:block">
+                <Lightbulb className="w-4 h-4 text-[#D96B4A] -rotate-45" strokeWidth={1.5} />
+              </div>
+              <div>
+                <p className="text-[9px] tracking-[0.2em] text-[#9A8A7A] uppercase mb-0.5">Naskah</p>
+                <p className="text-xl font-serif text-[#F5F0EB]">{knowledgeUnlocked}</p>
+              </div>
+            </div>
           </div>
-          <p className="text-[10px] md:text-[11px] tracking-[0.2em] text-gray-500 uppercase mb-1 md:mb-2">Level</p>
-          <div className="flex items-end gap-1 md:gap-2 mb-2 md:mb-3">
-            <p className="text-3xl md:text-4xl font-serif text-white">{level}</p>
-            <p className="text-sm md:text-base text-gray-500 mb-0.5 md:mb-1">/ Lv {level + 1}</p>
-          </div>
-          <div className="w-full h-1 md:h-1.5 bg-gray-800 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-linear-to-r from-[#D96B4A] to-[#E86B52] rounded-full transition-all"
-              style={{ width: `${levelProgress}%` }}
-            />
-          </div>
-          <p className="text-[9px] md:text-[10px] text-gray-500 mt-1.5 md:mt-2">
-            {Math.round(levelProgress)}% menuju level berikutnya
-          </p>
-        </div>
-
-        {/* Stories Completed */}
-        <div className="relative p-4 md:p-6 bg-[#0D0907] border border-transparent group min-h-[120px] md:min-h-[140px]">
-          {/* Corner brackets */}
-          <div className="absolute top-0 left-0 w-3 h-3 border-l border-t border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
-          <div className="absolute top-0 right-0 w-3 h-3 border-r border-t border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
-          <div className="absolute bottom-0 left-0 w-3 h-3 border-l border-b border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
-          <div className="absolute bottom-0 right-0 w-3 h-3 border-r border-b border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
-
-          <div className="mb-3 md:mb-4 inline-flex p-2 md:p-3 border border-gray-800/80 group-hover:border-[#D96B4A]/30 rounded-sm transition-colors relative">
-            <div className="absolute top-0 left-0 w-1 h-1 border-l border-t border-gray-600"></div>
-            <div className="absolute bottom-0 right-0 w-1 h-1 border-r border-b border-gray-600"></div>
-            <BookOpen className="w-5 h-5 md:w-6 md:h-6 text-[#D96B4A]" strokeWidth={2} />
-          </div>
-          <p className="text-[10px] md:text-[11px] tracking-[0.2em] text-gray-500 uppercase mb-1 md:mb-2">Cerita Selesai</p>
-          <p className="text-3xl md:text-4xl font-serif text-white">{completedStories}</p>
-          <p className="text-[10px] md:text-[11px] text-gray-500 mt-1">dari {totalStories} cerita</p>
-        </div>
-
-        {/* Knowledge Unlocked */}
-        <div className="relative p-4 md:p-6 bg-[#0D0907] border border-transparent group min-h-[120px] md:min-h-[140px]">
-          {/* Corner brackets */}
-          <div className="absolute top-0 left-0 w-3 h-3 border-l border-t border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
-          <div className="absolute top-0 right-0 w-3 h-3 border-r border-t border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
-          <div className="absolute bottom-0 left-0 w-3 h-3 border-l border-b border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
-          <div className="absolute bottom-0 right-0 w-3 h-3 border-r border-b border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
-
-          <div className="mb-3 md:mb-4 inline-flex p-2 md:p-3 border border-gray-800/80 group-hover:border-[#D96B4A]/30 rounded-sm transition-colors relative">
-            <div className="absolute top-0 left-0 w-1 h-1 border-l border-t border-gray-600"></div>
-            <div className="absolute bottom-0 right-0 w-1 h-1 border-r border-b border-gray-600"></div>
-            <Lightbulb className="w-5 h-5 md:w-6 md:h-6 text-[#D96B4A]" strokeWidth={2} />
-          </div>
-          <p className="text-[10px] md:text-[11px] tracking-[0.2em] text-gray-500 uppercase mb-1 md:mb-2">Pengetahuan</p>
-          <p className="text-3xl md:text-4xl font-serif text-white">{knowledgeUnlocked}</p>
-          <p className="text-[10px] md:text-[11px] text-gray-500 mt-1">pengetahuan terbuka</p>
         </div>
       </div>
 
       {/* Region Progress & Recent Activity */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 mb-8 md:mb-10">
         {/* Region Progress */}
-        <div className="relative p-5 md:p-8 bg-[#0D0907] border border-transparent group">
-          {/* Corner brackets */}
-          <div className="absolute top-0 left-0 w-3 h-3 border-l border-t border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
-          <div className="absolute top-0 right-0 w-3 h-3 border-r border-t border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
-          <div className="absolute bottom-0 left-0 w-3 h-3 border-l border-b border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
-          <div className="absolute bottom-0 right-0 w-3 h-3 border-r border-b border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
+        <div className="relative p-5 md:p-8 bg-[#0a0604] border border-[#2E2318] group shadow-[inset_0_0_30px_rgba(0,0,0,0.5)] flex flex-col">
+          {/* Corner frames */}
+          <div className="absolute top-0 left-0 w-8 h-8 border-l-2 border-t-2 border-[#D96B4A]/30" />
+          <div className="absolute top-0 right-0 w-8 h-8 border-r-2 border-t-2 border-[#D96B4A]/30" />
+          <div className="absolute bottom-0 left-0 w-8 h-8 border-l-2 border-b-2 border-[#D96B4A]/30" />
+          <div className="absolute bottom-0 right-0 w-8 h-8 border-r-2 border-b-2 border-[#D96B4A]/30" />
 
-          <div className="flex items-center gap-3 mb-5 md:mb-6">
-            <div className="inline-flex p-2 border border-gray-800/80 rounded-sm relative">
-              <div className="absolute top-0 left-0 w-1 h-1 border-l border-t border-gray-600"></div>
-              <div className="absolute bottom-0 right-0 w-1 h-1 border-r border-b border-gray-600"></div>
-              <TrendingUp className="w-5 h-5 text-[#D96B4A]" strokeWidth={2} />
-            </div>
-            <h3 className="text-lg md:text-xl font-serif text-white">Progress Per Region</h3>
+          <div className="flex items-center gap-3 mb-6 md:mb-8 border-b border-[#2E2318] pb-4">
+            <TrendingUp className="w-5 h-5 text-[#D96B4A]" strokeWidth={1.5} />
+            <h3 className="text-lg md:text-xl font-serif text-[#F5F0EB] tracking-wide">Peta Penjelajahan</h3>
           </div>
 
-          <div className="space-y-4 md:space-y-5">
-            {regionProgress.map((region) => (
-              <div key={region.name}>
-                <div className="flex justify-between items-center mb-2">
-                  <span className="text-sm md:text-base text-gray-300">{region.name}</span>
-                  <span className="text-[11px] md:text-[12px] text-gray-500">
-                    {region.completed}/{region.total}
+          <div className="space-y-5 md:space-y-6 flex-1 flex flex-col justify-center">
+            {regionProgress.length > 0 ? regionProgress.map((region) => (
+              <div key={region.name} className="relative">
+                <div className="flex justify-between items-end mb-2">
+                  <span className="text-sm md:text-base text-[#D96B4A] uppercase tracking-wider">{region.name}</span>
+                  <span className="text-[11px] md:text-[12px] text-[#9A8A7A] font-medium">
+                    {region.completed}/{region.total} WILAYAH
                   </span>
                 </div>
-                <div className="w-full h-1 md:h-1.5 bg-gray-800 rounded-full overflow-hidden">
+                <div className="w-full h-1.5 md:h-2 bg-[#1A1410] overflow-hidden border border-[#2E2318]">
                   <div
-                    className="h-full bg-linear-to-r from-[#D96B4A] to-[#E86B52] rounded-full transition-all"
+                    className="h-full bg-gradient-to-r from-[#D96B4A] to-[#E86B52] shadow-[0_0_10px_rgba(217,107,74,0.5)]"
                     style={{ width: `${region.percentage}%` }}
                   />
                 </div>
               </div>
-            ))}
-            {regionProgress.length === 0 && (
-              <p className="text-sm md:text-base text-gray-500 text-center py-6 md:py-8">
-                Belum ada progress di region manapun.{" "}
-                <Link href="/explore" className="text-[#D96B4A] hover:text-[#E86B52] transition-colors">
-                  Mulai jelajah sekarang!
-                </Link>
-              </p>
+            )) : (
+              <div className="flex flex-col items-center justify-center py-6 text-center">
+                 <Compass className="w-12 h-12 text-[#2E2318] mb-4 opacity-50" strokeWidth={1} />
+                 <p className="text-sm md:text-base text-[#9A8A7A] mb-4 font-serif">Peta penjelajahanmu masih rahasia</p>
+                 <Link href="/explore" className="text-[11px] text-[#D96B4A] uppercase tracking-[0.2em] hover:text-[#E86B52] border-b border-[#D96B4A]/30 pb-1 flex items-center gap-2 transition-all">
+                    Buka Peta <Map className="w-3 h-3" />
+                 </Link>
+              </div>
             )}
           </div>
         </div>
 
         {/* Recent Activity */}
-        <div className="relative p-5 md:p-8 bg-[#0D0907] border border-transparent group">
-          {/* Corner brackets */}
-          <div className="absolute top-0 left-0 w-3 h-3 border-l border-t border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
-          <div className="absolute top-0 right-0 w-3 h-3 border-r border-t border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
-          <div className="absolute bottom-0 left-0 w-3 h-3 border-l border-b border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
-          <div className="absolute bottom-0 right-0 w-3 h-3 border-r border-b border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
+        <div className="relative p-5 md:p-8 bg-[#0a0604] border border-[#2E2318] group shadow-[inset_0_0_30px_rgba(0,0,0,0.5)] flex flex-col">
+          {/* Corner frames */}
+          <div className="absolute top-0 left-0 w-8 h-8 border-l-2 border-t-2 border-[#D96B4A]/30" />
+          <div className="absolute top-0 right-0 w-8 h-8 border-r-2 border-t-2 border-[#D96B4A]/30" />
+          <div className="absolute bottom-0 left-0 w-8 h-8 border-l-2 border-b-2 border-[#D96B4A]/30" />
+          <div className="absolute bottom-0 right-0 w-8 h-8 border-r-2 border-b-2 border-[#D96B4A]/30" />
 
-          <div className="flex items-center gap-3 mb-5 md:mb-6">
-            <div className="inline-flex p-2 border border-gray-800/80 rounded-sm relative">
-              <div className="absolute top-0 left-0 w-1 h-1 border-l border-t border-gray-600"></div>
-              <div className="absolute bottom-0 right-0 w-1 h-1 border-r border-b border-gray-600"></div>
-              <Clock className="w-5 h-5 text-[#D96B4A]" strokeWidth={2} />
-            </div>
-            <h3 className="text-lg md:text-xl font-serif text-white">Aktivitas Terbaru</h3>
+          <div className="flex items-center gap-3 mb-6 md:mb-8 border-b border-[#2E2318] pb-4">
+            <Clock className="w-5 h-5 text-[#D96B4A]" strokeWidth={1.5} />
+            <h3 className="text-lg md:text-xl font-serif text-[#F5F0EB] tracking-wide">Jejak Langkah Terkini</h3>
           </div>
 
-          <div className="space-y-3 md:space-y-4">
+          <div className="space-y-3 md:space-y-4 flex-1 flex flex-col justify-center">
             {recentActivities.length > 0 ? (
               recentActivities.map((activity) => (
                 <div
                   key={activity.id}
-                  className="flex items-start gap-3 pb-3 md:pb-4 border-b border-gray-800/50 last:border-0 last:pb-0"
+                  className="flex items-start gap-4 p-3 md:p-4 bg-[#1A1410]/40 border border-[#2E2318] hover:border-[#D96B4A]/30 transition-all hover:bg-[#1A1410]"
                 >
                   <div
-                    className={`w-2 h-2 rounded-full mt-1.5 flex-shrink-0 ${
+                    className={`w-1.5 h-full min-h-[40px] ${
                       activity.status === "completed"
-                        ? "bg-green-500"
-                        : "bg-yellow-500"
+                        ? "bg-[#D96B4A] shadow-[0_0_8px_rgba(217,107,74,0.4)]"
+                        : "bg-[#9A8A7A]"
                     }`}
                   />
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm md:text-base text-gray-300 truncate">
-                      {activity.status === "completed" ? "Selesai" : "Memainkan"}{" "}
-                      &quot;{activity.story.title}&quot;
+                  <div className="flex-1 min-w-0 py-1">
+                    <p className="text-sm md:text-base font-serif text-[#F5F0EB] truncate drop-shadow-sm">
+                      {activity.status === "completed" ? "Tamat" : "Menyelusuri"}{" "}
+                      <span className="text-[#D96B4A]">&quot;{activity.story.title}&quot;quot;{activity.story.title}&quot;{activity.story.title}&quot;quot;quot;{activity.story.title}&quot;{activity.story.title}&quot;quot;{activity.story.title}&quot;{activity.story.title}&quot;quot;quot;</span>
                     </p>
-                    <p className="text-[11px] md:text-[12px] text-gray-500 mt-1">
-                      {formatDate(activity.startedAt)} •{" "}
-                      {activity.status === "completed"
-                        ? `Skor: ${activity.score}`
-                        : "Dalam progress"}
-                    </p>
+                    <div className="flex items-center gap-2 mt-1.5">
+                      <span className="text-[10px] text-[#9A8A7A] tracking-widest uppercase">
+                        {formatDate(activity.startedAt)}
+                      </span>
+                      <span className="text-[#D96B4A]/50 text-xs">•</span>
+                      <span className="text-[10px] text-[#9A8A7A] uppercase tracking-wider">
+                        {activity.status === "completed"
+                          ? `Reputasi: +${activity.score || 0}`
+                          : "Dalam perjalanan"}
+                      </span>
+                    </div>
                   </div>
                 </div>
               ))
             ) : (
-              <p className="text-sm md:text-base text-gray-500 text-center py-6 md:py-8">
-                Belum ada aktivitas.{" "}
-                <Link href="/explore" className="text-[#D96B4A] hover:text-[#E86B52] transition-colors">
-                  Mulai petualangan Anda!
-                </Link>
-              </p>
+               <div className="flex flex-col items-center justify-center py-6 text-center">
+                 <Footprints className="w-12 h-12 text-[#2E2318] mb-4 opacity-50" strokeWidth={1} />
+                 <p className="text-sm md:text-base text-[#9A8A7A] mb-4 font-serif">Kisahmu belum dimulai</p>
+                 <Link href="/explore" className="text-[11px] text-[#D96B4A] uppercase tracking-[0.2em] hover:text-[#E86B52] border-b border-[#D96B4A]/30 pb-1 flex items-center gap-2 transition-all">
+                    Ayunkan Langkah Pertama
+                 </Link>
+              </div>
             )}
           </div>
         </div>
       </div>
 
       {/* Recent Collectibles Section */}
-      <div className="relative p-4 md:p-8 bg-[#0D0907] border border-transparent group">
-        {/* Corner brackets */}
-        <div className="absolute top-0 left-0 w-3 h-3 border-l border-t border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
-        <div className="absolute top-0 right-0 w-3 h-3 border-r border-t border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
-        <div className="absolute bottom-0 left-0 w-3 h-3 border-l border-b border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
-        <div className="absolute bottom-0 right-0 w-3 h-3 border-r border-b border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
+      <div className="relative p-5 md:p-8 bg-[#0a0604] border border-[#2E2318] group shadow-[inset_0_0_30px_rgba(0,0,0,0.5)]">
+        {/* Corner frames */}
+        <div className="absolute top-0 left-0 w-8 h-8 border-l-2 border-t-2 border-[#D96B4A]/30" />
+        <div className="absolute top-0 right-0 w-8 h-8 border-r-2 border-t-2 border-[#D96B4A]/30" />
+        <div className="absolute bottom-0 left-0 w-8 h-8 border-l-2 border-b-2 border-[#D96B4A]/30" />
+        <div className="absolute bottom-0 right-0 w-8 h-8 border-r-2 border-b-2 border-[#D96B4A]/30" />
 
-        <div className="flex items-center justify-between mb-5 md:mb-6">
+        <div className="flex items-center justify-between mb-6 md:mb-8 border-b border-[#2E2318]/50 pb-4">
           <div className="flex items-center gap-3">
-            <div className="inline-flex p-2 border border-gray-800/80 rounded-sm relative">
-              <div className="absolute top-0 left-0 w-1 h-1 border-l border-t border-gray-600"></div>
-              <div className="absolute bottom-0 right-0 w-1 h-1 border-r border-b border-gray-600"></div>
-              <Gem className="w-5 h-5 text-[#D96B4A]" strokeWidth={2} />
-            </div>
-            <h3 className="text-lg md:text-xl font-serif text-white">Koleksi Terbaru</h3>
+            <Gem className="w-5 h-5 text-[#D96B4A]" strokeWidth={1.5} />
+            <h3 className="text-lg md:text-xl font-serif text-[#F5F0EB] tracking-wide">Peti Pusaka</h3>
           </div>
           <Link 
             href="/dashboard/collection" 
-            className="text-[10px] md:text-[11px] tracking-[0.15em] text-[#D96B4A] hover:text-[#E86B52] transition-colors uppercase"
+            className="text-[10px] md:text-[11px] tracking-[0.2em] text-[#D96B4A] hover:text-[#E86B52] transition-colors uppercase border border-[#D96B4A]/20 hover:border-[#D96B4A]/50 px-4 py-2 bg-[#1A1410]/50"
           >
             Lihat Semua
           </Link>
@@ -401,82 +390,78 @@ export default async function DashboardPage() {
             {recentCollectibles.map((item) => (
               <div
                 key={item.id}
-                className="relative p-3 md:p-4 bg-[#0A0705] border border-gray-800/50 hover:border-[#D96B4A]/40 transition-colors group/item"
+                className="relative p-3 md:p-4 bg-[#0D0907] border border-[#2E2318] hover:border-[#D96B4A]/60 transition-all group/item hover:shadow-[0_0_15px_rgba(217,107,74,0.15)]"
               >
                 {/* Corner accents */}
-                <div className="absolute top-0 left-0 w-2 h-2 border-l border-t border-gray-700 group-hover/item:border-[#D96B4A]/50 transition-colors" />
-                <div className="absolute bottom-0 right-0 w-2 h-2 border-r border-b border-gray-700 group-hover/item:border-[#D96B4A]/50 transition-colors" />
+                <div className="absolute top-0 left-0 w-2 h-2 border-l border-t border-[#D96B4A]/30 group-hover/item:border-[#D96B4A] transition-colors" />
+                <div className="absolute bottom-0 right-0 w-2 h-2 border-r border-b border-[#D96B4A]/30 group-hover/item:border-[#D96B4A] transition-colors" />
                 
-                <div className="relative aspect-square mb-2 md:mb-3 overflow-hidden bg-[#1A1410] rounded-sm">
+                <div className="relative aspect-square mb-3 md:mb-4 overflow-hidden bg-[#1A1410] border border-[#2E2318] group-hover/item:border-[#D96B4A]/30">
                   <Image
                     src={item.collectible.image}
                     alt={item.collectible.name}
                     fill
-                    className="object-cover"
+                    className="object-cover group-hover/item:scale-110 transition-transform duration-500"
                   />
                   {/* Rarity badge */}
-                  <div className={`absolute top-1 right-1 px-1 md:px-1.5 py-0.5 text-[7px] md:text-[8px] uppercase tracking-wider font-medium rounded-sm ${
+                  <div className={`absolute top-1 right-1 px-1.5 md:px-2 py-0.5 text-[8px] md:text-[9px] uppercase tracking-widest font-bold border ${
                     item.collectible.rarity === "legendary" 
-                      ? "bg-amber-500/20 text-amber-400 border border-amber-500/30"
+                      ? "bg-amber-500/10 text-amber-400 border-amber-500/50 shadow-[0_0_10px_rgba(245,158,11,0.2)]"
                       : item.collectible.rarity === "rare"
-                      ? "bg-purple-500/20 text-purple-400 border border-purple-500/30"
+                      ? "bg-purple-500/10 text-purple-400 border-purple-500/50 shadow-[0_0_10px_rgba(168,85,247,0.2)]"
                       : item.collectible.rarity === "uncommon"
-                      ? "bg-blue-500/20 text-blue-400 border border-blue-500/30"
-                      : "bg-gray-500/20 text-gray-400 border border-gray-500/30"
+                      ? "bg-blue-500/10 text-blue-400 border-blue-500/50 shadow-[0_0_10px_rgba(59,130,246,0.2)]"
+                      : "bg-[#9A8A7A]/10 text-[#9A8A7A] border-[#9A8A7A]/50"
                   }`}>
                     {item.collectible.rarity}
                   </div>
                 </div>
                 
-                <p className="text-xs md:text-sm text-gray-200 font-medium truncate">
+                <p className="text-xs md:text-sm text-[#F5F0EB] font-serif truncate group-hover/item:text-[#D96B4A] transition-colors">
                   {item.collectible.name}
                 </p>
-                <p className="text-[10px] md:text-[11px] text-gray-500 truncate mt-0.5">
+                <p className="text-[10px] md:text-[11px] text-[#9A8A7A] truncate mt-1 border-t border-[#2E2318] pt-1">
                   {item.collectible.story.title}
-                </p>
-                <p className="text-[9px] md:text-[10px] text-gray-600 mt-1">
-                  {formatDate(item.unlockedAt)}
                 </p>
               </div>
             ))}
+            
+            {/* Fill empty spots to show inventory feel if less than 5 items */}
+            {Array.from({ length: Math.max(0, 5 - recentCollectibles.length) }).map((_, i) => (
+               <div key={`empty-${i}`} className="relative p-3 md:p-4 bg-[#0a0604] border border-[#2E2318]/50 opacity-60 hidden md:block">
+                  <div className="absolute top-0 left-0 w-2 h-2 border-l border-t border-[#2E2318]" />
+                  <div className="absolute bottom-0 right-0 w-2 h-2 border-r border-b border-[#2E2318]" />
+                  <div className="relative aspect-square mb-3 md:mb-4 bg-[#1A1410] border border-[#2E2318]">
+                     <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="w-8 h-8 rounded-none border border-[#2E2318] rotate-45" />
+                     </div>
+                  </div>
+                  <div className="h-4 bg-[#1A1410] w-3/4 mb-2"></div>
+                  <div className="h-3 bg-[#1A1410] w-1/2"></div>
+               </div>
+            ))}
           </div>
         ) : (
-          <div className="text-center py-8 md:py-12">
-            <Gem className="w-14 h-14 md:w-18 md:h-18 text-gray-700 mx-auto mb-4" />
-            <p className="text-sm md:text-base text-gray-500">
-              Belum ada koleksi.{" "}
-              <Link href="/explore" className="text-[#D96B4A] hover:text-[#E86B52] transition-colors">
-                Mainkan cerita untuk mengumpulkan item!
-              </Link>
-            </p>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4">
+             {/* 5 Empty Inventory Slots */}
+             {[1, 2, 3, 4, 5].map((i) => (
+               <div key={i} className={`relative p-3 md:p-4 bg-[#0a0604] border border-[#2E2318]/50 opacity-60 ${i > 2 ? 'hidden sm:block' : ''}`}>
+                  <div className="absolute top-0 left-0 w-2 h-2 border-l border-t border-[#2E2318]" />
+                  <div className="absolute bottom-0 right-0 w-2 h-2 border-r border-b border-[#2E2318]" />
+                  <div className="relative aspect-square mb-3 md:mb-4 bg-[#1A1410] border border-[#2E2318]">
+                     <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="w-8 h-8 rounded-none border border-[#2E2318] rotate-45 flex items-center justify-center">
+                           <span className="text-[10px] text-[#2E2318] -rotate-45">?</span>
+                        </div>
+                     </div>
+                  </div>
+                  <div className="h-3 bg-[#1A1410] w-3/4 mb-1 border border-[#2E2318]"></div>
+                  <div className="h-2 bg-[#1A1410] w-1/2 border border-[#2E2318]"></div>
+               </div>
+             ))}
           </div>
         )}
       </div>
-
-      {/* Achievements Section (Placeholder) */}
-      <div className="relative p-8 bg-[#0D0907] border border-transparent group">
-        {/* Corner brackets */}
-        <div className="absolute top-0 left-0 w-3 h-3 border-l border-t border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
-        <div className="absolute top-0 right-0 w-3 h-3 border-r border-t border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
-        <div className="absolute bottom-0 left-0 w-3 h-3 border-l border-b border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
-        <div className="absolute bottom-0 right-0 w-3 h-3 border-r border-b border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
-
-        <div className="flex items-center gap-3 mb-6">
-          <div className="inline-flex p-2 border border-gray-800/80 rounded-sm relative">
-            <div className="absolute top-0 left-0 w-1 h-1 border-l border-t border-gray-600"></div>
-            <div className="absolute bottom-0 right-0 w-1 h-1 border-r border-b border-gray-600"></div>
-            <Trophy className="w-5 h-5 text-[#D96B4A]" strokeWidth={2} />
-          </div>
-          <h3 className="text-xl font-serif text-white">Pencapaian</h3>
-        </div>
-
-        <div className="text-center py-12">
-          <Trophy className="w-16 h-16 text-gray-700 mx-auto mb-4" />
-          <p className="text-sm text-gray-500">
-            Sistem pencapaian akan segera hadir...
-          </p>
-        </div>
-      </div>
-    </div>
+</div>
   );
 }

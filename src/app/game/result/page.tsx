@@ -112,7 +112,7 @@ function ResultPageContent() {
           className="flex flex-col sm:flex-row gap-4 justify-center items-center w-full max-w-md"
         >
           <Link
-            href="/dashboard"
+            href="/explore"
             className="w-full text-center py-4 px-8 bg-[#D96B4A] text-white tracking-widest text-xs font-semibold hover:bg-[#E86B52] transition-colors"
           >
             KEMBALI KE PETA

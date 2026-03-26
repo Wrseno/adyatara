@@ -23,8 +23,8 @@ interface CollectibleItem {
   image: string;
   rarity: string;
   category: string | null;
-  funFact: string | null;
-  wikipediaUrl: string | null;
+  funFact?: string | null;
+  wikipediaUrl?: string | null;
 }
 
 interface CollectionGridProps {

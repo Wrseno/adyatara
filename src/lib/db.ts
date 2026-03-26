@@ -5,7 +5,7 @@ import pg from "pg";
 const connectionString = process.env.DATABASE_URL;
 
 const globalForPrisma = globalThis as unknown as {
-  prisma: PrismaClient | undefined;
+  prisma_v2: PrismaClient | undefined;
 };
 
 function createPrismaClient(): PrismaClient {
@@ -26,6 +26,6 @@ function createPrismaClient(): PrismaClient {
   });
 }
 
-export const db = globalForPrisma.prisma ?? createPrismaClient();
+export const db = globalForPrisma.prisma_v2 ?? createPrismaClient();
 
-if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = db;
+if (process.env.NODE_ENV !== "production") globalForPrisma.prisma_v2 = db;

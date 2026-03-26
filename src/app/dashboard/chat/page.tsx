@@ -4,7 +4,7 @@ import { constructMetadata } from "@/lib/metadata";
 import { ChatInterface } from "@/components/dashboard/chat-interface";
 
 export const metadata = constructMetadata({
-  title: "Chatbot Kebudayaan",
+  title: "Pamandu Kebudayaan",
   description: "Tanya jawab tentang kebudayaan Indonesia per provinsi",
   path: "/dashboard/chat",
 });
@@ -23,7 +23,7 @@ export default async function ChatPage() {
         <div className="flex items-center gap-4 mb-4">
           <div className="h-px w-12 bg-[#D96B4A]/30"></div>
           <p className="text-[10px] tracking-[0.3em] text-[#D96B4A] uppercase font-medium">
-            CHATBOT
+            Pemandu Budaya
           </p>
         </div>
         <h1 className="text-5xl font-serif text-white mb-3">
