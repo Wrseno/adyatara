@@ -221,9 +221,10 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {stories.map((story, idx) => (
-              <div
+              <Link
                 key={idx}
-                className="group cursor-pointer aspect-[3/4] overflow-hidden relative"
+                href="/dashboard"
+                className="group cursor-pointer aspect-[3/4] overflow-hidden relative block"
               >
                 <div
                   className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-105"
@@ -252,7 +253,7 @@ export default function HomePage() {
                     </p>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
