@@ -7,9 +7,10 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npm run prisma:generate && next build",
     "start": "next start",
     "lint": "eslint",
+    "prisma:generate": "prisma generate",
     "prisma:seed": "ts-node prisma/seed.ts",
     "seed:sumbar": "npx tsx --env-file=.env prisma/seed-sumbar.ts"
   },
