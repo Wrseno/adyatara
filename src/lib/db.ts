@@ -30,11 +30,13 @@ function buildConnectionString(rawUrl: string): string {
 }
 
 function createPrismaClient(): PrismaClient {
-  if (!process.env.DATABASE_URL) {
-    throw new Error("DATABASE_URL environment variable is not set");
+  const runtimeUrl = process.env.DATABASE_URL ?? process.env.DIRECT_URL;
+
+  if (!runtimeUrl) {
+    throw new Error("DATABASE_URL or DIRECT_URL environment variable is not set");
   }
 
-  const connectionString = buildConnectionString(process.env.DATABASE_URL);
+  const connectionString = buildConnectionString(runtimeUrl);
   const pool = new pg.Pool({ connectionString });
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const adapter = new PrismaPg(pool as any);
