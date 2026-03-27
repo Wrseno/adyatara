@@ -54,10 +54,10 @@ const stories = [
   },
   {
     tag: "TRAGEDI",
-    prov: "TANAH SUNDA",
-    title: "Jawa Barat",
-    subtitle: "Legenda Sangkuriang",
-    image: "/images/jawa-barat.webp",
+    prov: "TANAH MINAHASA",
+    title: "Sulawesi Utara",
+    subtitle: "Legenda Danau Tondano",
+    image: "/images/sulawesi-utara.webp",
     gradient:
       "linear-gradient(to bottom, rgba(13,10,8,0.1) 0%, rgba(13,10,8,0.4) 40%, rgba(13,10,8,0.95) 100%)",
   },
