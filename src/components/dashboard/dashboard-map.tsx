@@ -52,7 +52,7 @@ export default function DashboardMap() {
     : null;
 
   return (
-    <div className="w-full h-full absolute inset-0 z-0 overflow-hidden">
+    <div className="w-full h-full absolute inset-0 overflow-hidden">
       <MapContainer
         center={[-2.5, 118]} // Center of Indonesia
         zoom={5}

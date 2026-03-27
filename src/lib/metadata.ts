@@ -8,9 +8,9 @@ interface MetadataParams {
 }
 
 const siteConfig = {
-    name: "NextBoiler",
+    name: "Adyatara",
     description:
-        "A production-ready Next.js boilerplate with Prisma, NextAuth, TanStack Query, and more.",
+        "Platform storytelling interaktif untuk menjelajahi legenda Nusantara melalui visual novel, kuis budaya, dan koleksi pengetahuan.",
     url: process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000",
 };
 
@@ -18,7 +18,7 @@ export function constructMetadata({
     title,
     description = siteConfig.description,
     path = "/",
-    image = "/og-image.png",
+    image = "/images/adyatara-logo.png",
 }: MetadataParams = {}): Metadata {
     const fullTitle = title
         ? `${title} | ${siteConfig.name}`
@@ -29,6 +29,12 @@ export function constructMetadata({
     return {
         title: fullTitle,
         description,
+        applicationName: siteConfig.name,
+        icons: {
+            icon: [{ url: "/images/adyatara-logo.png", type: "image/png" }],
+            apple: [{ url: "/images/adyatara-logo.png", type: "image/png" }],
+            shortcut: ["/images/adyatara-logo.png"],
+        },
         openGraph: {
             title: fullTitle,
             description,

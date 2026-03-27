@@ -19,7 +19,7 @@ function ResultPageContent() {
   const endingInfo = endingLabels[endingKey] ?? endingLabels.neutral;
 
   const stats = [
-    { label: "Skor Akhir", value: String(score), prefix: "", icon: Sparkles },
+    { label: "Karma Akhir", value: String(score), prefix: "", icon: Sparkles },
     { label: "Pengetahuan", value: "+1", prefix: "", icon: BookOpen },
     {
       label: "Ending",

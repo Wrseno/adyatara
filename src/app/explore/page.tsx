@@ -38,12 +38,12 @@ export default async function ExplorePage() {
       </div>
 
       {/* Map Area */}
-      <div className="absolute inset-0 z-0 h-full w-full">
+      <div className="absolute inset-0 h-full w-full z-10">
         <MapWrapper />
       </div>
 
       {/* UI overlay layer */}
-      <div className="relative z-10 w-full h-full flex flex-col pointer-events-none">
+      <div className="relative w-full h-full flex flex-col pointer-events-none">
         {/* Header */}
         <div className="flex items-center justify-between p-2 sm:p-4 lg:p-8 w-full mr-auto ml-auto lg:px-12">
           {/* Left - Back Button */}
@@ -82,7 +82,7 @@ export default async function ExplorePage() {
                 <Trophy className="w-5 h-5 lg:w-6 lg:h-6 text-[#D96B4A]" strokeWidth={2} />
                 <div>
                   <p className="text-[10px] lg:text-[11px] tracking-[0.2em] text-gray-500 uppercase mb-0.5">
-                    SKOR TOTAL
+                    KARMA TOTAL
                   </p>
                   <p className="text-lg lg:text-xl font-medium text-white">{score}</p>
                 </div>

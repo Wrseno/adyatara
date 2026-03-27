@@ -6,7 +6,6 @@ import {
   Trophy,
   
   BookOpen,
-  Lightbulb,
   Clock,
   TrendingUp,
   Gem,
@@ -22,7 +21,7 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export const metadata = constructMetadata({
-  title: "Dashboard - Statistik",
+  title: "Beranda - Statistik",
   description: "Lihat statistik permainan dan progress Anda",
   path: "/dashboard",
 });
@@ -50,11 +49,6 @@ export default async function DashboardPage() {
           startedAt: "desc",
         },
       },
-      userKnowledges: {
-        select: {
-          id: true,
-        },
-      },
     },
   });
 
@@ -75,7 +69,11 @@ export default async function DashboardPage() {
   const completedStories = uniqueCompletedStoryIds.size;
 
   const totalStories = await db.story.count();
-  const knowledgeUnlocked = userData.userKnowledges.length;
+  const collectiblesUnlocked = await db.userCollectible.count({
+    where: {
+      userId: session.user.id,
+    },
+  });
   const recentActivities = userData.gameSessions.slice(0, 5);
 
   // Calculate progress to next level dynamically 
@@ -248,14 +246,14 @@ export default async function DashboardPage() {
                 <p className="text-xl font-serif text-[#F5F0EB]">{completedStories}<span className="text-xs text-[#9A8A7A]">/{totalStories}</span></p>
               </div>
             </div>
-            {/* Wawasan */}
+            {/* Collectibles */}
             <div className="flex items-center gap-3">
               <div className="p-2 border border-[#2E2318] bg-[#0D0A08] rotate-45 hidden md:block">
-                <Lightbulb className="w-4 h-4 text-[#D96B4A] -rotate-45" strokeWidth={1.5} />
+                <Gem className="w-4 h-4 text-[#D96B4A] -rotate-45" strokeWidth={1.5} />
               </div>
               <div>
-                <p className="text-[9px] tracking-[0.2em] text-[#9A8A7A] uppercase mb-0.5">Naskah</p>
-                <p className="text-xl font-serif text-[#F5F0EB]">{knowledgeUnlocked}</p>
+                <p className="text-[9px] tracking-[0.2em] text-[#9A8A7A] uppercase mb-0.5">Koleksi</p>
+                <p className="text-xl font-serif text-[#F5F0EB]">{collectiblesUnlocked}</p>
               </div>
             </div>
           </div>
@@ -320,7 +318,7 @@ export default async function DashboardPage() {
 
           <div className="space-y-3 md:space-y-4 flex-1 flex flex-col justify-center">
             {recentActivities.length > 0 ? (
-              recentActivities.map((activity) => (
+              recentActivities.slice(0, 3).map((activity) => (
                 <div
                   key={activity.id}
                   className="flex items-start gap-4 p-3 md:p-4 bg-[#1A1410]/40 border border-[#2E2318] hover:border-[#D96B4A]/30 transition-all hover:bg-[#1A1410]"
@@ -344,7 +342,7 @@ export default async function DashboardPage() {
                       <span className="text-[#D96B4A]/50 text-xs">•</span>
                       <span className="text-[10px] text-[#9A8A7A] uppercase tracking-wider">
                         {activity.status === "completed"
-                          ? `Reputasi: +${activity.score || 0}`
+                          ? `Karma: +${activity.score || 0}`
                           : "Dalam perjalanan"}
                       </span>
                     </div>

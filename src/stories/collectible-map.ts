@@ -1,6 +1,7 @@
 /**
- * Mapping: storySlug → ending → collectible NAMES to award.
- * Using names instead of IDs makes it more robust against database seeds/resets.
+ * Mapping: storySlug -> ending -> collectible names to award.
+ * Kept in a separate file (no narraleaf-react dependency) so it can
+ * be safely imported from server-side API routes.
  */
 export const storyCollectibleMap: Record<string, Record<string, string[]>> = {
   prambanan: {
@@ -8,8 +9,6 @@ export const storyCollectibleMap: Record<string, Record<string, string[]>> = {
       "Candi Prambanan",
       "Keris Yogyakarta",
       "Gamelan Jawa",
-      "Wayang Kulit",
-      "Batik Parang",
     ],
     neutral: [
       "Wayang Kulit",
@@ -26,9 +25,9 @@ export const storyCollectibleMap: Record<string, Record<string, string[]>> = {
       "Nasi Pecel",
     ],
     bad: [
+      "Rumah Joglo",
       "Jamu Tradisional",
       "Lumpia Semarang",
-      "Rumah Joglo",
     ],
   },
   "danau-tondano": {
@@ -37,10 +36,26 @@ export const storyCollectibleMap: Record<string, Record<string, string[]>> = {
       "Rumah Woloan",
       "Pedang Bara Sangihe",
     ],
+    neutral: [
+      "Alat Musik Kolintang",
+    ],
     bad: [
       "Tari Kabasaran",
-      "Alat Musik Kolintang",
       "Tinutuan",
+    ],
+  },
+  "malin-kundang": {
+    best: [
+      "Jam Gadang",
+      "Rendang",
+    ],
+    neutral: [
+      "Rumah Gadang",
+      "Tari Piring",
+    ],
+    bad: [
+      "Songket Minang",
+      "Kerupuk Sanjai",
     ],
   },
 };

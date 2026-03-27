@@ -192,7 +192,7 @@ export default async function ProfilePage() {
                 <Trophy className="w-5 h-5 text-[#D96B4A]" />
               </div>
               <div>
-                <p className="text-[10px] tracking-[0.2em] text-gray-500 uppercase">Total Skor</p>
+                <p className="text-[10px] tracking-[0.2em] text-gray-500 uppercase">Total Karma</p>
                 <p className="text-xl md:text-2xl font-serif text-white">{userData.totalScore.toLocaleString()}</p>
               </div>
             </div>

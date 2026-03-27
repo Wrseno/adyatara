@@ -4,7 +4,12 @@ import { GameMenu, Item } from "narraleaf-react";
 
 export function AdyataraMenu({ items }: { items: number[] }) {
   return (
-    <GameMenu className="absolute bottom-10 md:bottom-0 w-full h-full flex items-end justify-center pb-[40%] sm:pb-[30%] md:pb-8">
+    <GameMenu
+      className="absolute bottom-10 md:bottom-0 w-full h-full flex items-end justify-center pb-[40%] sm:pb-[30%] md:pb-8"
+      onClick={(e) => e.stopPropagation()}
+      onPointerDown={(e) => e.stopPropagation()}
+      onTouchStart={(e) => e.stopPropagation()}
+    >
       <div className="max-w-6xl w-full mx-auto">
         <div className="bg-[#0A0705]/95 border border-gray-800/80 backdrop-blur-sm p-3 sm:p-5 md:p-8 relative">
           {/* Corner brackets */}

@@ -3,6 +3,25 @@
 import { useEffect } from "react";
 import { Dialog, Nametag, Texts, useVoiceState } from "narraleaf-react";
 
+function waitForFirstUserGesture(): Promise<void> {
+  return new Promise((resolve) => {
+    const handler = () => {
+      cleanup();
+      resolve();
+    };
+
+    const cleanup = () => {
+      window.removeEventListener("click", handler);
+      window.removeEventListener("touchstart", handler);
+      window.removeEventListener("keydown", handler);
+    };
+
+    window.addEventListener("click", handler, { once: true });
+    window.addEventListener("touchstart", handler, { once: true });
+    window.addEventListener("keydown", handler, { once: true });
+  });
+}
+
 /**
  * Inner component rendered inside <Dialog> so it has access to the
  * sentence context that useVoiceState reads.
@@ -13,7 +32,36 @@ function VoiceAutoPlay() {
 
   useEffect(() => {
     if (!voice) return;
-    void playVoice();
+
+    let cancelled = false;
+
+    const run = async () => {
+      try {
+        await playVoice();
+      } catch (error) {
+        const message =
+          error instanceof Error ? error.message : "Unknown audio error";
+
+        if (!message.includes("Audio context is not ready") || cancelled) {
+          return;
+        }
+
+        await waitForFirstUserGesture();
+        if (cancelled) return;
+
+        try {
+          await playVoice();
+        } catch {
+          // Ignore second failure; next sentence or interaction can retry.
+        }
+      }
+    };
+
+    void run();
+
+    return () => {
+      cancelled = true;
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [voice]); // re-run only when the Sound object changes (= new sentence)
 

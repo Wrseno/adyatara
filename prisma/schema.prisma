@@ -179,6 +179,11 @@ enum Role {
   ADMIN
 }
 
+enum QuizCategory {
+  STORY
+  GENERAL
+}
+
 model Collectible {
   id          String            @id @default(cuid())
   name        String
@@ -209,10 +214,11 @@ model Quiz {
   id          String        @id @default(cuid())
   title       String
   description String?
-  storyId     String
+  category    QuizCategory  @default(STORY)
+  storyId     String?
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
-  story       Story         @relation(fields: [storyId], references: [id], onDelete: Cascade)
+  story       Story?        @relation(fields: [storyId], references: [id], onDelete: SetNull)
   questions   Question[]
   attempts    QuizAttempt[]
 }
@@ -245,6 +251,7 @@ model QuizAttempt {
   quizId      String
   score       Int      @default(0)
   isCompleted Boolean  @default(false)
+  completedAt DateTime @default(now())
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
