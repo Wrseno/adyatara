@@ -13,6 +13,8 @@ import {
   LogOut,
   ChevronLeft,
   ChevronRight,
+  BotMessageSquare,
+  BookText,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -47,12 +49,12 @@ const menuItems: MenuItem[] = [
   },  
   {
     label: "Uji Wawasan",
-    icon: BookMarked,
+    icon: BookText,
     href: "/dashboard/quiz",
   },
   {
     label: "Pemandu Budaya",
-    icon: MessageCircle,
+    icon: BotMessageSquare,
     href: "/dashboard/chat",
   },
 ];

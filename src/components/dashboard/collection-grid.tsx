@@ -114,7 +114,7 @@ export function CollectionGrid({
       </div>
 
       <CollectibleDetailModal
-        collectible={selectedCollectible}
+        collectible={selectedCollectible as any}
         open={modalOpen}
         onOpenChange={setModalOpen}
       />

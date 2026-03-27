@@ -43,7 +43,7 @@ export default function DashboardMap() {
   const selectedStoryInfo = selectedProvince?.storySlug ? storyInfoMap[selectedProvince.storySlug] : null;
 
   return (
-    <div className="w-full h-full absolute inset-0 z-0 overflow-hidden">
+    <div className="w-full h-full absolute inset-0 overflow-hidden">
       <MapContainer
         center={[-2.5, 118]} // Center of Indonesia
         zoom={5}
@@ -57,7 +57,7 @@ export default function DashboardMap() {
         }}
       >
         {selectedProvince && (
-          <Popup position={selectedProvince.position} closeButton={false} className="custom-map-popup -mt-5">
+          <Popup position={selectedProvince.position} closeButton={false} className="custom-map-popup -mt-5 z-20">
             <div className="relative p-6 w-80 bg-[#0D0907] border border-transparent shadow-[0_10px_40px_rgba(0,0,0,0.8)] text-[#f4e1d1] transition-all duration-300 animate-in fade-in zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out data-[state=closed]:zoom-out-95 group">
               {/* Corner brackets matching landing page */}
               <div className="absolute top-0 left-0 w-3 h-3 border-l border-t border-gray-800 transition-colors" />

@@ -46,25 +46,34 @@ export async function POST(req: Request) {
       });
 
       // Award collectibles based on story + ending (only new ones)
-      const collectibleIds = storyCollectibleMap[storySlug]?.[gameEnding] || [];
+      const collectibleNames = storyCollectibleMap[storySlug]?.[gameEnding] || [];
       let newCollectibles = 0;
-      if (collectibleIds.length > 0) {
-        // Check which ones user already has
-        const existing = await db.userCollectible.findMany({
-          where: {
-            userId: user.id,
-            collectibleId: { in: collectibleIds },
-          },
-          select: { collectibleId: true },
+      if (collectibleNames.length > 0) {
+        // Fetch valid Collectible IDs from DB based on names
+        const dbCollectibles = await db.collectible.findMany({
+          where: { name: { in: collectibleNames } },
+          select: { id: true },
         });
-        const existingIds = new Set(existing.map((e) => e.collectibleId));
-        const toCreate = collectibleIds
-          .filter((id) => !existingIds.has(id))
-          .map((id) => ({ userId: user.id, collectibleId: id }));
+        const collectibleIds = dbCollectibles.map((c) => c.id);
 
-        if (toCreate.length > 0) {
-          await db.userCollectible.createMany({ data: toCreate });
-          newCollectibles = toCreate.length;
+        if (collectibleIds.length > 0) {
+          // Check which ones user already has
+          const existing = await db.userCollectible.findMany({
+            where: {
+              userId: user.id,
+              collectibleId: { in: collectibleIds },
+            },
+            select: { collectibleId: true },
+          });
+          const existingIds = new Set(existing.map((e) => e.collectibleId));
+          const toCreate = collectibleIds
+            .filter((id) => !existingIds.has(id))
+            .map((id) => ({ userId: user.id, collectibleId: id }));
+
+          if (toCreate.length > 0) {
+            await db.userCollectible.createMany({ data: toCreate });
+            newCollectibles = toCreate.length;
+          }
         }
       }
 

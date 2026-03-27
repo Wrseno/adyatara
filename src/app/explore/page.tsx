@@ -38,14 +38,14 @@ export default async function ExplorePage() {
       </div>
 
       {/* Map Area */}
-      <div className="absolute inset-0 z-0 h-full w-full">
+      <div className="absolute inset-0 h-full w-full z-10">
         <MapWrapper />
       </div>
 
       {/* UI overlay layer */}
-      <div className="relative z-10 w-full h-full flex flex-col pointer-events-none">
+      <div className="relative w-full h-full flex flex-col pointer-events-none">
         {/* Header */}
-        <div className="flex items-center justify-between p-4 md:p-8 w-full mr-auto ml-auto md:px-12">
+        <div className="relative z-20 flex items-center justify-between p-4 md:p-8 w-full mr-auto ml-auto md:px-12">
           {/* Left - Back Button */}
           <div className="flex items-center pointer-events-auto">
             <Link
@@ -105,7 +105,7 @@ export default async function ExplorePage() {
         </div>
 
         {/* Title */}
-        <div className="flex flex-col items-center mt-1 md:mt-2">
+        <div className="relative z-0 flex flex-col items-center mt-1 md:mt-2">
           <p className="text-[10px] md:text-[11px] tracking-[0.3em] md:tracking-[0.4em] text-[#D96B4A] uppercase font-medium mb-1.5 md:mb-3">
             PETA NUSANTARA
           </p>
@@ -115,7 +115,7 @@ export default async function ExplorePage() {
         </div>
 
         {/* Legend Bottom */}
-        <div className="absolute bottom-4 md:bottom-8 left-1/2 -translate-x-1/2 flex items-center justify-center gap-3 md:gap-10 bg-[#0a0705]/80 px-4 py-2 md:py-3 rounded-full border border-gray-800/50 backdrop-blur-md">
+        <div className="absolute z-20 bottom-4 md:bottom-8 left-1/2 -translate-x-1/2 flex items-center justify-center gap-3 md:gap-10 bg-[#0a0705]/80 px-4 py-2 md:py-3 rounded-full border border-gray-800/50 backdrop-blur-md">
           <div className="flex items-center gap-2 md:gap-3">
             <div className="w-2 h-2 md:w-3 md:h-3 rounded-full bg-[#EAA87E]" />
             <span className="text-[8px] md:text-[10px] tracking-[0.15em] md:tracking-[0.2em] text-gray-500 uppercase font-medium">
