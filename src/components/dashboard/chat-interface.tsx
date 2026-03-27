@@ -8,16 +8,44 @@ import { Button } from "@/components/ui/button";
 import { Markdown } from "@/components/ui/markdown";
 
 const PROVINCES = [
-  "Aceh", "Sumatera Utara", "Sumatera Barat", "Riau", "Jambi",
-  "Sumatera Selatan", "Bengkulu", "Lampung", "Kepulauan Bangka Belitung",
-  "Kepulauan Riau", "DKI Jakarta", "Jawa Barat", "Jawa Tengah",
-  "DI Yogyakarta", "Jawa Timur", "Banten", "Bali", "Nusa Tenggara Barat",
-  "Nusa Tenggara Timur", "Kalimantan Barat", "Kalimantan Tengah",
-  "Kalimantan Selatan", "Kalimantan Timur", "Kalimantan Utara",
-  "Sulawesi Utara", "Sulawesi Tengah", "Sulawesi Selatan",
-  "Sulawesi Tenggara", "Gorontalo", "Sulawesi Barat", "Maluku",
-  "Maluku Utara", "Papua", "Papua Barat", "Papua Selatan",
-  "Papua Tengah", "Papua Pegunungan", "Papua Barat Daya",
+  "Aceh",
+  "Sumatera Utara",
+  "Sumatera Barat",
+  "Riau",
+  "Jambi",
+  "Sumatera Selatan",
+  "Bengkulu",
+  "Lampung",
+  "Kepulauan Bangka Belitung",
+  "Kepulauan Riau",
+  "DKI Jakarta",
+  "Jawa Barat",
+  "Jawa Tengah",
+  "DI Yogyakarta",
+  "Jawa Timur",
+  "Banten",
+  "Bali",
+  "Nusa Tenggara Barat",
+  "Nusa Tenggara Timur",
+  "Kalimantan Barat",
+  "Kalimantan Tengah",
+  "Kalimantan Selatan",
+  "Kalimantan Timur",
+  "Kalimantan Utara",
+  "Sulawesi Utara",
+  "Sulawesi Tengah",
+  "Sulawesi Selatan",
+  "Sulawesi Tenggara",
+  "Gorontalo",
+  "Sulawesi Barat",
+  "Maluku",
+  "Maluku Utara",
+  "Papua",
+  "Papua Barat",
+  "Papua Selatan",
+  "Papua Tengah",
+  "Papua Pegunungan",
+  "Papua Barat Daya",
 ];
 
 const SUGGESTIONS = [
@@ -68,7 +96,10 @@ export function ChatInterface({ userId }: ChatInterfaceProps) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          messages: allMessages.map((m) => ({ role: m.role, content: m.content })),
+          messages: allMessages.map((m) => ({
+            role: m.role,
+            content: m.content,
+          })),
           province: selectedProvince || undefined,
         }),
         signal: abortRef.current.signal,
@@ -83,9 +114,12 @@ export function ChatInterface({ userId }: ChatInterfaceProps) {
       setMessages((prev) =>
         prev.map((m, i) =>
           i === prev.length - 1
-            ? { ...m, content: stripMarkdown(data.content) || "Tidak ada respons." }
-            : m
-        )
+            ? {
+                ...m,
+                content: stripMarkdown(data.content) || "Tidak ada respons.",
+              }
+            : m,
+        ),
       );
     } catch (err) {
       if ((err as Error).name !== "AbortError") {
@@ -93,9 +127,12 @@ export function ChatInterface({ userId }: ChatInterfaceProps) {
         setMessages((prev) =>
           prev.map((m, i) =>
             i === prev.length - 1
-              ? { ...m, content: `Maaf, terjadi kesalahan: ${(err as Error).message}` }
-              : m
-          )
+              ? {
+                  ...m,
+                  content: `Maaf, terjadi kesalahan: ${(err as Error).message}`,
+                }
+              : m,
+          ),
         );
       }
     } finally {
@@ -127,17 +164,25 @@ export function ChatInterface({ userId }: ChatInterfaceProps) {
               "bg-[#0D0907] border border-gray-800 text-[#F5F0EB] text-sm",
               "rounded-none px-3 py-1.5 pr-8 appearance-none cursor-pointer",
               "focus:outline-none focus:border-[#D96B4A]/60",
-              "transition-colors duration-200"
+              "transition-colors duration-200",
             )}
           >
             <option value="">Semua Provinsi</option>
             {PROVINCES.map((p) => (
-              <option key={p} value={p}>{p}</option>
+              <option key={p} value={p}>
+                {p}
+              </option>
             ))}
           </select>
           <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-[#9A8A7A]">
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-              <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              <path
+                d="M3 4.5L6 7.5L9 4.5"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
             </svg>
           </div>
         </div>
@@ -162,7 +207,7 @@ export function ChatInterface({ userId }: ChatInterfaceProps) {
                 <span className="text-2xl font-serif text-[#D96B4A]">A</span>
               </div>
               <h3 className="text-xl font-serif text-[#F5F0EB] mb-2">
-                Selamat Datang di Adyatara Chat
+                Selamat Datang di Budayawan
               </h3>
               <p className="text-sm text-[#9A8A7A] max-w-md">
                 Tanyakan apa saja tentang kebudayaan Indonesia. Dari tradisi,
@@ -179,7 +224,7 @@ export function ChatInterface({ userId }: ChatInterfaceProps) {
                     "text-left py-2.5 px-3 text-sm font-light",
                     "bg-[#0A0705] border border-gray-800 text-[#9A8A7A]",
                     "hover:border-[#D96B4A]/60 hover:text-[#F5F0EB]",
-                    "rounded-none transition-all duration-200"
+                    "rounded-none transition-all duration-200",
                   )}
                 >
                   {s}
@@ -194,7 +239,7 @@ export function ChatInterface({ userId }: ChatInterfaceProps) {
                 key={idx}
                 className={cn(
                   "flex gap-3 items-start",
-                  msg.role === "user" ? "justify-end" : "justify-start"
+                  msg.role === "user" ? "justify-end" : "justify-start",
                 )}
               >
                 {msg.role === "assistant" && (
@@ -207,7 +252,7 @@ export function ChatInterface({ userId }: ChatInterfaceProps) {
                     "rounded-none px-3 py-2 max-w-[85%] text-sm",
                     msg.role === "user"
                       ? "bg-[#D96B4A]/10 border border-[#D96B4A]/30 text-[#F5F0EB] whitespace-pre-wrap"
-                      : "bg-[#0A0705] border border-gray-800/60 text-[#F5F0EB]"
+                      : "bg-[#0A0705] border border-gray-800/60 text-[#F5F0EB]",
                   )}
                 >
                   {msg.role === "user" ? (
@@ -216,10 +261,21 @@ export function ChatInterface({ userId }: ChatInterfaceProps) {
                     <Markdown>{msg.content}</Markdown>
                   ) : (
                     <span className="flex items-center gap-1">
-                      <span className="animate-bounce inline-block w-1.5 h-1.5 bg-[#D96B4A] rounded-full" style={{ animationDelay: "0ms" }} />
-                      <span className="animate-bounce inline-block w-1.5 h-1.5 bg-[#D96B4A] rounded-full" style={{ animationDelay: "150ms" }} />
-                      <span className="animate-bounce inline-block w-1.5 h-1.5 bg-[#D96B4A] rounded-full" style={{ animationDelay: "300ms" }} />
-                      <span className="text-xs text-[#9A8A7A] ml-2">Berpikir...</span>
+                      <span
+                        className="animate-bounce inline-block w-1.5 h-1.5 bg-[#D96B4A] rounded-full"
+                        style={{ animationDelay: "0ms" }}
+                      />
+                      <span
+                        className="animate-bounce inline-block w-1.5 h-1.5 bg-[#D96B4A] rounded-full"
+                        style={{ animationDelay: "150ms" }}
+                      />
+                      <span
+                        className="animate-bounce inline-block w-1.5 h-1.5 bg-[#D96B4A] rounded-full"
+                        style={{ animationDelay: "300ms" }}
+                      />
+                      <span className="text-xs text-[#9A8A7A] ml-2">
+                        Berpikir...
+                      </span>
                     </span>
                   )}
                 </div>
@@ -252,7 +308,7 @@ export function ChatInterface({ userId }: ChatInterfaceProps) {
             "rounded-none px-3 py-2.5 resize-none",
             "placeholder:text-gray-600",
             "focus:outline-none focus:border-[#D96B4A]/60",
-            "transition-colors duration-200"
+            "transition-colors duration-200",
           )}
         />
         <Button
@@ -261,7 +317,7 @@ export function ChatInterface({ userId }: ChatInterfaceProps) {
           className={cn(
             "bg-[#E86B52] hover:bg-[#D96B4A] text-white",
             "rounded-none h-auto px-4",
-            "disabled:opacity-50 disabled:cursor-not-allowed"
+            "disabled:opacity-50 disabled:cursor-not-allowed",
           )}
         >
           <SendHorizontal className="h-4 w-4" />

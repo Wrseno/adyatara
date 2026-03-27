@@ -15,6 +15,7 @@ import {
   X,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useMounted } from "@/hooks/use-mounted";
 
 interface MenuItem {
   label: string;
@@ -49,6 +50,7 @@ export function MobileNav() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
   const { data: session } = useSession();
+  const mounted = useMounted();
 
   const isActive = (href: string) => {
     if (href === "/dashboard") {
@@ -56,6 +58,8 @@ export function MobileNav() {
     }
     return pathname.startsWith(href);
   };
+
+  if (!mounted) return null;
 
   return (
     <>

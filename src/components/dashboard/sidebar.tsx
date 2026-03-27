@@ -22,6 +22,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useMounted } from "@/hooks/use-mounted";
 
 interface MenuItem {
   label: string;
@@ -56,6 +57,7 @@ export function Sidebar() {
   const [collapsed, setCollapsed] = useState(false);
   const pathname = usePathname();
   const { data: session } = useSession();
+  const mounted = useMounted();
 
   const toggleSidebar = () => setCollapsed(!collapsed);
 
@@ -66,9 +68,11 @@ export function Sidebar() {
     return pathname.startsWith(href);
   };
 
+  if (!mounted) return null;
+
   return (
     <TooltipProvider delay={0}>
-      <div className="relative shrink-0 hidden md:block">
+      <div className="relative shrink-0 hidden md:block z-50">
         <aside
           className={cn(
             "sticky top-0 h-screen flex flex-col border-r",
@@ -128,7 +132,7 @@ export function Sidebar() {
                     <TooltipTrigger render={menuLink} />
                     <TooltipContent 
                       side="right" 
-                      className="bg-[#1A1410] text-[#F5F0EB] border border-[#2E2318]"
+                      className="bg-[#1A1410] text-[#F5F0EB] border border-[#2E2318] ml-2"
                     >
                       {item.label}
                     </TooltipContent>
@@ -171,7 +175,7 @@ export function Sidebar() {
                 />
                 <TooltipContent 
                   side="right" 
-                  className="bg-[#1A1410] text-[#F5F0EB] border border-[#2E2318]"
+                  className="bg-[#1A1410] text-[#F5F0EB] border border-[#2E2318] ml-2"
                 >
                   Profile
                 </TooltipContent>
@@ -228,7 +232,7 @@ export function Sidebar() {
                 />
                 <TooltipContent 
                   side="right" 
-                  className="bg-[#1A1410] text-[#F5F0EB] border border-[#2E2318]"
+                  className="bg-[#1A1410] text-[#F5F0EB] border border-[#2E2318] ml-2"
                 >
                   Logout
                 </TooltipContent>

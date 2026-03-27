@@ -22,7 +22,7 @@ function VoiceAutoPlay() {
 
 export function AdyataraDialog() {
   return (
-    <Dialog className="relative bg-[#0A0705]/95 border border-gray-800/80 backdrop-blur-sm p-6 md:p-8 max-w-6xl mx-auto w-full">
+    <Dialog className="relative bg-[#0A0705]/95 border border-gray-800/80 backdrop-blur-sm p-6 lg:p-8 max-w-6xl mx-auto w-full">
       {/* Corner brackets */}
       <div className="absolute top-0 left-0 w-2 h-2 border-l border-t border-gray-700/50" />
       <div className="absolute top-0 right-0 w-2 h-2 border-r border-t border-gray-700/50" />
