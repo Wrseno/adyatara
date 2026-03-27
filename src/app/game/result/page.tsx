@@ -31,7 +31,7 @@ function ResultPageContent() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#0A0705] relative flex flex-col items-center justify-center py-12 px-6 overflow-hidden">
+    <div className="min-h-screen bg-[#0A0705] relative flex flex-col items-center justify-center py-6 sm:py-8 md:py-12 px-4 sm:px-6 overflow-hidden">
       {/* Background with overlay */}
       <div
         className="absolute inset-0 z-0 opacity-20"
@@ -51,20 +51,20 @@ function ResultPageContent() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="text-center mb-16"
+          className="text-center mb-8 sm:mb-12 md:mb-16"
         >
-          <div className="flex items-center justify-center gap-4 mb-4">
-            <div className="h-px w-12 bg-[#D96B4A]" />
-            <h2 className="text-[#D96B4A] tracking-[0.3em] text-xs font-semibold uppercase">
+          <div className="flex items-center justify-center gap-2 sm:gap-4 mb-2 sm:mb-4">
+            <div className="h-px w-6 sm:w-8 md:w-12 bg-[#D96B4A]" />
+            <h2 className="text-[#D96B4A] tracking-[0.2em] sm:tracking-[0.3em] text-[8px] sm:text-[10px] md:text-xs font-semibold uppercase">
               Permainan Selesai
             </h2>
-            <div className="h-px w-12 bg-[#D96B4A]" />
+            <div className="h-px w-6 sm:w-8 md:w-12 bg-[#D96B4A]" />
           </div>
 
-          <h1 className="text-4xl md:text-6xl font-serif text-white mb-6">
+          <h1 className="text-xl sm:text-3xl md:text-4xl lg:text-6xl font-serif text-white mb-3 sm:mb-4 md:mb-6">
             Akhir Perjalanan
           </h1>
-          <p className="text-gray-400 font-light max-w-xl mx-auto text-lg">
+          <p className="text-gray-400 font-light max-w-xl mx-auto text-xs sm:text-sm md:text-lg">
             Anda telah menyelesaikan kisah {storyTitle}. Keputusan yang Anda
             ambil telah mengubah takdir mereka selamanya.
           </p>
@@ -75,25 +75,25 @@ function ResultPageContent() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-          className="grid grid-cols-3 gap-4 w-full mb-16"
+          className="grid grid-cols-3 gap-2 sm:gap-4 w-full mb-8 sm:mb-12 md:mb-16"
         >
           {stats.map((stat, index) => {
             const Icon = stat.icon;
             return (
               <div
                 key={index}
-                className="bg-[#120D0A]/80 border border-gray-800 p-6 flex flex-col items-center justify-center relative group hover:border-[#D96B4A]/50 transition-colors"
+                className="bg-[#120D0A]/80 border border-gray-800 p-3 sm:p-4 md:p-6 flex flex-col items-center justify-center relative group hover:border-[#D96B4A]/50 transition-colors"
               >
-                <Icon className="w-5 h-5 text-gray-500 mb-3 group-hover:text-[#D96B4A] transition-colors" />
-                <p className="text-xs text-gray-500 uppercase tracking-widest mb-1">
+                <Icon className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 text-gray-500 mb-1.5 sm:mb-2 md:mb-3 group-hover:text-[#D96B4A] transition-colors" />
+                <p className="text-[7px] sm:text-[9px] md:text-xs text-gray-500 uppercase tracking-widest mb-0.5 sm:mb-1">
                   {stat.label}
                 </p>
                 <p
-                  className="text-3xl font-serif"
+                  className="text-base sm:text-xl md:text-3xl font-serif"
                   style={{ color: stat.color ?? "#fff" }}
                 >
                   {stat.prefix && (
-                    <span className="text-sm text-[#D96B4A] mr-1">
+                    <span className="text-[8px] sm:text-[10px] md:text-sm text-[#D96B4A] mr-1">
                       {stat.prefix}
                     </span>
                   )}
@@ -109,7 +109,7 @@ function ResultPageContent() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center items-center w-full max-w-md"
+          className="flex flex-col sm:flex-row gap-2 sm:gap-4 justify-center items-center w-full max-w-md"
         >
           <Link
             href="/explore"
@@ -118,9 +118,9 @@ function ResultPageContent() {
             KEMBALI KE PETA
           </Link>
 
-          <button className="w-full sm:w-auto py-4 px-8 border border-gray-700 text-gray-300 flex justify-center items-center gap-2 hover:border-gray-500 hover:text-white transition-colors">
-            <Share2 className="w-4 h-4" />
-            <span className="text-xs tracking-widest font-semibold">
+          <button className="w-full sm:w-auto py-2.5 sm:py-3 md:py-4 px-6 sm:px-8 border border-gray-700 text-gray-300 flex justify-center items-center gap-2 hover:border-gray-500 hover:text-white transition-colors">
+            <Share2 className="w-3 h-3 sm:w-4 sm:h-4" />
+            <span className="text-[9px] sm:text-[10px] md:text-xs tracking-widest font-semibold">
               BAGIKAN
             </span>
           </button>

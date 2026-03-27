@@ -13,15 +13,15 @@ type StoryModule = { default: Story; storyMeta: StoryMeta };
 export const storyRegistry: Record<string, () => Promise<StoryModule>> = {
   "prambanan": () => import("./prambanan"),
   "timun-mas": () => import("./timun-mas"),
-  "danau-tondano": () => import("./danau-tondano"),
   "malin-kundang": () => import("./malin-kundang"),
+  "danau-tondano": () => import("./danau-tondano"),
 };
 
 export const storyInfoMap: Record<string, { title: string; coverImage: string }> = {
   "prambanan": { title: "Legenda Candi Prambanan", coverImage: "/images/jawa-tengah.webp" },
   "timun-mas": { title: "Legenda Timun Mas", coverImage: "/images/jawa-tengah.webp" },
-  "danau-tondano": { title: "Legenda Danau Tondano", coverImage: "/images/sulawesi-utara.webp" },
   "malin-kundang": { title: "Malin Kundang", coverImage: "/images/sumatera-barat.webp" },
+  "danau-tondano": { title: "Legenda Danau Tondano", coverImage: "/images/sulawesi-utara.webp" },
 };
 
 export const endingLabels: Record<string, { label: string; color: string }> = {
@@ -34,8 +34,8 @@ export const endingLabels: Record<string, { label: string; color: string }> = {
 export const provinceStoryMap: Record<string, string> = {
   "Yogyakarta": "prambanan",
   "Jawa Tengah": "timun-mas",
-  "Sulawesi Utara": "danau-tondano",
   "Sumatera Barat": "malin-kundang",
+  "Sulawesi Utara": "danau-tondano",
 };
 
 export async function loadStory(slug: string): Promise<StoryModule | null> {

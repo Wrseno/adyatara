@@ -132,7 +132,7 @@ function GamePlayer({
   return (
     <div style={{ width: "100vw", height: "100vh", position: "relative" }}>
       {/* Story title overlay */}
-      <div className="absolute top-0 left-0 right-0 z-30 p-6 md:p-8 pointer-events-none">
+      <div className="absolute top-0 left-0 right-0 z-30 p-3 sm:p-4 lg:p-8 pointer-events-none">
         <div className="flex items-start justify-between">
           <div className="relative">
             {/* Darker at top, fades out toward bottom for readability */}
@@ -140,17 +140,17 @@ function GamePlayer({
             <div className="absolute -left-4 -right-12 -top-3 h-14 rounded-md bg-black/45 blur-lg" />
 
             <div className="relative">
-            <div className="flex items-center gap-x-2 mb-1">
-              <div className="h-4 w-1 bg-orange-500" />
-              <p className="text-xs tracking-[0.2em] text-[#D96B4A] font-extrabold uppercase">
+            <div className="flex items-center gap-x-1.5 sm:gap-x-2 mb-0.5 sm:mb-1">
+              <div className="h-3 sm:h-4 w-[2px] sm:w-1 bg-orange-500" />
+              <p className="text-[8px] sm:text-[10px] lg:text-xs tracking-[0.1em] sm:tracking-[0.2em] text-[#D96B4A] font-extrabold uppercase">
                 {storyMeta.description}
               </p>
             </div>
 
-            <h2 className="text-2xl font-serif text-white">
+            <h2 className="text-sm sm:text-lg lg:text-2xl font-serif text-white">
               {storyMeta.title}
             </h2>
-            <p className="text-sm mt-1 text-white">
+            <p className="text-[9px] sm:text-xs lg:text-sm mt-0.5 sm:mt-1 text-white">
               Tekan &quot;spasi&quot; untuk memulai/melanjutkan cerita
             </p>
             </div>
@@ -159,17 +159,17 @@ function GamePlayer({
           <Button
             variant="ghost"
             size="icon"
-            className="pointer-events-auto text-[#D96B4A] hover:text-[#E8724A] hover:bg-[#D96B4A]/10"
+            className="pointer-events-auto text-[#D96B4A] hover:text-[#E8724A] hover:bg-[#D96B4A]/10 w-7 h-7 sm:w-9 sm:h-9 lg:w-10 lg:h-10"
             onClick={() => setIsPaused(true)}
           >
-            <Pause className="w-5 h-5" />
+            <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 lg:w-5 lg:h-5" />
           </Button>
         </div>
       </div>
 
       {/* Pause confirmation dialog */}
       <Dialog open={isPaused} onOpenChange={setIsPaused}>
-        <DialogContent className="bg-[#0A0705]/95 border border-gray-800/80 backdrop-blur-sm rounded-none max-w-md p-6 md:p-8">
+        <DialogContent className="bg-[#0A0705]/95 border border-gray-800/80 backdrop-blur-sm rounded-none max-w-md p-6 lg:p-8">
           {/* Corner brackets */}
           <div className="absolute top-0 left-0 w-2 h-2 border-l border-t border-gray-700/50" />
           <div className="absolute top-0 right-0 w-2 h-2 border-r border-t border-gray-700/50" />

@@ -1,5 +1,5 @@
 /**
- * Mapping: storySlug → ending → collectible names to award.
+ * Mapping: storySlug -> ending -> collectible names to award.
  * Kept in a separate file (no narraleaf-react dependency) so it can
  * be safely imported from server-side API routes.
  */
@@ -32,16 +32,16 @@ export const storyCollectibleMap: Record<string, Record<string, string[]>> = {
   },
   "danau-tondano": {
     best: [
-      "Danau Tondano",
-      "Watu Pinabetengan",
+      "Monumen Yesus Memberkati",
+      "Rumah Woloan",
+      "Pedang Bara Sangihe",
     ],
     neutral: [
-      "Kolintang",
-      "Cakalang Fufu",
+      "Alat Musik Kolintang",
     ],
     bad: [
-      "Pakaian Adat Minahasa",
-      "Tinutuan (Bubur Manado)",
+      "Tari Kabasaran",
+      "Tinutuan",
     ],
   },
   "malin-kundang": {
@@ -54,8 +54,8 @@ export const storyCollectibleMap: Record<string, Record<string, string[]>> = {
       "Tari Piring",
     ],
     bad: [
-      "Batu Malin Kundang",
-      "Sate Padang",
+      "Songket Minang",
+      "Kerupuk Sanjai",
     ],
-  }
+  },
 };

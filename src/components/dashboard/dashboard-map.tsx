@@ -18,7 +18,11 @@ function getInitials(name: string): string {
 
 export default function DashboardMap() {
   const [geoData, setGeoData] = useState<FeatureCollection | null>(null);
-  const [selectedProvince, setSelectedProvince] = useState<{name: string, storySlug: string | null, position: [number, number]} | null>(null);
+  const [selectedProvince, setSelectedProvince] = useState<{
+    name: string;
+    storySlug: string | null;
+    position: [number, number];
+  } | null>(null);
 
   useEffect(() => {
     fetch("/indonesia.geojson")
@@ -35,12 +39,17 @@ export default function DashboardMap() {
     );
   }
 
-  const handleProvinceSelect = (stateName: string, position: [number, number]) => {
+  const handleProvinceSelect = (
+    stateName: string,
+    position: [number, number],
+  ) => {
     const slug = provinceStoryMap[stateName];
     setSelectedProvince({ name: stateName, storySlug: slug || null, position });
   };
 
-  const selectedStoryInfo = selectedProvince?.storySlug ? storyInfoMap[selectedProvince.storySlug] : null;
+  const selectedStoryInfo = selectedProvince?.storySlug
+    ? storyInfoMap[selectedProvince.storySlug]
+    : null;
 
   return (
     <div className="w-full h-full absolute inset-0 overflow-hidden">
@@ -53,84 +62,91 @@ export default function DashboardMap() {
         dragging={true}
         className="w-full h-full bg-[#0A0705]"
         style={{
-            background: "#0A0705"
+          background: "#0A0705",
         }}
       >
         {selectedProvince && (
-          <Popup position={selectedProvince.position} closeButton={false} className="custom-map-popup -mt-5 z-20">
-            <div className="relative p-6 w-80 bg-[#0D0907] border border-transparent shadow-[0_10px_40px_rgba(0,0,0,0.8)] text-[#f4e1d1] transition-all duration-300 animate-in fade-in zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out data-[state=closed]:zoom-out-95 group">
+          <Popup
+            position={selectedProvince.position}
+            closeButton={false}
+            className="custom-map-popup -mt-5 z-50"
+          >
+            <div className="relative p-3 lg:p-6 w-56 lg:w-80 bg-[#0D0907] border border-transparent shadow-[0_10px_40px_rgba(0,0,0,0.8)] text-[#f4e1d1] transition-all duration-300 animate-in fade-in zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out data-[state=closed]:zoom-out-95 group">
               {/* Corner brackets matching landing page */}
-              <div className="absolute top-0 left-0 w-3 h-3 border-l border-t border-gray-800 transition-colors" />
-              <div className="absolute top-0 right-0 w-3 h-3 border-r border-t border-gray-800 transition-colors" />
-              <div className="absolute bottom-0 left-0 w-3 h-3 border-l border-b border-gray-800 transition-colors" />
-              <div className="absolute bottom-0 right-0 w-3 h-3 border-r border-b border-gray-800 transition-colors" />
+              <div className="absolute top-0 left-0 w-2 h-2 lg:w-3 lg:h-3 border-l border-t border-gray-800 transition-colors" />
+              <div className="absolute top-0 right-0 w-2 h-2 lg:w-3 lg:h-3 border-r border-t border-gray-800 transition-colors" />
+              <div className="absolute bottom-0 left-0 w-2 h-2 lg:w-3 lg:h-3 border-l border-b border-gray-800 transition-colors" />
+              <div className="absolute bottom-0 right-0 w-2 h-2 lg:w-3 lg:h-3 border-r border-b border-gray-800 transition-colors" />
 
               <div className="relative">
-                <button 
+                <button
                   onClick={() => setSelectedProvince(null)}
-                  className="absolute -top-2 -right-2 text-gray-500 hover:text-[#D96B4A] transition-colors z-20"
+                  className="absolute -top-1 -right-1 lg:-top-2 lg:-right-2 text-gray-500 hover:text-[#D96B4A] transition-colors z-20"
                 >
-                  <X className="w-5 h-5" />
+                  <X className="w-3.5 h-3.5 lg:w-5 lg:h-5" />
                 </button>
-                
+
                 <div className="flex flex-col">
                   {selectedProvince.storySlug && selectedStoryInfo ? (
                     <>
-                      <div className="mb-4 inline-flex border border-gray-800/80 rounded-sm relative self-start overflow-hidden">
-                         <div className="absolute top-0 left-0 w-1.5 h-1.5 border-l border-t border-gray-600 z-10"></div>
-                         <div className="absolute bottom-0 right-0 w-1.5 h-1.5 border-r border-b border-gray-600 z-10"></div>
-                         {selectedStoryInfo.coverImage ? (
-                           <Image 
-                             src={selectedStoryInfo.coverImage} 
-                             alt="" 
-                             width={56} 
-                             height={56} 
-                             className="object-cover w-14 h-14"
-                           />
-                         ) : (
-                           <div className="w-14 h-14 bg-linear-to-br from-[#2a1a14] to-[#1a0f0a] flex items-center justify-center">
-                             <span className="text-[#D96B4A]/60 text-base font-serif">
-                               {getInitials(selectedProvince.name)}
-                             </span>
-                           </div>
-                         )}
+                      <div className="mb-2 lg:mb-4 inline-flex border border-gray-800/80 rounded-sm relative self-start overflow-hidden">
+                        <div className="absolute top-0 left-0 w-1 h-1 lg:w-1.5 lg:h-1.5 border-l border-t border-gray-600 z-10"></div>
+                        <div className="absolute bottom-0 right-0 w-1 h-1 lg:w-1.5 lg:h-1.5 border-r border-b border-gray-600 z-10"></div>
+                        {selectedStoryInfo.coverImage ? (
+                          <Image
+                            src={selectedStoryInfo.coverImage}
+                            alt=""
+                            width={56}
+                            height={56}
+                            className="object-cover w-9 h-9 lg:w-14 lg:h-14"
+                          />
+                        ) : (
+                          <div className="w-9 h-9 lg:w-14 lg:h-14 bg-linear-to-br from-[#2a1a14] to-[#1a0f0a] flex items-center justify-center">
+                            <span className="text-[#D96B4A]/60 text-[10px] lg:text-base font-serif">
+                              {getInitials(selectedProvince.name)}
+                            </span>
+                          </div>
+                        )}
                       </div>
-                      
-                      <h3 className="text-lg font-serif text-white mb-3 tracking-wide">
+
+                      <h3 className="text-xs lg:text-lg font-serif text-white mb-1.5 lg:mb-3 tracking-wide">
                         Provinsi {selectedProvince.name}
                       </h3>
-                      
-                      <p className="text-gray-400 text-sm leading-relaxed mb-6 line-clamp-3">
-                         {selectedStoryInfo.title}. Petualangan menantimu di daerah ini—apakah kamu siap menjelajahi warisan nusantara?
+
+                      <p className="text-gray-400 text-[10px] lg:text-sm leading-relaxed mb-3 lg:mb-6 line-clamp-2 lg:line-clamp-3">
+                        {selectedStoryInfo.title}. Petualangan menantimu di
+                        daerah ini—apakah kamu siap menjelajahi warisan
+                        nusantara?
                       </p>
 
-                      <Button 
+                      <Button
                         onClick={() => {
                           window.location.href = `/game?story=${selectedProvince.storySlug}`;
                         }}
-                        className="w-full bg-[#1A1410] border border-gray-800 hover:border-[#D96B4A]/60 text-[#D96B4A] hover:bg-[#D96B4A]/10 transition-all uppercase tracking-widest text-xs py-5 rounded-none shadow-none font-sans"
+                        className="w-full bg-[#1A1410] border border-gray-800 hover:border-[#D96B4A]/60 text-[#D96B4A] hover:bg-[#D96B4A]/10 transition-all uppercase tracking-widest text-[9px] lg:text-xs py-2.5 lg:py-5 rounded-none shadow-none font-sans"
                       >
                         Mulai Perjalanan
                       </Button>
                     </>
                   ) : (
                     <>
-                       <div className="mb-4 inline-flex border border-gray-800/80 rounded-sm relative self-start overflow-hidden">
-                         <div className="absolute top-0 left-0 w-1.5 h-1.5 border-l border-t border-gray-600 z-10"></div>
-                         <div className="absolute bottom-0 right-0 w-1.5 h-1.5 border-r border-b border-gray-600 z-10"></div>
-                         <div className="w-14 h-14 bg-linear-to-br from-[#2a1a14] to-[#1a0f0a] flex items-center justify-center">
-                           <span className="text-gray-600 text-base font-serif">
-                             {getInitials(selectedProvince.name)}
-                           </span>
-                         </div>
+                      <div className="mb-2 lg:mb-4 inline-flex border border-gray-800/80 rounded-sm relative self-start overflow-hidden">
+                        <div className="absolute top-0 left-0 w-1 h-1 lg:w-1.5 lg:h-1.5 border-l border-t border-gray-600 z-10"></div>
+                        <div className="absolute bottom-0 right-0 w-1 h-1 lg:w-1.5 lg:h-1.5 border-r border-b border-gray-600 z-10"></div>
+                        <div className="w-9 h-9 lg:w-14 lg:h-14 bg-linear-to-br from-[#2a1a14] to-[#1a0f0a] flex items-center justify-center">
+                          <span className="text-gray-600 text-[10px] lg:text-base font-serif">
+                            {getInitials(selectedProvince.name)}
+                          </span>
+                        </div>
                       </div>
-                      
-                      <h3 className="text-lg font-serif text-white mb-3 tracking-wide">
+
+                      <h3 className="text-xs lg:text-lg font-serif text-white mb-1.5 lg:mb-3 tracking-wide">
                         Provinsi {selectedProvince.name}
                       </h3>
-                      
-                      <p className="text-gray-400 text-sm leading-relaxed mb-4">
-                         Belum ada cerita yang tersedia untuk wilayah ini. Ikuti terus pembaruannya!
+
+                      <p className="text-gray-400 text-[10px] lg:text-sm leading-relaxed mb-2 lg:mb-4">
+                        Belum ada cerita yang tersedia untuk wilayah ini. Ikuti
+                        terus pembaruannya!
                       </p>
                     </>
                   )}
@@ -143,39 +159,39 @@ export default function DashboardMap() {
         <GeoJSON
           data={geoData}
           style={(feature) => {
-             const stateName = feature?.properties?.state;
-             const hasStory = !!provinceStoryMap[stateName];
-             return {
-                color: "#6b332b",
-                weight: 1,
-                fillColor: hasStory ? "#3d1c16" : "#170c09", // highlight provinces with stories slightly
-                fillOpacity: hasStory ? 0.8 : 0.6,
-             };
+            const stateName = feature?.properties?.state;
+            const hasStory = !!provinceStoryMap[stateName];
+            return {
+              color: "#6b332b",
+              weight: 1,
+              fillColor: hasStory ? "#3d1c16" : "#170c09", // highlight provinces with stories slightly
+              fillOpacity: hasStory ? 0.8 : 0.6,
+            };
           }}
           onEachFeature={(feature, layer) => {
             const stateName = feature?.properties?.state;
             const hasStory = !!provinceStoryMap[stateName];
             layer.on({
-                click: (e) => {
-                   handleProvinceSelect(stateName, [e.latlng.lat, e.latlng.lng]);
-                },
-                mouseover: (e) => {
-                    const layer = e.target;
-                    layer.setStyle({
-                        color: "#E86B52",
-                        weight: 1.5,
-                        fillColor: hasStory ? "#4a231b" : "#2a1410",
-                    });
-                    layer.bringToFront();
-                },
-                mouseout: (e) => {
-                    const layer = e.target;
-                    layer.setStyle({
-                        color: "#6b332b",
-                        weight: 1,
-                        fillColor: hasStory ? "#3d1c16" : "#170c09",
-                    });
-                }
+              click: (e) => {
+                handleProvinceSelect(stateName, [e.latlng.lat, e.latlng.lng]);
+              },
+              mouseover: (e) => {
+                const layer = e.target;
+                layer.setStyle({
+                  color: "#E86B52",
+                  weight: 1.5,
+                  fillColor: hasStory ? "#4a231b" : "#2a1410",
+                });
+                layer.bringToFront();
+              },
+              mouseout: (e) => {
+                const layer = e.target;
+                layer.setStyle({
+                  color: "#6b332b",
+                  weight: 1,
+                  fillColor: hasStory ? "#3d1c16" : "#170c09",
+                });
+              },
             });
           }}
         />

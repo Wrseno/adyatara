@@ -253,3 +253,9 @@
 .leaflet-popup-close-button {
   display: none !important;
 }
+.leaflet-popup-pane {
+  z-index: 9999 !important;
+}
+.leaflet-popup {
+  z-index: 9999 !important;
+}
