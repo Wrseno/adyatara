@@ -24,18 +24,34 @@ export async function POST(req: Request) {
         where: { title: { contains: storySlug.replace(/-/g, " "), mode: "insensitive" } },
       });
 
-      if (story) {
-        await db.gameSession.create({
-          data: {
-            userId: user.id,
-            storyId: story.id,
-            currentNodeId: "completed",
-            score: gameScore,
-            status: "completed",
-            finishedAt: new Date(),
-          },
-        });
+      if (!story) {
+        return NextResponse.json({ error: "Story not found" }, { status: 404 });
       }
+
+      // Check if user has already achieved this ending for this story to prevent duplicate rewards
+      const previousSession = await db.gameSession.findFirst({
+        where: {
+          userId: user.id,
+          storyId: story.id,
+          status: "completed",
+          // We use the score/ending combination to identify the specific ending achievement
+          // This ensures that getting the same ending again doesn't trigger new rewards logic
+          score: gameScore, 
+        },
+      });
+
+      const isFirstTimeEnding = !previousSession;
+
+      await db.gameSession.create({
+        data: {
+          userId: user.id,
+          storyId: story.id,
+          currentNodeId: "completed",
+          score: gameScore,
+          status: "completed",
+          finishedAt: new Date(),
+        },
+      });
 
       await db.user.update({
         where: { id: user.id },
@@ -45,26 +61,37 @@ export async function POST(req: Request) {
         },
       });
 
-      // Award collectibles based on story + ending (only new ones)
-      const collectibleIds = storyCollectibleMap[storySlug]?.[gameEnding] || [];
-      let newCollectibles = 0;
-      if (collectibleIds.length > 0) {
-        // Check which ones user already has
-        const existing = await db.userCollectible.findMany({
-          where: {
-            userId: user.id,
-            collectibleId: { in: collectibleIds },
-          },
-          select: { collectibleId: true },
-        });
-        const existingIds = new Set(existing.map((e) => e.collectibleId));
-        const toCreate = collectibleIds
-          .filter((id) => !existingIds.has(id))
-          .map((id) => ({ userId: user.id, collectibleId: id }));
+      // Award collectibles based on story + ending (only if first time reaching this ending)
+      let newCollectiblesCount = 0;
+      if (isFirstTimeEnding) {
+        const collectibleNames = storyCollectibleMap[storySlug]?.[gameEnding] || [];
+        if (collectibleNames.length > 0) {
+          // Find the IDs for these names
+          const collectibles = await db.collectible.findMany({
+            where: { name: { in: collectibleNames } },
+            select: { id: true },
+          });
+          const collectibleIds = collectibles.map((c) => c.id);
 
-        if (toCreate.length > 0) {
-          await db.userCollectible.createMany({ data: toCreate });
-          newCollectibles = toCreate.length;
+          if (collectibleIds.length > 0) {
+            // Check which ones user already has (in case of overlap between endings)
+            const existing = await db.userCollectible.findMany({
+              where: {
+                userId: user.id,
+                collectibleId: { in: collectibleIds },
+              },
+              select: { collectibleId: true },
+            });
+            const existingIds = new Set(existing.map((e) => e.collectibleId));
+            const toCreate = collectibleIds
+              .filter((id) => !existingIds.has(id))
+              .map((id) => ({ userId: user.id, collectibleId: id }));
+
+            if (toCreate.length > 0) {
+              await db.userCollectible.createMany({ data: toCreate });
+              newCollectiblesCount = toCreate.length;
+            }
+          }
         }
       }
 
@@ -72,7 +99,8 @@ export async function POST(req: Request) {
         success: true,
         score: gameScore,
         ending: gameEnding,
-        collectiblesUnlocked: newCollectibles,
+        collectiblesUnlocked: newCollectiblesCount,
+        isFirstTimeEnding,
       });
     }
 

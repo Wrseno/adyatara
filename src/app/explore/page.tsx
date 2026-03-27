@@ -45,22 +45,22 @@ export default async function ExplorePage() {
       {/* UI overlay layer */}
       <div className="relative z-10 w-full h-full flex flex-col pointer-events-none">
         {/* Header */}
-        <div className="flex items-center justify-between p-4 md:p-8 w-full mr-auto ml-auto md:px-12">
+        <div className="flex items-center justify-between p-2 sm:p-4 lg:p-8 w-full mr-auto ml-auto lg:px-12">
           {/* Left - Back Button */}
           <div className="flex items-center pointer-events-auto">
             <Link
               href="/dashboard"
-              className="flex items-center gap-1.5 px-2 py-1.5 md:px-4 md:py-2 border border-gray-800/80 bg-[#0D0907]/50 hover:bg-[#1A1410]/80 transition-colors group"
+              className="flex items-center gap-1.5 px-2 py-1.5 lg:px-4 lg:py-2 border border-gray-800/80 bg-[#0D0907]/50 hover:bg-[#1A1410]/80 transition-colors group"
             >
-              <ArrowLeft className="w-4 h-4 md:w-5 md:h-5 text-gray-400 group-hover:text-[#E8724A] transition-colors" />
-              <span className="text-[10px] md:text-xs tracking-[0.2em] text-gray-400 group-hover:text-[#F5F0EB] transition-colors">
+              <ArrowLeft className="w-4 h-4 lg:w-5 lg:h-5 text-gray-400 group-hover:text-[#E8724A] transition-colors" />
+              <span className="text-[10px] lg:text-xs tracking-[0.2em] text-gray-400 group-hover:text-[#F5F0EB] transition-colors">
                 KEMBALI
               </span>
             </Link>
           </div>
 
           {/* Center - Stats - Hidden on mobile, shown on desktop */}
-          <div className="hidden md:flex items-center pointer-events-auto">
+          <div className="hidden lg:flex items-center pointer-events-auto">
             {/* Stats Box */}
             <div className="relative border border-gray-800/80 bg-[#0D0907]/50 flex items-center py-3 px-8">
               <div className="absolute top-0 left-0 w-1.5 h-1.5 border-l border-t border-gray-600/50" />
@@ -69,22 +69,22 @@ export default async function ExplorePage() {
               <div className="absolute bottom-0 right-0 w-1.5 h-1.5 border-r border-b border-gray-600/50" />
 
               <div className="flex items-center gap-3 pr-8 border-r border-gray-800">
-                <Award className="w-5 h-5 md:w-6 md:h-6 text-[#D96B4A]" strokeWidth={2} />
+                <Award className="w-5 h-5 lg:w-6 lg:h-6 text-[#D96B4A]" strokeWidth={2} />
                 <div>
-                  <p className="text-[10px] md:text-[11px] tracking-[0.2em] text-gray-500 uppercase mb-0.5">
+                  <p className="text-[10px] lg:text-[11px] tracking-[0.2em] text-gray-500 uppercase mb-0.5">
                     LEVEL
                   </p>
-                  <p className="text-lg md:text-xl font-medium text-white">{level}</p>
+                  <p className="text-lg lg:text-xl font-medium text-white">{level}</p>
                 </div>
               </div>
 
               <div className="flex items-center gap-3 pl-8">
-                <Trophy className="w-5 h-5 md:w-6 md:h-6 text-[#D96B4A]" strokeWidth={2} />
+                <Trophy className="w-5 h-5 lg:w-6 lg:h-6 text-[#D96B4A]" strokeWidth={2} />
                 <div>
-                  <p className="text-[10px] md:text-[11px] tracking-[0.2em] text-gray-500 uppercase mb-0.5">
+                  <p className="text-[10px] lg:text-[11px] tracking-[0.2em] text-gray-500 uppercase mb-0.5">
                     SKOR TOTAL
                   </p>
-                  <p className="text-lg md:text-xl font-medium text-white">{score}</p>
+                  <p className="text-lg lg:text-xl font-medium text-white">{score}</p>
                 </div>
               </div>
             </div>
@@ -92,11 +92,11 @@ export default async function ExplorePage() {
 
           {/* Right - Logo */}
           <div className="flex items-center pointer-events-auto">
-            <div className="flex items-center gap-2 md:gap-4">
-              <span className="text-[10px] md:text-[12px] tracking-[0.3em] md:tracking-[0.4em] font-serif text-gray-300 uppercase">
+            <div className="flex items-center gap-2 lg:gap-4">
+              <span className="text-[10px] lg:text-[12px] tracking-[0.3em] lg:tracking-[0.4em] font-serif text-gray-300 uppercase">
                 ADYATARA
               </span>
-              <div className="w-5 h-5 md:w-8 md:h-8 border border-gray-700/50 flex items-center justify-center relative">
+              <div className="w-5 h-5 lg:w-8 lg:h-8 border border-gray-700/50 flex items-center justify-center relative">
                 <div className="absolute top-0 left-0 w-1 h-1 border-l border-t border-gray-500" />
                 <div className="absolute bottom-0 right-0 w-1 h-1 border-r border-b border-gray-500" />
               </div>
@@ -105,38 +105,38 @@ export default async function ExplorePage() {
         </div>
 
         {/* Title */}
-        <div className="flex flex-col items-center mt-1 md:mt-2">
-          <p className="text-[10px] md:text-[11px] tracking-[0.3em] md:tracking-[0.4em] text-[#D96B4A] uppercase font-medium mb-1.5 md:mb-3">
+        <div className="flex flex-col items-center mt-0.5 sm:mt-1 lg:mt-2">
+          <p className="text-[9px] sm:text-[10px] lg:text-[11px] tracking-[0.2em] lg:tracking-[0.4em] text-[#D96B4A] uppercase font-medium mb-0.5 sm:mb-1.5 lg:mb-3">
             PETA NUSANTARA
           </p>
-          <h1 className="text-5xl font-serif text-white">
+          <h1 className="text-2xl sm:text-3xl lg:text-5xl font-serif text-white">
             Pilih Provinsi
           </h1>
         </div>
 
         {/* Legend Bottom */}
-        <div className="absolute bottom-4 md:bottom-8 left-1/2 -translate-x-1/2 flex items-center justify-center gap-3 md:gap-10 bg-[#0a0705]/80 px-4 py-2 md:py-3 rounded-full border border-gray-800/50 backdrop-blur-md">
-          <div className="flex items-center gap-2 md:gap-3">
-            <div className="w-2 h-2 md:w-3 md:h-3 rounded-full bg-[#EAA87E]" />
-            <span className="text-[8px] md:text-[10px] tracking-[0.15em] md:tracking-[0.2em] text-gray-500 uppercase font-medium">
+        <div className="absolute bottom-2 sm:bottom-4 lg:bottom-8 left-1/2 -translate-x-1/2 flex items-center justify-center gap-2 sm:gap-3 lg:gap-10 bg-[#0a0705]/80 px-2 sm:px-4 py-1 sm:py-2 lg:py-3 rounded-full border border-gray-800/50 backdrop-blur-md">
+          <div className="flex items-center gap-2 lg:gap-3">
+            <div className="w-2 h-2 lg:w-3 lg:h-3 rounded-full bg-[#EAA87E]" />
+            <span className="text-[8px] lg:text-[10px] tracking-[0.15em] lg:tracking-[0.2em] text-gray-500 uppercase font-medium">
               SELESAI
             </span>
           </div>
-          <div className="flex items-center gap-2 md:gap-3">
-            <div className="w-2 h-2 md:w-3 md:h-3 rounded-full bg-[#E86B52] shadow-[0_0_10px_2px_rgba(232,107,82,0.6)]" />
-            <span className="text-[8px] md:text-[10px] tracking-[0.15em] md:tracking-[0.2em] text-gray-500 uppercase font-medium">
+          <div className="flex items-center gap-2 lg:gap-3">
+            <div className="w-2 h-2 lg:w-3 lg:h-3 rounded-full bg-[#E86B52] shadow-[0_0_10px_2px_rgba(232,107,82,0.6)]" />
+            <span className="text-[8px] lg:text-[10px] tracking-[0.15em] lg:tracking-[0.2em] text-gray-500 uppercase font-medium">
               AKTIF
             </span>
           </div>
-          <div className="flex items-center gap-2 md:gap-3">
-            <div className="w-2 h-2 md:w-3 md:h-3 rounded-full bg-[#8C3A2A]" />
-            <span className="text-[8px] md:text-[10px] tracking-[0.15em] md:tracking-[0.2em] text-gray-500 uppercase font-medium">
+          <div className="flex items-center gap-2 lg:gap-3">
+            <div className="w-2 h-2 lg:w-3 lg:h-3 rounded-full bg-[#8C3A2A]" />
+            <span className="text-[8px] lg:text-[10px] tracking-[0.15em] lg:tracking-[0.2em] text-gray-500 uppercase font-medium">
               TERSEDIA
             </span>
           </div>
-          <div className="flex items-center gap-2 md:gap-3">
-            <div className="w-2 h-2 md:w-3 md:h-3 rounded-full bg-gray-700" />
-            <span className="text-[8px] md:text-[10px] tracking-[0.15em] md:tracking-[0.2em] text-gray-500 uppercase font-medium">
+          <div className="flex items-center gap-2 lg:gap-3">
+            <div className="w-2 h-2 lg:w-3 lg:h-3 rounded-full bg-gray-700" />
+            <span className="text-[8px] lg:text-[10px] tracking-[0.15em] lg:tracking-[0.2em] text-gray-500 uppercase font-medium">
               TERKUNCI
             </span>
           </div>

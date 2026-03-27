@@ -65,15 +65,15 @@ export default async function DashboardPage() {
   // Calculate stats
   const totalScore = userData.totalScore || 0;
   const level = userData.level || 1;
-  
+
   // Count unique completed stories (each story counted only once)
   const uniqueCompletedStoryIds = new Set(
     userData.gameSessions
       .filter((s) => s.status === "completed")
-      .map((s) => s.storyId)
+      .map((s) => s.storyId),
   );
   const completedStories = uniqueCompletedStoryIds.size;
-  
+
   const totalStories = await db.story.count();
   const knowledgeUnlocked = userData.userKnowledges.length;
   const recentActivities = userData.gameSessions.slice(0, 5);
@@ -125,7 +125,7 @@ export default async function DashboardPage() {
     const region = regionData.region;
     const total = regionData._count.id;
     const completed = completedStoriesData.filter(
-      (s) => s.region === region
+      (s) => s.region === region,
     ).length;
     return {
       name: region,

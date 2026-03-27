@@ -6,9 +6,9 @@ export default function GameLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
+    <div className="fixed inset-0 z-50 overflow-hidden bg-[#0A0705]">
       <LandscapeOverlay />
       {children}
-    </>
+    </div>
   );
 }

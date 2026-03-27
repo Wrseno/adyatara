@@ -429,44 +429,44 @@ async function main() {
   const collectibles3 = await Promise.all([
     prisma.collectible.create({
       data: {
-        name: "Kolintang",
+        name: "Alat Musik Kolintang",
         description: "Alat musik tradisional Minahasa yang terbuat dari kayu dan dimainkan dengan cara dipukul. Digunakan dalam upacara adat dan pertunjukan budaya.",
-        image: "/images/collectibles/kolintang.webp", rarity: "rare", category: "Seni", storyId: story3.id
+        image: "/images/collectibles/alat-musik-kolintang.webp", rarity: "rare", category: "Seni", storyId: story3.id
       }
     }),
     prisma.collectible.create({
       data: {
-        name: "Pakaian Adat Minahasa",
-        description: "Pakaian tradisional suku Minahasa dengan motif khas berwarna cerah. Dikenakan dalam upacara adat dan perayaan budaya.",
-        image: "/images/collectibles/pakaian-minahasa.webp", rarity: "common", category: "Budaya", storyId: story3.id
+        name: "Tari Kabasaran",
+        description: "Tarian perang tradisional masyarakat Minahasa. Penari mengenakan pakaian merah dan membawa pedang atau tombak, melambangkan keberanian dan perlindungan desa.",
+        image: "/images/collectibles/tari-kabasaran.webp", rarity: "rare", category: "Budaya", storyId: story3.id
       }
     }),
     prisma.collectible.create({
       data: {
-        name: "Tinutuan (Bubur Manado)",
+        name: "Tinutuan",
         description: "Makanan khas Manado berupa bubur yang terdiri dari berbagai sayuran, jagung, dan labu. Disajikan dengan ikan asin dan sambal roa.",
         image: "/images/collectibles/tinutuan.webp", rarity: "common", category: "Kuliner", storyId: story3.id
       }
     }),
     prisma.collectible.create({
       data: {
-        name: "Danau Tondano",
-        description: "Danau vulkanik terbesar di Sulawesi Utara yang terbentuk dari kaldera gunung berapi. Menjadi sumber mata pencaharian nelayan dan objek wisata.",
-        image: "/images/collectibles/danau-tondano.webp", rarity: "legendary", category: "Alam", storyId: story3.id
+        name: "Monumen Yesus Memberkati",
+        description: "Monumen Yesus Kristus di Manado yang merupakan salah satu patung Yesus tertinggi di dunia. Melambangkan perlindungan dan berkah bagi kota.",
+        image: "/images/collectibles/monumen-yesus-memberkati.webp", rarity: "legendary", category: "Sejarah", storyId: story3.id
       }
     }),
     prisma.collectible.create({
       data: {
-        name: "Cakalang Fufu",
-        description: "Ikan cakalang yang diasap dengan cara tradisional khas Sulawesi Utara. Digunakan sebagai bahan masakan seperti sambal roa dan rica-rica.",
-        image: "/images/collectibles/cakalang-fufu.webp", rarity: "rare", category: "Kuliner", storyId: story3.id
+        name: "Pedang Bara Sangihe",
+        description: "Senjata tradisional khas Kepulauan Sangihe yang digunakan oleh para pahlawan dalam melawan penjajah. Melambangkan integritas dan semangat juang.",
+        image: "/images/collectibles/pedang-bara-sangihe.webp", rarity: "rare", category: "Sejarah", storyId: story3.id
       }
     }),
     prisma.collectible.create({
       data: {
-        name: "Watu Pinabetengan",
-        description: "Batu bersejarah suku Minahasa yang dipercaya sebagai tempat pembagian wilayah sub-etnis. Menjadi situs sejarah dan spiritual penting.",
-        image: "/images/collectibles/watu-pinabetengan.webp", rarity: "legendary", category: "Sejarah", storyId: story3.id
+        name: "Rumah Woloan",
+        description: "Rumah panggung tradisional Minahasa yang terkenal dengan konstruksi kayu yang kuat dan dapat dipindahkan. Pusat industrinya berada di Kelurahan Woloan, Tomohon.",
+        image: "/images/collectibles/rumah-woloan.webp", rarity: "legendary", category: "Budaya", storyId: story3.id
       }
     }),
   ]);
