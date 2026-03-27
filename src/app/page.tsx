@@ -57,7 +57,7 @@ const stories = [
     prov: "TANAH MINAHASA",
     title: "Sulawesi Utara",
     subtitle: "Legenda Danau Tondano",
-    image: "/images/sulawesi-utara.webp",
+    image: "/images/sulawesi.webp",
     gradient:
       "linear-gradient(to bottom, rgba(13,10,8,0.1) 0%, rgba(13,10,8,0.4) 40%, rgba(13,10,8,0.95) 100%)",
   },
